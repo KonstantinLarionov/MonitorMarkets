@@ -3,6 +3,7 @@ using System.Web.UI;
 using BitgetMapper;
 using BitgetMapper.Futures.RestAPI;
 using BitgetMapper.Futures.RestAPI.Requests.Account;
+using BitgetMapper.Futures.RestAPI.Responses.Account;
 using BitgetMapper.Requests;
 using JetBrains.Annotations;
 using Org.BouncyCastle.Bcpg.Sig;
@@ -15,39 +16,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         readonly RequestArranger _requestArranger = new RequestArranger();
         private FuturesHanlderComposition _composition = new FuturesHanlderComposition(new FuturesHandlerFactory());
         private RestClient _restClient;
-        private readonly FuturesHanlderComposition _hanlderComposition;
-        internal FuturesHanlderComposition hanlderComposition => _hanlderComposition;
-        internal void SetUrl(string rest_url)
+        public BitgetClient(string rest_url)
         {
             _restClient = new RestClient(rest_url);
         }
-
-        internal delegate void Log_Dlg(string sender, string message);
-
-        internal Log_Dlg Log;
-        internal bool LogResponceEnabled = false;
-        internal bool LogExEnabled = false;
-
-        void OnLogResponce(string response)
-        {
-            if (LogResponceEnabled)
-            {
-                Log?.Invoke("RestClient", string.Concat("Response: ", response));
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        void OnLogEx(Exception ex, string responce = null)
-        {
-            if (LogExEnabled)
-            {
-                Log?.Invoke("RestClient",
-                    string.Concat("Exception: ", ex.Message, "; ", ex?.InnerException, " - ", responce));
-            }
-        }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -89,16 +62,18 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #region [Requests]
         
-        internal bool CancelOrderRequest(string symbol, string marginCoin, string orderId)
+        public CancelOrderResponse CancelOrderRequest(string symbol, string marginCoin, string orderId)
         {
-            var request = _requestArranger.Arrange(new CancelOrderRequest(symbol, marginCoin, orderId));
+            new CancelOrderRequest(symbol, marginCoin, orderId)
+            var request = _requestArranger.Arrange();
 
             string response = string.Empty;
             try
             {
                 response = SendRestRequest(request);
-                OnLogResponce(response);
-                return true;
+                var response_obj = _composition.HandleCancelOrderResponse(response);
+                
+                return response_obj;
                 
             }
             catch (Exception ex)
