@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("viewmodel/readme.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("view/readme.txt")]
 
 
