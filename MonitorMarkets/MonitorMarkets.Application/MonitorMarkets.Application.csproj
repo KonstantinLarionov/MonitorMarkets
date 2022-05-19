@@ -33,7 +33,13 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="BybitMapper">
-          <HintPath>..\..\..\Bybit\TradingClient\_Libraries\BybitMapper\BybitMapper.dll</HintPath>
+          <HintPath>..\..\Libraries\BybitMapper\BybitMapper.dll</HintPath>
+        </Reference>
+        <Reference Include="JetBrains.Annotations">
+          <HintPath>..\..\Libraries\BybitMapper\JetBrains.Annotations.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>..\..\Libraries\BybitMapper\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
           <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
@@ -46,7 +52,6 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="MarketsAdaptor\ByBitClient.cs" />
-        <Compile Include="MarketsAdaptor\exampleclient.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
