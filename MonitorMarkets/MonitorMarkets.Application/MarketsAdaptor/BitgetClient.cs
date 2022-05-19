@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BitgetMapper.Futures.RestAPI;
 using BitgetMapper.Futures.RestAPI.Data.DTO.Enum;
 using BitGetMapper.Futures.RestAPI.Data.DTO.Enum;
@@ -95,7 +96,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #region [Requests]
 
         #region [Market]
-        
+        /// <summary>
+        /// GetAllSymbols набор инструментов
+        /// </summary>
+        /// <param name="productTypeEnum"></param>
+        /// <returns></returns>
         public GetAllSymbolsResponse GetAllSymbolsRequest(ProductTypeEnum productTypeEnum)
         {
             var allSymbols = new GetAllSymbolsRequest(productTypeEnum);
@@ -114,12 +119,20 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 }
                 return responseObj;
         }
-
-        public GetCandleDataResponse GetCandleDataRequest (string symbol, GranularityEnum granularity, DateTime start, DateTime end)
+/// <summary>
+/// CandleData данные о свечах
+/// </summary>
+/// <param name="symbol"></param>
+/// <param name="granularity"></param>
+/// <param name="start"></param>
+/// <param name="end"></param>
+/// <returns>#1 Timestamp,#2 Timestamp,#3 Highest price,#4 Lowest price,#5 Closing price,#6 Base currency trading volume,#7 Quote currency trading volume</returns>
+        public List<List<decimal>> GetCandleDataRequest (string symbol, GranularityEnum granularity, DateTime start, DateTime end)
          { 
+             
              var candleData = new GetCandleDataRequest(symbol, granularity, start, end);
             var request = _requestArranger.Arrange(candleData);
-            GetCandleDataResponse responseObj = null;
+            List<List<decimal>> responseObj = null;
             string response = string.Empty;
                 try
                 {
@@ -133,7 +146,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 }
                 return responseObj;
         }
-
+/// <summary>
+/// 
+/// </summary>
+/// <param name="symbol"></param>
+/// <returns></returns>
         public GetDepthResponse GetDepthRequest(string symbol)
         {
             var depth = new GetDepthRequest(symbol);
@@ -152,8 +169,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 }
                 return responseObj ;
         }
-        
-        public ServerTimeResponse ServerTimeRequest()
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+public ServerTimeResponse ServerTimeRequest()
         {
             var serverTime = new ServerTimeRequest();
             var request = _requestArranger.Arrange(serverTime);
@@ -175,6 +195,13 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #endregion
         
         #region [Account]
+/// <summary>
+/// 
+/// </summary>
+/// <param name="symbol"></param>
+/// <param name="marginCoin"></param>
+/// <param name="orderId"></param>
+/// <returns></returns>
         public CancelOrderResponse CancelOrderRequest(string symbol, string marginCoin, string orderId)
         {
             var cancelOrder = new CancelOrderRequest(symbol, marginCoin, orderId);
@@ -194,7 +221,14 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 }
                 return responseObj;
         }
-        
+/// <summary>
+/// 
+/// </summary>
+/// <param name="symbol"></param>
+/// <param name="startTime"></param>
+/// <param name="endTime"></param>
+/// <param name="pageSize"></param>
+/// <returns></returns>
         public GetHistoryOrderResponse GetHistoryOrderRequest(string symbol, DateTime startTime, DateTime endTime, string pageSize)
         {
             var historyOrder = new GetHistoryOrderRequest(symbol, startTime, endTime, pageSize);
@@ -214,6 +248,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 }
                 return responseObj;
         }
+/// <summary>
+/// 
+/// </summary>
+/// <param name="symbol"></param>
+/// <returns></returns>
         
         public GetOpenOrderResponse GetOpenOrderRequest(string symbol)
         {
@@ -234,6 +273,12 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 }
                 return responseObj;
         }
+/// <summary>
+/// 
+/// </summary>
+/// <param name="symbol"></param>
+/// <param name="marginCoin"></param>
+/// <returns></returns>
        
         public GetSingleAccountResponse GetSingleAccountRequest(string symbol, string marginCoin)
         {
@@ -254,6 +299,15 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 }
                 return responseObj;
         }
+/// <summary>
+/// 
+/// </summary>
+/// <param name="symbol"></param>
+/// <param name="marginCoin"></param>
+/// <param name="size"></param>
+/// <param name="side"></param>
+/// <param name="orderType"></param>
+/// <returns></returns>
         
         public PlaceOrderResponse PlaceOrderRequest(string symbol, string marginCoin, decimal size,
             SideType side, OrderTypeEnum orderType)

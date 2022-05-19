@@ -4,12 +4,12 @@
 winexe
 C#
 .cs
-D:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\
 MonitorMarkets.Vizualizer
 none
 false
 DEBUG;TRACE
-D:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml
 1708054652
 11190426936
 4-429815766
