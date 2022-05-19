@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
 using BybitMapper.InversePerpetual.RestV2.Requests.Market;
 using BybitMapper.Perpetual.RestV2.Data.Enums;
 using BybitMapper.Perpetual.RestV2.Responses.Account.Position;
@@ -25,13 +26,30 @@ namespace MonitorMarkets.Application.MarketsAdaptor
     internal class ByBitClient
     {
         private UsdcPepetualHandlerComposition m_HandlerComposition;
-        internal UsdcPepetualHandlerComposition HandlerComposition => m_HandlerComposition;
-        RequestArranger m_RequestArranger;
+        private RequestArranger m_RequestArranger;
+        private RestClient _restClient;
 
-        internal void UsdcPerpetualRestClient(RequestArranger ra)
+        /// <summary>
+        /// Публичный конструктор класса
+        /// </summary>
+        public ByBitClient()
         {
             m_HandlerComposition = new UsdcPepetualHandlerComposition(new UsdcPepetualHandlerFactory());
-            m_RequestArranger = ra;
+            m_RequestArranger = new RequestArranger();
+            _restClient = new RestClient();
+        }
+        
+        /// <summary>
+        /// Приватный конструктор класса
+        /// </summary>
+        /// <param name="api_key"></param>
+        /// <param name="secret"></param>
+        /// <param name="func"></param>
+        public ByBitClient(string api_key, string secret, Func<long> func)
+        {
+            m_HandlerComposition = new UsdcPepetualHandlerComposition(new UsdcPepetualHandlerFactory());
+            m_RequestArranger = new RequestArranger(api_key, secret, func);
+            _restClient = new RestClient();
         }
 
         #region [Base]
@@ -71,28 +89,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return _restClient.Execute(request).Content;
         }
-        internal delegate void Log_Dlg(string sender, string message);
-        internal Log_Dlg Log;
-        internal bool LogResponseEnabled = false;
-        internal bool LogExEnabled = false;
-        /// <summary>
-        /// 
-        /// </summary>
-        void OnLogResponse(string response)
-        {
-            if (LogResponseEnabled)
-            { Log?.Invoke("RestClient", string.Concat("Response: ", response)); }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        void OnLogEx(Exception ex, string response = null)
-        {
-            if (LogExEnabled)
-            { Log?.Invoke("RestClient", string.Concat("Exception: ", ex.Message, "; ", ex?.InnerException, " - ", response)); }
-        }
-
-
         #endregion
         
         #region [Request]
@@ -112,9 +108,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
                 return response_obj;
             }
-            catch (Exception ex)    
+            catch (Exception ex)
             {
-                OnLogEx(ex,response);
+                return null;
             }
 
             return response_obj;
@@ -137,7 +133,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
             }
 
             return response_obj;
@@ -159,7 +155,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
             }
 
             return response_obj;
@@ -182,7 +178,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
             }
             return response_obj;
         }
@@ -203,7 +199,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
             }
             return response_obj;
         }
@@ -224,7 +220,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
             }
             return response_obj;
         }
@@ -245,7 +241,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
             }
             return response_obj;
         }
@@ -270,7 +266,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
             }
 
             return response_obj;
@@ -292,7 +288,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
+                
             }
 
             return response_obj;
@@ -314,7 +311,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)    
             {
-                OnLogEx(ex,response);
+                return null;
+                
             }
 
             return response_obj;
