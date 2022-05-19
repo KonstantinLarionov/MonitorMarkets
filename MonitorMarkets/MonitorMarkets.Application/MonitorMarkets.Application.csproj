@@ -33,7 +33,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\BitgetMapper.dll</HintPath>
+          <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
         </Reference>
         <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
           <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\BouncyCastle.Crypto.dll</HintPath>
@@ -61,7 +61,6 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="MarketsAdaptor\BitgetClient.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
