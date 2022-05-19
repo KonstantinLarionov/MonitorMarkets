@@ -8,20 +8,29 @@ using BitgetMapper.Futures.RestAPI.Responses.Account;
 using BitGetMapper.Futures.RestAPI.Responses.Account;
 using BitgetMapper.Futures.RestAPI.Responses.Market;
 using BitgetMapper.Requests;
-using JetBrains.Annotations;
 using RestSharp;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
     public class BitgetClient
     {
-        readonly RequestArranger _requestArranger = new RequestArranger();
-        private FuturesHanlderComposition _composition = new FuturesHanlderComposition(new FuturesHandlerFactory());
+        readonly RequestArranger _requestArranger;
+        private FuturesHanlderComposition _composition;
         private RestClient _restClient;
         public BitgetClient(string rest_url)
         {
             _restClient = new RestClient(rest_url);
+            _requestArranger = new RequestArranger();
+            _composition = new FuturesHanlderComposition(new FuturesHandlerFactory());
         }
+        
+        public BitgetClient(string api_key, string secret_key, string passphrase, Func<long> funcTime, string rest_url)
+        {
+            _restClient = new RestClient(rest_url);
+            _requestArranger = new RequestArranger(api_key, secret_key, passphrase, funcTime);
+            _composition = new FuturesHanlderComposition(new FuturesHandlerFactory());
+        }
+        
         #region [Base]
         string SendRestRequest(IRequestContent message)
         {
@@ -82,7 +91,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
 
         #endregion
-
+        
         #region [Requests]
 
         #region [Market]
@@ -164,11 +173,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         }
         
         #endregion
-
-        
         
         #region [Account]
-        
         public CancelOrderResponse CancelOrderRequest(string symbol, string marginCoin, string orderId)
         {
             var cancelOrder = new CancelOrderRequest(symbol, marginCoin, orderId);
@@ -249,7 +255,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 return responseObj;
         }
         
-        public PlaceOrderResponse PlaceOrderRequest([NotNull] string symbol, string marginCoin, [NotNull] decimal size,
+        public PlaceOrderResponse PlaceOrderRequest(string symbol, string marginCoin, decimal size,
             SideType side, OrderTypeEnum orderType)
         {
             var placeOrder = new PlaceOrderRequest(symbol, marginCoin, size, side, orderType);
@@ -271,6 +277,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         }
         
         #endregion
+        
         #endregion
     }
 }
