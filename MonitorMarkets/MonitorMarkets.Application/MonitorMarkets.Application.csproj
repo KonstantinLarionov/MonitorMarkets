@@ -60,6 +60,9 @@
     <ItemGroup>
         <Compile Include="MarketsAdaptor\BitgetClient.cs" />
         <Compile Include="MarketsAdaptor\ByBitClient.cs" />
+        <Compile Include="MarketsAdaptor\FactoryClientService.cs" />
+        <Compile Include="Objects\Responses\CancelOrderResponse.cs" />
+        <Compile Include="Objects\Responses\PlaceOrderResponse.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

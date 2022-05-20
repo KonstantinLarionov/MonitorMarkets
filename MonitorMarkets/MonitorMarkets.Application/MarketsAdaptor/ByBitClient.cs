@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
-using BybitMapper.InversePerpetual.RestV2.Requests.Market;
-using BybitMapper.Perpetual.RestV2.Data.Enums;
-using BybitMapper.Perpetual.RestV2.Responses.Account.Position;
 using BybitMapper.Requests;
 using BybitMapper.UsdcPerpetual.RestV2;
 using BybitMapper.UsdcPerpetual.RestV2.Data.Enums;
@@ -94,49 +89,54 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #region [Request]
 
         #region [Account]
-        public CancelOrderResponse CancelOrderRequest(string symbol, OrderFilterType orderFilter)
+        public Objects.Responses.CancelOrderResponse CancelOrderRequest(string symbol, OrderFilterType orderFilter)
         {
             var request_prep = new CancelOrderRequest(symbol, orderFilter);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             CancelOrderResponse response_obj = null;
+            Objects.Responses.CancelOrderResponse response_unt = null;
             
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleCancelOrderResponse(response);
+                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Result.OrderId);
 
-                return response_obj;
+                return response_unt;
             }
             catch (Exception ex)
             {
                 return null;
             }
 
-            return response_obj;
+            return null;
         }
 
-        public PlaceOrderResponse PlaceOrderRequest(string symbol, OrderType orderType, OrderFilterType orderFilter,
+        public Objects.Responses.PlaceOrderResponse PlaceOrderRequest(string symbol, OrderType orderType, OrderFilterType orderFilter,
             SideType side, decimal orderQty)
         {
             var request_prep = new PlaceOrderRequest(symbol, orderType, orderFilter, side, orderQty);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             PlaceOrderResponse response_obj = null;
+            Objects.Responses.PlaceOrderResponse response_unt = null;
             
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
+                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.Symbol, response_obj.Result.);
 
-                return response_obj;
+                return response_unt;
+
             }
             catch (Exception ex)    
             {
                 return null;
             }
 
-            return response_obj;
+            return null;
         }
 
         public QueryOrderHistoryResponse QueryOrderHistoryRequest(CategoryType category, long time)
