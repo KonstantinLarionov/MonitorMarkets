@@ -23,7 +23,7 @@ using SideType = BybitMapper.UsdcPerpetual.RestV2.Data.Enums.SideType;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
-    public class ByBitClient
+    internal class ByBitClient
     {
         private UsdcPepetualHandlerComposition m_HandlerComposition;
         private RequestArranger m_RequestArranger;
