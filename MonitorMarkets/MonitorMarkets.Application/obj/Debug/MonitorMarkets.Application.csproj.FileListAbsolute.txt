@@ -1,0 +1,2 @@
+C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CoreCompileInputs.cache

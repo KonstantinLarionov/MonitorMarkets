@@ -126,7 +126,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
-                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.Symbol, response_obj.Result.);
+                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId, response_obj.Result.OrderLinkId,response_obj.Result.Symbol, response_obj.Result.OrderPrice, response_obj.Result.OrderQty, response_obj.Result.OrderType, response_obj.Result.Side);
 
                 return response_unt;
 

@@ -35,8 +35,14 @@
         <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
         </Reference>
+        <Reference Include="BybitMapper">
+          <HintPath>..\..\..\bybitmapper\BybitMapper.dll</HintPath>
+        </Reference>
         <Reference Include="BybitMapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\Libraries\BybitMapper\BybitMapper.dll</HintPath>
+        </Reference>
+        <Reference Include="JetBrains.Annotations">
+          <HintPath>..\..\..\bybitmapper\JetBrains.Annotations.dll</HintPath>
         </Reference>
         <Reference Include="JetBrains.Annotations, Version=2020.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
           <HintPath>..\..\Libraries\BybitMapper\JetBrains.Annotations.dll</HintPath>
@@ -46,6 +52,9 @@
         </Reference>
         <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
           <HintPath>..\..\Libraries\BybitMapper\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>..\..\..\bybitmapper\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75">
           <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
