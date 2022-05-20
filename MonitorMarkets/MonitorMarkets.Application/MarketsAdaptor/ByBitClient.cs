@@ -139,53 +139,57 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public QueryOrderHistoryResponse QueryOrderHistoryRequest(CategoryType category, long time)
+        public Objects.Responses.QueryOrderHistoryResponse QueryOrderHistoryRequest(CategoryType category, long time)
         {
-            var request_prep = new QueryOrderHistoryRequest(category, time);
+            var request_prep = new QueryOrderHistoryRequest(category);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryOrderHistoryResponse response_obj = null;
+            Objects.Responses.QueryOrderHistoryResponse response_unt = null;
             
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryOrderHistoryResponse(response);
+                response_unt = new Objects.Responses.QueryOrderHistoryResponse(response_obj.Result.ResultTotalSize, response_obj.Result.Cursor, response_obj.Result.DataList);
 
-                return response_obj;
+                return response_unt;
             }
             catch (Exception ex)    
             {
                 return null;
             }
 
-            return response_obj;
-
+            return null;
         }
 
-        public QueryUnfilledResponse QueryUnfilledRequest(CategoryType category)
+        public Objects.Responses.QueryUnfilledResponse QueryUnfilledRequest(CategoryType category)
         {
             var request_prep = new QueryUnfilledRequest(category);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryUnfilledResponse response_obj = null;
+            Objects.Responses.QueryUnfilledResponse response_unt = null;
             
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryUnfilledResponse(response);
+                response_unt = new Objects.Responses.QueryUnfilledResponse(response_obj.Result.ResultTotalSize,
+                    response_obj.Result.Cursor, response_obj.Result.DataList);
 
-                return response_obj;
+                return response_unt;
             }
             catch (Exception ex)    
             {
                 return null;
             }
-            return response_obj;
+            return null;
         }
 
         public TradeHistoryResponse TradeHistoryRequest(CategoryType category, DateTime startTime, int limit)
         {
-            var request_prep = new TradeHistoryRequest(category, startTime, limit);
+            var request_prep = new TradeHistoryRequest(category, limit);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             TradeHistoryResponse response_obj = null;

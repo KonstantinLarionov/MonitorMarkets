@@ -38,9 +38,6 @@
         <Reference Include="BybitMapper">
           <HintPath>..\..\..\bybitmapper\BybitMapper.dll</HintPath>
         </Reference>
-        <Reference Include="BybitMapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\Libraries\BybitMapper\BybitMapper.dll</HintPath>
-        </Reference>
         <Reference Include="JetBrains.Annotations">
           <HintPath>..\..\..\bybitmapper\JetBrains.Annotations.dll</HintPath>
         </Reference>
@@ -49,6 +46,9 @@
         </Reference>
         <Reference Include="JetBrains.Annotations, Version=4242.42.42.42, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
           <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\JetBrains.Annotations.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim">
+          <HintPath>..\..\..\Bybit\TradingClient\_Libraries\BybitMapper\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
           <HintPath>..\..\Libraries\BybitMapper\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
@@ -72,6 +72,8 @@
         <Compile Include="MarketsAdaptor\FactoryClientService.cs" />
         <Compile Include="Objects\Responses\CancelOrderResponse.cs" />
         <Compile Include="Objects\Responses\PlaceOrderResponse.cs" />
+        <Compile Include="Objects\Responses\QueryOrderHistoryResponse.cs" />
+        <Compile Include="Objects\Responses\QueryUnfilledResponse.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
