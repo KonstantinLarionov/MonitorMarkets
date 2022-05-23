@@ -5,7 +5,7 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class QueryUnfilledResponse
     {
-        public QueryUnfilledResponse(int resultTotalSize, string cursor, IReadOnlyList<QueryUnfilledData> dataList)
+        public QueryUnfilledResponse(int resultTotalSize, string cursor, IReadOnlyList<QueryOrderHistoryData> dataList)
         {
             ResultTotalSize = resultTotalSize;
             Cursor = cursor;
@@ -13,7 +13,7 @@ namespace MonitorMarkets.Application.Objects.Responses
         }
         public int ResultTotalSize { get; set; }
         public string Cursor { get; set; }
-        public IReadOnlyList<QueryUnfilledData> DataList { get; set; }
+        public IReadOnlyList<QueryOrderHistoryData> DataList { get; set; }
 
     }
 }

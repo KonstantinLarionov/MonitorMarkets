@@ -70,10 +70,16 @@
         <Compile Include="MarketsAdaptor\BitgetClient.cs" />
         <Compile Include="MarketsAdaptor\ByBitClient.cs" />
         <Compile Include="MarketsAdaptor\FactoryClientService.cs" />
-        <Compile Include="Objects\Responses\CancelOrderResponse.cs" />
-        <Compile Include="Objects\Responses\PlaceOrderResponse.cs" />
-        <Compile Include="Objects\Responses\QueryOrderHistoryResponse.cs" />
-        <Compile Include="Objects\Responses\QueryUnfilledResponse.cs" />
+        <Compile Include="Objects\BybitResponses\CancelOrderResponse.cs" />
+        <Compile Include="Objects\BybitResponses\ContractInfoResponse.cs" />
+        <Compile Include="Objects\BybitResponses\OrderBookResponse.cs" />
+        <Compile Include="Objects\BybitResponses\PlaceOrderResponse.cs" />
+        <Compile Include="Objects\BybitResponses\QueryKlineResponse.cs" />
+        <Compile Include="Objects\BybitResponses\QueryMyPositionsResponse.cs" />
+        <Compile Include="Objects\BybitResponses\QueryOrderHistoryResponse.cs" />
+        <Compile Include="Objects\BybitResponses\QueryUnfilledResponse.cs" />
+        <Compile Include="Objects\BybitResponses\TradeHistoryResponse.cs" />
+        <Compile Include="Objects\BybitResponses\WalletInfoResponse.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
