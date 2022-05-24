@@ -32,6 +32,9 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="BitgetMapper">
+          <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\BitgetMapper.dll</HintPath>
+        </Reference>
         <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
         </Reference>
@@ -61,8 +64,14 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.ComponentModel.Primitives">
+          <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\System.ComponentModel.Primitives.dll</HintPath>
+        </Reference>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Runtime.Serialization.Primitives">
+          <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\System.Runtime.Serialization.Primitives.dll</HintPath>
+        </Reference>
         <Reference Include="System.Web" />
         <Reference Include="System.Xml" />
     </ItemGroup>
@@ -70,20 +79,26 @@
         <Compile Include="MarketsAdaptor\BitgetClient.cs" />
         <Compile Include="MarketsAdaptor\ByBitClient.cs" />
         <Compile Include="MarketsAdaptor\FactoryClientService.cs" />
-        <Compile Include="Objects\BybitResponses\CancelOrderResponse.cs" />
-        <Compile Include="Objects\BybitResponses\ContractInfoResponse.cs" />
-        <Compile Include="Objects\BybitResponses\OrderBookResponse.cs" />
-        <Compile Include="Objects\BybitResponses\PlaceOrderResponse.cs" />
-        <Compile Include="Objects\BybitResponses\QueryKlineResponse.cs" />
-        <Compile Include="Objects\BybitResponses\QueryMyPositionsResponse.cs" />
-        <Compile Include="Objects\BybitResponses\QueryOrderHistoryResponse.cs" />
-        <Compile Include="Objects\BybitResponses\QueryUnfilledResponse.cs" />
-        <Compile Include="Objects\BybitResponses\TradeHistoryResponse.cs" />
-        <Compile Include="Objects\BybitResponses\WalletInfoResponse.cs" />
+        <Compile Include="MarketsAdaptor\IMarketClient.cs" />
+        <Compile Include="Objects\Data\CancelOrderData.cs" />
+        <Compile Include="Objects\Data\ContractInfoData.cs" />
+        <Compile Include="Objects\Responses\CancelOrderResponse.cs" />
+        <Compile Include="Objects\Responses\ContractInfoResponse.cs" />
+        <Compile Include="Objects\Responses\GetAllSymbolsResponse.cs" />
+        <Compile Include="Objects\Responses\GetCandleDataResponse.cs" />
+        <Compile Include="Objects\Responses\GetDepthResponse.cs" />
+        <Compile Include="Objects\Responses\GetHistoryOrderResponse.cs" />
+        <Compile Include="Objects\Responses\GetOpenOrderResponse.cs" />
+        <Compile Include="Objects\Responses\GetSingleAccountResponse.cs" />
+        <Compile Include="Objects\Responses\OrderBookResponse.cs" />
+        <Compile Include="Objects\Responses\PlaceOrderResponse.cs" />
+        <Compile Include="Objects\Responses\QueryKlineResponse.cs" />
+        <Compile Include="Objects\Responses\QueryMyPositionsResponse.cs" />
+        <Compile Include="Objects\Responses\QueryOrderHistoryResponse.cs" />
+        <Compile Include="Objects\Responses\QueryUnfilledResponse.cs" />
+        <Compile Include="Objects\Responses\TradeHistoryResponse.cs" />
+        <Compile Include="Objects\Responses\WalletInfoResponse.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="Objects\README.txt" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

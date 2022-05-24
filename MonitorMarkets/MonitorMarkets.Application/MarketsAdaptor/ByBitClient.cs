@@ -9,19 +9,27 @@ using BybitMapper.UsdcPerpetual.RestV2.Requests.Account.Order;
 using BybitMapper.UsdcPerpetual.RestV2.Requests.Account.Positions;
 using BybitMapper.UsdcPerpetual.RestV2.Requests.Account.Wallet;
 using BybitMapper.UsdcPerpetual.RestV2.Requests.Market;
-using BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Account;
-using BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order;
-using BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Positions;
 using BybitMapper.UsdcPerpetual.RestV2.Responses.Market;
+using MonitorMarkets.Application.Objects.Data;
+using MonitorMarkets.Application.Objects.Responses;
 using RestSharp;
+using CancelOrderResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.CancelOrderResponse;
 using IntervalType = BybitMapper.UsdcPerpetual.RestV2.Data.Enums.IntervalType;
 using OrderBookRequest = BybitMapper.UsdcPerpetual.RestV2.Requests.Market.OrderBookRequest;
+using OrderBookResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Market.OrderBookResponse;
 using OrderType = BybitMapper.UsdcPerpetual.RestV2.Data.Enums.OrderType;
+using PlaceOrderResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.PlaceOrderResponse;
+using QueryKlineResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Market.QueryKlineResponse;
+using QueryMyPositionsResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Positions.QueryMyPositionsResponse;
+using QueryOrderHistoryResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.QueryOrderHistoryResponse;
+using QueryUnfilledResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.QueryUnfilledResponse;
 using SideType = BybitMapper.UsdcPerpetual.RestV2.Data.Enums.SideType;
+using TradeHistoryResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.TradeHistoryResponse;
+using WalletInfoResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Account.WalletInfoResponse;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
-    internal class ByBitClient
+    internal class ByBitClient : IMarketClient
     {
         private UsdcPepetualHandlerComposition m_HandlerComposition;
         private RequestArranger m_RequestArranger;
@@ -92,10 +100,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #region [Request]
 
         #region [Account]
-        public Objects.Responses.CancelOrderResponse CancelOrderRequest(string symbol, OrderFilterType orderFilter)
+        public Objects.Responses.CancelOrderResponse GetCancelOrder(string symbol)
         {
-            var request_prep = new CancelOrderRequest(symbol, orderFilter);
-            var request = m_RequestArranger.Arrange(request_prep);
+            var cancelOrder = new CancelOrderRequest(symbol, null);
+            var request = m_RequestArranger.Arrange(cancelOrder);
             string response = string.Empty;
             CancelOrderResponse response_obj = null;
             Objects.Responses.CancelOrderResponse response_unt = null;
@@ -104,7 +112,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleCancelOrderResponse(response);
-                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Result.OrderId);
+                response_unt = 
 
                 return response_unt;
             }
@@ -129,7 +137,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
-                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId, response_obj.Result.OrderLinkId,response_obj.Result.Symbol, response_obj.Result.OrderPrice, response_obj.Result.OrderQty, response_obj.Result.OrderType, response_obj.Result.Side);
+                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId);
 
                 return response_unt;
 
@@ -267,7 +275,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #region [Market]
 
-        public Objects.Responses.ContractInfoResponse ContractInfoRequest()
+        public Objects.Responses.ContractInfoResponse GetContractInfo()
         {
             var request_prep = new ContractInfoRequest();
             var request = m_RequestArranger.Arrange(request_prep);
@@ -279,8 +287,19 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleContractInfoResponce(response);
-                response_unt = new Objects.Responses.ContractInfoResponse(response_obj.RetCode, response_obj.RetMsg,
-                    response_obj.Result);
+                List<ContractInfoData> listData = new List<ContractInfoData>();
+
+                foreach (var item in response_obj.Result)
+                {
+                    listData.Add(new ContractInfoData(item.Symbol, item.Status, item.BaseCoin, item.QuoteCoin,
+                        item.TakerFeeRate, item.MakerFeeRate, item.MinLeverage, item.MaxLeverage, item.LeverageStep,
+                        item.MinPrice, item.MaxPrice, item.TickSize, item.MinTradingQty, item.MaxTradingQty,
+                        item.QtyStep, item.DeliveryFreeRate, item.DeliveryTime));
+                }
+                
+                response_unt = new Objects.Responses.ContractInfoResponse(response_obj.RetCode.ToString(),
+                    response_obj.RetMsg,
+                    listData);
 
                 return response_unt;
             }
@@ -290,7 +309,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-        }
+        }   
 
         public Objects.Responses.OrderBookResponse OrderBookRequest(string symbol)
         {
@@ -346,5 +365,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #endregion
         
         #endregion
+
+        
     }
 }
