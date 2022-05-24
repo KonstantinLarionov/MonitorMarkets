@@ -29,10 +29,9 @@
                                        Canvas.Top="20" Canvas.Left="30" FontSize="16">
                                 Количество позиций:
                             </TextBlock>
-                            <Label Uid="NumberPosition" VerticalAlignment="Top" HorizontalAlignment="Center"
+                            <Label Name="NumberPosition" VerticalAlignment="Top" HorizontalAlignment="Center"
                                    Canvas.Top="30" Canvas.Left="190" FontSize="16"
-                                   Width="10" Height="10" Foreground="Black">
-                                
+                                    Foreground="Black" Content="asdasdasd" >
                             </Label>
                             <Canvas>
                                 <Button Canvas.Top="180" Canvas.Left="40" Width="210" Content="Следущая" Background="CornflowerBlue" BorderBrush="CornflowerBlue" Foreground="Black">
