@@ -1,6 +1,7 @@
 ﻿
 using System.Windows;
 using System.Windows.Controls;
+using MonitorMarkets.Vizualizer.View;
 using MonitorMarkets.Vizualizer.View.Resources.MenuLibrary;
 using Menu = MonitorMarkets.Vizualizer.View.Resources.Menu;
 
@@ -18,6 +19,8 @@ namespace MonitorMarkets.Vizualizer
         {
             InitializeComponent();
             this.menu = new Menu();
+            var example = new ExampleWindow();
+            example.Show();
         }
 
         public void ButtonBase_OnClick(object sender, RoutedEventArgs e)

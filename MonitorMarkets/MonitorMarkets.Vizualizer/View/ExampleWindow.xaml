@@ -6,7 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
         mc:Ignorable="d"
-        Title="ExampleWindow" Height="710" Width="450" ResizeMode="NoResize">
+        Title="ExampleWindow" Height="730" Width="450" ResizeMode="NoResize">
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" Margin="10">
             <materialDesign:Card Background="White" Height="350">
