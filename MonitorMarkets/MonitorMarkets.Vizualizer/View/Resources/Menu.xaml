@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="MonitorMarkets.Vizualizer.View.Resources.Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="750" d:DesignWidth="880">
+    <DockPanel LastChildFill="False" Background="#b0c4de" >
+        <StackPanel>
+            <materialDesign:Card 
+                                 MaxWidth="200" 
+                                 MaxHeight="750" 
+                                 MinWidth = "200" 
+                                 MinHeight ="750" 
+                                 HorizontalAlignment="Left" 
+                                 Background="WhiteSmoke" >
+                    <Button Name= "coins" Content="Coins" VerticalAlignment="Top" Margin="0" Click="Button_Table" />
+            </materialDesign:Card>
+        </StackPanel>
+        <DockPanel Name="ListCoins">
+            
+        </DockPanel>
+    </DockPanel>
+</UserControl>

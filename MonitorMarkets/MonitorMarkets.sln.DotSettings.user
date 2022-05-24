@@ -6,4 +6,6 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CJetBrains_002EAnnotations_002Exml/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CMicrosoft_002EVisualStudio_002ECodeCoverage_002EShim_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=MonitorMarkets_002EVizualizer_002FProperties_002FResources/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>
