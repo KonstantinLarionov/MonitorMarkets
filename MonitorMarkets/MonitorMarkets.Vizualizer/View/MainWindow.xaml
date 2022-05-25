@@ -8,57 +8,93 @@
         mc:Ignorable="d"
         Title="MonitorMarkets" Height="750" Width="450"
         ResizeMode="NoResize">
-    <DockPanel LastChildFill="True" Background="#b0c4de" >
-        <Grid>
-        <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Center" Width="350" Height="650" Background="WhiteSmoke">
-            <Grid>
-                <Canvas>
-                    <Grid>
-                        <Canvas>
-                            <TextBlock Canvas.Left="95" FontSize="18">
-                                Монитор позиций
-                            </TextBlock>
-                        </Canvas>
-                    </Grid>
-                    <materialDesign:Card Canvas.Left= "30" Canvas.Top= "50" 
-                                         Background="Azure" Width="290" 
-                                         Height="240" HorizontalAlignment="Center" 
-                                         VerticalAlignment="Top">
-                        <Canvas>
-                            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center"
-                                       Canvas.Top="20" Canvas.Left="30" FontSize="16">
-                                Количество позиций:
-                            </TextBlock>
-                            <Label Name="NumberPosition" VerticalAlignment="Top" HorizontalAlignment="Center"
-                                   Canvas.Top="30" Canvas.Left="190" FontSize="16"
-                                    Foreground="Black" Content="asdasdasd" >
-                            </Label>
-                            <Canvas>
-                                <Button Canvas.Top="180" Canvas.Left="40" Width="210" Content="Следущая" Background="CornflowerBlue" BorderBrush="CornflowerBlue" Foreground="Black">
-                                </Button>
-                            </Canvas>
-                        </Canvas>
-                    </materialDesign:Card>
-                </Canvas>
-              <Canvas>
-                  <Grid Canvas.Top="310" Canvas.Left="30" Width="140">
-                      <Button FontSize="12" Content="Закрыть текущую" Background="Transparent" BorderBrush="Red" Foreground="Black">  </Button>
-                  </Grid>
-                  <Grid Canvas.Top="310" Canvas.Left="180" Width="140">
-                      <Button Content="Закрыть все" FontSize="12" Background="Red" BorderBrush="DarkRed" Foreground="White">  </Button>
-                  </Grid>
-                  <Grid Canvas.Top="370" Canvas.Left="123">
-                      <TextBlock FontSize="15">
-                          Главное Меню
-                      </TextBlock>
-                  </Grid>
-                  <Button Canvas.Top="410" Canvas.Left="73" Width="210" Content="Курсы валют" Background="Transparent" BorderBrush="Black" Foreground="Black"></Button>
-                  <Button Canvas.Top="460" Canvas.Left="73" Width="210" Content="Графики бирж" Background="Transparent" BorderBrush="Black" Foreground="Black"></Button>
-                  <Button Canvas.Top="510" Canvas.Left="73" Width="210" Content="Торговля" Background="Transparent" BorderBrush="Black" Foreground="Black"></Button>
-                  <Button Canvas.Top="560" Canvas.Left="73" Width="210" Content="Общие настройки" Background="Transparent" BorderBrush="Black" Foreground="Black"></Button>
-              </Canvas>      
-            </Grid>
-        </materialDesign:Card>
-        </Grid>
+   <DockPanel>
+        <DockPanel DockPanel.Dock="Top" Margin="10">
+            <materialDesign:Card Background="White" Height="350">
+                <DockPanel>
+                    <Label Margin="10"
+                           Foreground="Black" 
+                           FontSize="20"
+                           FontWeight="Bold"
+                           DockPanel.Dock="Top">
+                        Монитор позиций
+                    </Label>
+                    <StackPanel DockPanel.Dock="Top" Margin="15">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 ,0,0,10"
+                                DockPanel.Dock="Top">
+                        <Label FontSize="20" Foreground="Black">Кол.во позиций:</Label>
+                        <Label FontSize="20" Foreground="Black">15</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Top">
+                        <Label FontWeight="Bold" FontSize="20" Foreground="Black">Биржа:</Label>
+                        <Label FontSize="20" Foreground="Black">Bybit</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Top">
+                        <Label FontWeight="Bold" FontSize="20" Foreground="Black">Валюта</Label>
+                        <Label FontSize="20" Foreground="Black">BTCUSDT</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Top">
+                        <Label FontWeight="Bold" FontSize="20" Foreground="Black">PNL</Label>
+                        <Label FontSize="20" Foreground="Black">15%</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Top">
+                        <Label  FontWeight="Bold" FontSize="20" Foreground="Black">Объем</Label>
+                        <Label FontSize="20" Foreground="Black">15$</Label>
+                    </StackPanel>
+                    </StackPanel>
+                    <Button Margin="30,10"
+                            DockPanel.Dock="Bottom">Следующая позиция</Button>
+                </DockPanel>
+            </materialDesign:Card>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Button Margin="10"
+                    Width="200"
+                    Background="Transparent"
+                    BorderBrush="DarkRed"
+                    Foreground="DarkRed">
+                Закрыть текущую
+            </Button>
+            <Button Margin="10" 
+                    Background="DarkRed"
+                    BorderBrush="DarkRed">
+                Закрыть все
+            </Button>
+        </DockPanel>
+        <DockPanel Margin="10" LastChildFill="False">
+            <Label DockPanel.Dock="Top"
+                   Foreground="Black" 
+                   FontWeight="Bold"
+                   FontSize="20">Главное меню:</Label>
+            <Button DockPanel.Dock="Top"
+                    Background="Transparent"
+                    Foreground="Black"
+                    Margin="10">
+                Курсы валют
+            </Button>
+            <Button DockPanel.Dock="Top"
+                    Background="Transparent"
+                    Foreground="Black"
+                    Margin="10">
+                Графики бирж
+            </Button>
+            <Button DockPanel.Dock="Top"
+                    Background="Transparent"
+                    Foreground="Black"
+                    Margin="10">
+                Торговля
+            </Button>
+            <Button DockPanel.Dock="Top" 
+                    Background="Transparent"
+                    Foreground="Black"
+                    Margin="10">
+                Настройки
+            </Button>
+        </DockPanel>
     </DockPanel>
 </Window>

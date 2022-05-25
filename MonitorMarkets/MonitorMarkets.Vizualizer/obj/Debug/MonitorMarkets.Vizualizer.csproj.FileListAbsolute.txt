@@ -28,3 +28,5 @@ C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizual
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\Resources\MenuLibrary\ListOfCoins.baml
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ExampleWindow.g.cs
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ExampleWindow.baml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\Resources\GeneralSettings.g.cs
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\Resources\GeneralSettings.baml
