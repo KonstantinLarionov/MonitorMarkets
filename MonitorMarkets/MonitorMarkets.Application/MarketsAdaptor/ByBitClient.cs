@@ -102,7 +102,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #region [Account]
         public Objects.Responses.CancelOrderResponse GetCancelOrder(string symbol)
         {
-            var cancelOrder = new CancelOrderRequest(symbol, null);
+            var cancelOrder = new CancelOrderRequest(symbol, orderFilter: OrderFilterType.Order);
             var request = m_RequestArranger.Arrange(cancelOrder);
             string response = string.Empty;
             CancelOrderResponse response_obj = null;
@@ -112,7 +112,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleCancelOrderResponse(response);
-                response_unt = 
+                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.RetCode, response_obj.RetMsg,
+                    new CancelOrderData(response_obj.Result.OrderId));
 
                 return response_unt;
             }

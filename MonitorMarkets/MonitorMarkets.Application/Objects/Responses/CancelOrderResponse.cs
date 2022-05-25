@@ -5,14 +5,14 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class CancelOrderResponse
     {
-        public CancelOrderResponse(string retCode, string retMsg, IReadOnlyList<CancelOrderData> result)
+        public CancelOrderResponse(string code, string msg, CancelOrderData data)
         {
-            RetCode = retCode;
-            RetMsg = retMsg;
-            Result = result;
+            Code = code;
+            Msg = msg;
+            Data = data;
         }
-        public string RetCode { get; }
-        public string RetMsg { get; }
-        public IReadOnlyList<CancelOrderData> Result { get; }
+        public string Code { get; }
+        public string Msg { get; }
+        public CancelOrderData Data { get; }
     }
 }

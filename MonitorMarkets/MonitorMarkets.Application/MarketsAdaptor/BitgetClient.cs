@@ -263,8 +263,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleCancelOrderResponse(response);
-                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Code, response_obj.Msg,
-                    new CancelOrderData(response_obj.Data.OrderId, response_obj.Data.ClientOid));
+                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Code, response_obj.Msg, new CancelOrderData(response_obj.Data.OrderId));
                 
                 return response_unt;
             }

@@ -4,12 +4,10 @@ namespace MonitorMarkets.Application.Objects.Data
 {
     public class CancelOrderData
     {
-        public CancelOrderData(string orderId, string clientOid)
+        public CancelOrderData(string orderId)
         {
             OrderId = orderId;
-            ClientOid = clientOid;
         }
         public string OrderId { get; set; }
-        public string ClientOid { get; set; }
     }
 }
