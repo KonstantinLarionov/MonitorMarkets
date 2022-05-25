@@ -1,18 +1,13 @@
-﻿using System.Collections.Generic;
-using MonitorMarkets.Application.Objects.Data;
+﻿using Newtonsoft.Json.Serialization;
 
 namespace MonitorMarkets.Application.Objects.Responses
 {
     public class CancelOrderResponse
     {
-        public CancelOrderResponse(string code, string msg, CancelOrderData data)
+        public CancelOrderResponse(string orderId)
         {
-            Code = code;
-            Msg = msg;
-            Data = data;
+            OrderId = orderId;
         }
-        public string Code { get; }
-        public string Msg { get; }
-        public CancelOrderData Data { get; }
+        public string OrderId { get; set; }
     }
 }

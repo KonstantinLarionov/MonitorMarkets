@@ -3,9 +3,9 @@ using BybitMapper.UsdcPerpetual.RestV2.Data.ObjectDTO.Account.Positions;
 
 namespace MonitorMarkets.Application.Objects.Responses
 {
-    public class QueryMyPositionsResponse
+    public class MyPositionsResponse
     {
-        public QueryMyPositionsResponse(string symbol, double price, decimal amount)
+        public MyPositionsResponse(string symbol, double price, decimal amount)
         {
             Symbol = symbol;
             Price = price;

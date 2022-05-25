@@ -414,7 +414,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         public OrderBookResponse GetOrderBookResponse()
         {
         }
-        public QueryKlineResponse GetKlineResponse()
+        public KlineResponse GetKlineResponse()
         {
         }
 
@@ -426,11 +426,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         {
         }
 
-        public QueryUnfilledResponse GetUnfilledResponse()
+        public UnfilledResponse GetUnfilledResponse()
         {
         }
 
-        public QueryOrderHistoryResponse GetOrderHistoryResponse()
+        public OrderHistoryResponse GetOrderHistoryResponse()
         {
         }
 
@@ -442,7 +442,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         {
         }
 
-        public QueryMyPositionsResponse GetMyPositionsResponse()
+        public MyPositionsResponse GetMyPositionsResponse()
         {
         }
 

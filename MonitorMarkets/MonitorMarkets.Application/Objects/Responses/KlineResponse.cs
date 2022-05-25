@@ -4,9 +4,9 @@ using System;
 
 namespace MonitorMarkets.Application.Objects.Responses
 {
-    public class QueryKlineResponse
+    public class KlineResponse
     {
-        public QueryKlineResponse(DateTime startTime, double openPrice, double closePrice, double highPrice, double lowPrice, decimal volume)
+        public KlineResponse(DateTime startTime, double openPrice, double closePrice, double highPrice, double lowPrice, decimal volume)
         {
             StartTime = startTime;
             OpenPrice = openPrice;

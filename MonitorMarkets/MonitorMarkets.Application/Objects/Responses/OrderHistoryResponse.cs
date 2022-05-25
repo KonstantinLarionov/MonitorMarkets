@@ -5,9 +5,9 @@ using MonitorMarkets.Application.Objects.Data.Enums;
 
 namespace MonitorMarkets.Application.Objects.Responses
 {
-    public class QueryOrderHistoryResponse
+    public class OrderHistoryResponse
     {
-        public QueryOrderHistoryResponse(string symbol, string id, OrderActionEnum direction, double price, decimal originalAmount
+        public OrderHistoryResponse(string symbol, string id, OrderActionEnum direction, double price, decimal originalAmount
         , decimal remainAmount, long moment, OrderTypeEnum type, TriggerTypeEnum triggerType, OrderStateEnum state)
         {
             Symbol = symbol;

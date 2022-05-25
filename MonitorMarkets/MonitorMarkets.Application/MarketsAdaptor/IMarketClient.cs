@@ -7,18 +7,18 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #region [Public]
         ContractInfoResponse GetContractInfo();
         OrderBookResponse GetOrderBookResponse();
-        QueryKlineResponse GetKlineResponse();
+        KlineResponse GetKlineResponse();
         #endregion
 
         #region [Private]
 
         PlaceOrderResponse GetPlaceOrderResponse();
         PlaceOrderResponse GetCancelOrderResponse();
-        QueryUnfilledResponse GetUnfilledResponse();
-        QueryOrderHistoryResponse GetOrderHistoryResponse();
+        UnfilledResponse GetUnfilledResponse();
+        OrderHistoryResponse GetOrderHistoryResponse();
         TradeHistoryResponse GetTradeHistoryResponse();
         WalletInfoResponse GetWalletInfoResponse();
-        QueryMyPositionsResponse GetMyPositionsResponse();
+        MyPositionsResponse GetMyPositionsResponse();
 
         #endregion
     }

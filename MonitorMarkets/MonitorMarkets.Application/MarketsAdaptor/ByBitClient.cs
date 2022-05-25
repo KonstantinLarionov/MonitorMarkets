@@ -29,6 +29,7 @@ using SideType = BybitMapper.UsdcPerpetual.RestV2.Data.Enums.SideType;
 using TradeHistoryResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.TradeHistoryResponse;
 using WalletInfoResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Account.WalletInfoResponse;
 using MonitorMarkets.Application.Extensions;
+using MonitorMarkets.Application.Objects.Data.Enums;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
@@ -164,13 +165,13 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             return null;
         }
-        public Objects.Responses.QueryKlineResponse GetKlineResponse(string symbol, IntervalType period, DateTime startTime)
+        public Objects.Responses.KlineResponse GetKlineResponse(string symbol, IntervalType period, DateTime startTime)
         {
             var request_prep = new QueryKlineRequest(symbol, period, startTime);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryKlineResponse response_obj = null;
-            Objects.Responses.QueryKlineResponse response_unt = null;
+            Objects.Responses.KlineResponse response_unt = null;
 
             try
             {
@@ -179,7 +180,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
                 foreach (var item in response_obj.Result)
                 {
-                    response_unt = new Objects.Responses.QueryKlineResponse(FromUnixMilliseconds(item.OpenTime), item.Close, item.High, item.Low, item.Volume);
+                    response_unt = new Objects.Responses.KlineResponse(FromUnixMilliseconds(item.OpenTime), item.Close, item.High, item.Low, item.Volume);
                     return response_unt;
 
                 }
@@ -187,13 +188,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             catch (Exception ex)    
             {
                 return null;
-                
             }
-
             return null;
-
         }
-        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse()
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderType orderType, OrderFilterType orderFilter, SideType side, decimal orderQty, OrderMarkerEnum orderMarker)
         {
             var request_prep = new PlaceOrderRequest(symbol, orderType, orderFilter, side, orderQty);
             var request = m_RequestArranger.Arrange(request_prep);
@@ -205,7 +203,17 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
-                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId);
+                OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                if (response_obj.Result.SideType == SideType.Buy)
+                {
+                    orderAction = OrderActionEnum.Buy;
+                }
+                if (response_obj.Result.SideType == SideType.Sell)
+                {
+                    orderAction = OrderActionEnum.Sell;
+                }
+
+                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId, response_obj.Result.OrderPrice, response_obj.Result.OrderQty, orderAction, orderMarker);
 
                 return response_unt;
 
@@ -218,7 +226,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
-        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse()
+        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse(string symbol, OrderFilterType orderFilter)
         {
             var cancelOrder = new CancelOrderRequest(symbol, orderFilter: OrderFilterType.Order);
             var request = m_RequestArranger.Arrange(cancelOrder);
@@ -230,8 +238,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleCancelOrderResponse(response);
-                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.RetCode, response_obj.RetMsg,
-                    new CancelOrderData(response_obj.Result.OrderId));
+                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Result.OrderId);
 
                 return response_unt;
             }
@@ -243,20 +250,19 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
-        public QueryUnfilledResponse GetUnfilledResponse()
+        public Objects.Responses.UnfilledResponse GetUnfilledResponse(CategoryType category)
         {
             var request_prep = new QueryUnfilledRequest(category);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryUnfilledResponse response_obj = null;
-            Objects.Responses.QueryUnfilledResponse response_unt = null;
+            Objects.Responses.UnfilledResponse response_unt = null;
             
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryUnfilledResponse(response);
-                response_unt = new Objects.Responses.QueryUnfilledResponse(response_obj.Result.ResultTotalSize,
-                    response_obj.Result.Cursor, response_obj.Result.DataList);
+                response_unt = new Objects.Responses.UnfilledResponse();
 
                 return response_unt;
             }
@@ -267,20 +273,30 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
-        public QueryOrderHistoryResponse GetOrderHistoryResponse()
+        public Objects.Responses.OrderHistoryResponse GetOrderHistoryResponse(CategoryType category)
         {
             var request_prep = new QueryOrderHistoryRequest(category);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryOrderHistoryResponse response_obj = null;
-            Objects.Responses.QueryOrderHistoryResponse response_unt = null;
+            Objects.Responses.OrderHistoryResponse response_unt = null;
             
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryOrderHistoryResponse(response);
-                response_unt = new Objects.Responses.QueryOrderHistoryResponse(response_obj.Result.ResultTotalSize, response_obj.Result.Cursor, response_obj.Result.DataList);
+                
+                foreach (var item in response_obj.Result.DataList)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    var type = OrderActionEnum.Unknown;
+                    if (TryGetOrderState(item.OrderType, out type)) { }
 
+                    decimal remain_amount = item.Qty;
+                    response_unt = new Objects.Responses.OrderHistoryResponse(item.Symbol, item.OrderId, orderAction, item.Price, item.Qty, remain_amount, item.CreatedAt, item.OrderType, TriggerTypeEnum.LastPrice, type);
+                    return response_unt;
+
+                }
                 return response_unt;
             }
             catch (Exception ex)    
@@ -346,13 +362,13 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryMyPositionsResponse response_obj = null;
-            Objects.Responses.QueryMyPositionsResponse response_unt = null;
+            Objects.Responses.MyPositionsResponse response_unt = null;
             
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryMyPositionsResponse(response);
-                response_unt = new Objects.Responses.QueryMyPositionsResponse(response_obj.Result.ResultTotalSize,
+                response_unt = new Objects.Responses.MyPositionsResponse(response_obj.Result.ResultTotalSize,
                     response_obj.Result.Cursor, response_obj.Result.DataList);
 
                 return response_unt;
@@ -365,6 +381,27 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         }
         
+        
+        /// <summary>
+        /// Mapper to internal type
+        /// </summary>
+        bool TryGetOrderState(OrderType in_type, out OrderActionEnum out_type)
+        {
+            out_type = OrderActionEnum.Unknown;
+            switch (in_type)
+            {
+                case OrderType.Limit:
+                    out_type = OrderActionEnum.Buy;
+                    return true;
+                case OrderType.Market:
+                    out_type = OrderActionEnum.Sell;
+                    return true;
+
+                default:
+                    out_type = OrderActionEnum.Unknown;
+                    return false;
+            }
+        }
         #endregion
     }
 }
