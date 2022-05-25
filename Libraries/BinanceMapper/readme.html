@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>BFNXMapper readme</title>
+    <link rel="stylesheet" type="text/css" href="http://csharpindepth.com/codestyles.css">
+    <style>
+        details {
+            overflow: hidden;
+            background: #eaeaea;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+            details summary {
+                cursor: pointer;
+                padding: 10px;
+            }
+
+            details div {
+                float: left;
+                width: 65%;
+            }
+
+        body {
+            padding-left: 1.5%;
+        }
+
+        p {
+            margin-left: 1%;
+            font-size: 14px;
+        }
+
+        .paragraph {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h4>Документация к библиотеке BinanceMapper</h4>
+
+    <h4>Основные отличия от BFNXMapper'а</h4>
+
+    <p>1) Отсутствие контейнеров</p>
+    <p>
+        Хэндлеры возвращают объект конечного типа (либо массив таких объектов).<br/>
+        Предполагается, что конечный тип всегда известен пользователю.
+    </p>
+
+<p>2) Вебсокеты</p>
+
+    <p>
+        В API отсутствует понятие каналов и подписок. Вебсокет-соединение определяет все передаваемые данные при подключении
+        и является "иммутабельным".
+    </p>
+
+    <p>
+    2.1) По аутентифицированному каналу приходят данные типа UserStreamEvent, конечный тип которых определяется<br />
+    по полю EventType перечислимого типа UserStreamEventType (в xml приведены соответствующие классы).<br />
+    Для подключения создайте тип BinanceMapper.V1.UserStream.Streams.UserStreamData и используйте сво-во EndPoint
+    </p>
+
+    <p>
+    2.2) Для одиночных вебсокетов тип получаемой информации считается известным пользователю.<br />
+    Для подключения создайте тип BinanceMapper.V1.Websocket.Streams.StreamCommand, передав в конструктор нужный объект<br />
+    типа-наследника StreamData (пространство имён BinanceMapper.V1.Websocket.Streams; все, кроме StreamCommand и StreamData),<br />
+    и используйте сво-во EndPoint
+    </p>
+
+    <p>
+    2.3) Работа с комбинированными вебсокетами производится следующим образом:<br />
+    Для подключения создайте тип BinanceMapper.V1.Websocket.Streams.StreamCommand, передав в конструктор IEnumerable&lt;StreamData&gt;.<br />
+    Для обработки поступающих данных создайте CombinedStreamEventHandler (используя фабрику или композицию вебсокетов), передав в качестве аргумента<br />
+    объекты типа StreamData, которые использовались для подписки. Результатом работы CombinedStreamEventHandler'а будет объект типа CombinedStreamEvent.<br />
+    В сво-ве Data (типа object) будут находится данные, в сво-ве Stream - соответствующий объект StreamData. Для определения типа данных, находящихся в Data,<br />
+    а также конкретного типа StreamData при необходимости, используйте сво-во EventType типа WebsocketEventType (в xml приведены соответствующие классы).
+    </p>
+
+<p>
+    Заметка: классы-наследники StreamData, требующие инструмент в качестве аргумента, могут получать его в любом кейсе, т.к. внутри всё равно будут преобразованы к lowercase.
+</p>
+
+<p>
+    3) Создание рест-запросов<br />
+    Для подготовки запросов служит класс BinanceMapper.Requests.RequestArranger (один для всех типов апи).<br />
+    Конструктор класса имеет необязательный параметр timestampFactory типа Func&lt;long&gt;,<br />
+    позволяющий задать способ расчёта timestamp'а запросов (по умолчанию DateTimeOffset.UtcNow.ToUnixTimeMilliseconds).<br />
+    Также класс имеет два свойства: TimestampShiftInMilliseconds и ActualityWindow.<br />
+    Первое служит для динамического сдвига таймстампа для приведения ко времени сервера.<br />
+    Второе упоминается в документации binance как recvWindow. Запросы, пришедшие позже timestamp + recvWindow будут отклонены сервером.<br />
+</p>
+
+<p>
+    4) Класс BinanceMapper.V3.Rest.Requests.NewOrderRequest, служащий для выставления заявок, не имеет публичного конструктора.<br />
+    Вместо этого он реализует ряд статических конструкторов для каждого типа заявки. Это сделано для удобства использования, но<br />
+    если будет неудобно/непривычно - можно вернуть стандартный вариант.
+</p>
+
+</body>
+</html>
