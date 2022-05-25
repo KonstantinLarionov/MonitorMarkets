@@ -289,11 +289,15 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 foreach (var item in response_obj.Result.DataList)
                 {
                     OrderActionEnum orderAction = OrderActionEnum.Unknown;
-                    var type = OrderActionEnum.Unknown;
-                    if (TryGetOrderState(item.OrderType, out type)) { }
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
+                    OrderTypeEnum orderState = OrderTypeEnum.Unknown;
+                    if (TryGetOrderType(item.OrderType, out orderState)) { }
+                    OrderStateEnum orderType = OrderStateEnum.None;
+                    if (TryGetOrderState(item.OrderStatusType, out orderType)) { }
 
                     decimal remain_amount = item.Qty;
-                    response_unt = new Objects.Responses.OrderHistoryResponse(item.Symbol, item.OrderId, orderAction, item.Price, item.Qty, remain_amount, item.CreatedAt, item.OrderType, TriggerTypeEnum.LastPrice, type);
+                    
+                    response_unt = new Objects.Responses.OrderHistoryResponse(item.Symbol, item.OrderId, orderAction, item.Price, item.Qty, remain_amount, item.CreatedAt, orderState, TriggerTypeEnum.LastPrice, orderType);
                     return response_unt;
 
                 }
@@ -385,15 +389,15 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         /// <summary>
         /// Mapper to internal type
         /// </summary>
-        bool TryGetOrderState(OrderType in_type, out OrderActionEnum out_type)
+        bool TryGetOrderAction(SideType in_type, out OrderActionEnum out_type)
         {
             out_type = OrderActionEnum.Unknown;
             switch (in_type)
             {
-                case OrderType.Limit:
+                case SideType.Buy:
                     out_type = OrderActionEnum.Buy;
                     return true;
-                case OrderType.Market:
+                case SideType.Sell:
                     out_type = OrderActionEnum.Sell;
                     return true;
 
@@ -402,6 +406,58 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     return false;
             }
         }
+        bool TryGetOrderType(OrderType in_type, out OrderTypeEnum out_type)
+        {
+            out_type = OrderTypeEnum.Unknown;
+            switch (in_type)
+            {
+                case OrderType.Limit:
+                    out_type = OrderTypeEnum.Limit;
+                    return true;
+                case OrderType.Market:
+                    out_type = OrderTypeEnum.Market;
+                    return true;
+
+                default:
+                    out_type = OrderTypeEnum.Unknown;
+                    return false;
+            }
+        }
+        bool TryGetOrderState(OrderStatusType in_type, out OrderStateEnum out_type)
+        {
+            switch (in_type)
+            {
+                case OrderStatusType.None:
+                    out_type = OrderStateEnum.None;
+                    return true;
+                case OrderStatusType.Created:
+                    out_type = OrderStateEnum.Opened;
+                    return true;
+                case OrderStatusType.Rejected:
+                    out_type = OrderStateEnum.Removed;
+                    return true;
+                case OrderStatusType.New:
+                    out_type = OrderStateEnum.Opened;
+                    return true;
+                case OrderStatusType.PartiallyFilled:
+                    out_type = OrderStateEnum.Partial;
+                    return true;
+                case OrderStatusType.Filled:
+                    out_type = OrderStateEnum.Filled;
+                    return true;
+                case OrderStatusType.Cancelled:
+                    out_type = OrderStateEnum.CancelFailed;
+                    return true;
+
+                case OrderStatusType.PendingCancel:
+                    out_type = OrderStateEnum.Opened;
+                    return true;
+                default:
+                    out_type = OrderStateEnum.None;
+                    return false;
+            }
+        }
+
         #endregion
     }
 }

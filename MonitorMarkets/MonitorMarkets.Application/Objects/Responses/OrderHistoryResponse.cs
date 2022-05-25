@@ -7,7 +7,7 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class OrderHistoryResponse
     {
-        public OrderHistoryResponse(string symbol, string id, OrderActionEnum direction, double price, decimal originalAmount
+        public OrderHistoryResponse(string symbol, string id, OrderActionEnum direction, decimal price, decimal originalAmount
         , decimal remainAmount, long moment, OrderTypeEnum type, TriggerTypeEnum triggerType, OrderStateEnum state)
         {
             Symbol = symbol;
@@ -24,7 +24,7 @@ namespace MonitorMarkets.Application.Objects.Responses
         public string Symbol { get; set; }
         public string Id { get; set; }
         public OrderActionEnum Direction { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public decimal OriginalAmount { get; set; }
         public decimal RemainAmount { get; set; }
         public long Moment { get; set; }
