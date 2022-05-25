@@ -5,15 +5,15 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class QueryMyPositionsResponse
     {
-        public QueryMyPositionsResponse(int resultTotalSize, string cursor,
-            IReadOnlyList<QueryMyPositionsData> dataList)
+        public QueryMyPositionsResponse(string symbol, double price, decimal amount)
         {
-            ResultTotalSize = resultTotalSize;
-            Cursor = cursor;
-            DataList = dataList;
+            Symbol = symbol;
+            Price = price;
+            Amount = amount;
+
         }
-        public int ResultTotalSize { get; set; }
-        public string Cursor { get; set; }
-        public IReadOnlyList<QueryMyPositionsData> DataList { get; set; }
+        public string Symbol { get; set; }
+        public double Price { get; set; }
+        public decimal Amount { get; set; }
     }
 }

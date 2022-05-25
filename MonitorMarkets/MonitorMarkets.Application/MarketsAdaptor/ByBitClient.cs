@@ -5,6 +5,7 @@ using BybitMapper.Requests;
 using BybitMapper.UsdcPerpetual.RestV2;
 using BybitMapper.UsdcPerpetual.RestV2.Data.Enums;
 using BybitMapper.UsdcPerpetual.RestV2.Data.ObjectDTO.Account.Account;
+using BybitMapper.UsdcPerpetual.RestV2.Data.ObjectDTO.Market;
 using BybitMapper.UsdcPerpetual.RestV2.Requests.Account.Order;
 using BybitMapper.UsdcPerpetual.RestV2.Requests.Account.Positions;
 using BybitMapper.UsdcPerpetual.RestV2.Requests.Account.Wallet;
@@ -14,6 +15,7 @@ using MonitorMarkets.Application.Objects.Data;
 using MonitorMarkets.Application.Objects.Responses;
 using RestSharp;
 using CancelOrderResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.CancelOrderResponse;
+using ContractInfoData = MonitorMarkets.Application.Objects.Data.ContractInfoData;
 using IntervalType = BybitMapper.UsdcPerpetual.RestV2.Data.Enums.IntervalType;
 using OrderBookRequest = BybitMapper.UsdcPerpetual.RestV2.Requests.Market.OrderBookRequest;
 using OrderBookResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Market.OrderBookResponse;
@@ -26,6 +28,7 @@ using QueryUnfilledResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account
 using SideType = BybitMapper.UsdcPerpetual.RestV2.Data.Enums.SideType;
 using TradeHistoryResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Order.TradeHistoryResponse;
 using WalletInfoResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Account.WalletInfoResponse;
+using MonitorMarkets.Application.Extensions;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
@@ -99,183 +102,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         
         #region [Request]
 
-        #region [Account]
-        public Objects.Responses.CancelOrderResponse GetCancelOrder(string symbol)
-        {
-            var cancelOrder = new CancelOrderRequest(symbol, orderFilter: OrderFilterType.Order);
-            var request = m_RequestArranger.Arrange(cancelOrder);
-            string response = string.Empty;
-            CancelOrderResponse response_obj = null;
-            Objects.Responses.CancelOrderResponse response_unt = null;
-            
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = m_HandlerComposition.HandleCancelOrderResponse(response);
-                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.RetCode, response_obj.RetMsg,
-                    new CancelOrderData(response_obj.Result.OrderId));
-
-                return response_unt;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-
-            return null;
-        }
-
-        public Objects.Responses.PlaceOrderResponse PlaceOrderRequest(string symbol, OrderType orderType, OrderFilterType orderFilter,
-            SideType side, decimal orderQty)
-        {
-            var request_prep = new PlaceOrderRequest(symbol, orderType, orderFilter, side, orderQty);
-            var request = m_RequestArranger.Arrange(request_prep);
-            string response = string.Empty;
-            PlaceOrderResponse response_obj = null;
-            Objects.Responses.PlaceOrderResponse response_unt = null;
-            
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
-                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId);
-
-                return response_unt;
-
-            }
-            catch (Exception ex)    
-            {
-                return null;
-            }
-
-            return null;
-        }
-
-        public Objects.Responses.QueryOrderHistoryResponse QueryOrderHistoryRequest(CategoryType category, long time)
-        {
-            var request_prep = new QueryOrderHistoryRequest(category);
-            var request = m_RequestArranger.Arrange(request_prep);
-            string response = string.Empty;
-            QueryOrderHistoryResponse response_obj = null;
-            Objects.Responses.QueryOrderHistoryResponse response_unt = null;
-            
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = m_HandlerComposition.HandleQueryOrderHistoryResponse(response);
-                response_unt = new Objects.Responses.QueryOrderHistoryResponse(response_obj.Result.ResultTotalSize, response_obj.Result.Cursor, response_obj.Result.DataList);
-
-                return response_unt;
-            }
-            catch (Exception ex)    
-            {
-                return null;
-            }
-
-            return null;
-        }
-
-        public Objects.Responses.QueryUnfilledResponse QueryUnfilledRequest(CategoryType category)
-        {
-            var request_prep = new QueryUnfilledRequest(category);
-            var request = m_RequestArranger.Arrange(request_prep);
-            string response = string.Empty;
-            QueryUnfilledResponse response_obj = null;
-            Objects.Responses.QueryUnfilledResponse response_unt = null;
-            
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = m_HandlerComposition.HandleQueryUnfilledResponse(response);
-                response_unt = new Objects.Responses.QueryUnfilledResponse(response_obj.Result.ResultTotalSize,
-                    response_obj.Result.Cursor, response_obj.Result.DataList);
-
-                return response_unt;
-            }
-            catch (Exception ex)    
-            {
-                return null;
-            }
-            return null;
-        }
-
-        public Objects.Responses.TradeHistoryResponse TradeHistoryRequest(CategoryType category, DateTime startTime, int limit)
-        {
-            var request_prep = new TradeHistoryRequest(category, limit);
-            var request = m_RequestArranger.Arrange(request_prep);
-            string response = string.Empty;
-            TradeHistoryResponse response_obj = null;
-            Objects.Responses.TradeHistoryResponse response_unt = null;
-            
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = m_HandlerComposition.HandleTradeHistoryResponse(response);
-                response_unt = new Objects.Responses.TradeHistoryResponse(response_obj.Result.ResultTotalSize,
-                    response_obj.Result.Cursor, response_obj.Result.DataList);
-                    
-
-                return response_unt;
-            }
-            catch (Exception ex)    
-            {
-                return null;
-            }
-            return null;
-        }
-
-        public Objects.Responses.QueryMyPositionsResponse QueryMyPositionsRequest(CategoryType category)
-        {
-            var request_prep = new QueryMyPositionsRequest(category);
-            var request = m_RequestArranger.Arrange(request_prep);
-            string response = string.Empty;
-            QueryMyPositionsResponse response_obj = null;
-            Objects.Responses.QueryMyPositionsResponse response_unt = null;
-            
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = m_HandlerComposition.HandleQueryMyPositionsResponse(response);
-                response_unt = new Objects.Responses.QueryMyPositionsResponse(response_obj.Result.ResultTotalSize,
-                    response_obj.Result.Cursor, response_obj.Result.DataList);
-
-                return response_unt;
-            }
-            catch (Exception ex)    
-            {
-                return null;
-            }
-            return null;
-        }
-
-        public Objects.Responses.WalletInfoResponse WalletInfoRequest()
-        {
-            var request_prep = new WalletInfoRequest();
-            var request = m_RequestArranger.Arrange(request_prep);
-            string response = string.Empty;
-            WalletInfoResponse response_obj = null;
-            Objects.Responses.WalletInfoResponse response_unt = null;
-            
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = m_HandlerComposition.HandleWalletInfoResponse(response);
-                response_unt = new Objects.Responses.WalletInfoResponse(response_obj.RetCode, response_obj.RetMsg,
-                    response_obj.ExtCode, response_obj.ExtInfo, response_obj.Result);
-
-                return response_unt;
-            }
-            catch (Exception ex)    
-            {
-                return null;
-            }
-            return null;
-        }
-        
-        #endregion
-
-        #region [Market]
-
         public Objects.Responses.ContractInfoResponse GetContractInfo()
         {
             var request_prep = new ContractInfoRequest();
@@ -311,8 +137,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }   
-
-        public Objects.Responses.OrderBookResponse OrderBookRequest(string symbol)
+        
+        
+        public Objects.Responses.OrderBookResponse GetOrderBookResponse(string symbol)
         {
             var request_prep = new OrderBookRequest(symbol);
             var request = m_RequestArranger.Arrange(request_prep);
@@ -324,20 +151,20 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleOrderBookResponse(response);
-                response_unt = new Objects.Responses.OrderBookResponse(response_obj.RetCode, response_obj.RetMsg, response_obj.Result);
 
-                return response_unt;
+                foreach (var item in response_obj.Result)
+                {
+                    response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
+                    return response_unt;
+                }
             }
             catch (Exception ex)    
             {
                 return null;
-                
             }
-
             return null;
         }
-
-        public Objects.Responses.QueryKlineResponse QueryKlineRequest(string symbol, IntervalType period, DateTime startTime)
+        public Objects.Responses.QueryKlineResponse GetKlineResponse(string symbol, IntervalType period, DateTime startTime)
         {
             var request_prep = new QueryKlineRequest(symbol, period, startTime);
             var request = m_RequestArranger.Arrange(request_prep);
@@ -349,10 +176,13 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryKlineResponse(response);
-                response_unt = new Objects.Responses.QueryKlineResponse(response_obj.RetCode, response_obj.RetMsg,
-                    response_obj.Result);
 
-                return response_unt;
+                foreach (var item in response_obj.Result)
+                {
+                    response_unt = new Objects.Responses.QueryKlineResponse(FromUnixMilliseconds(item.OpenTime), item.Close, item.High, item.Low, item.Volume);
+                    return response_unt;
+
+                }
             }
             catch (Exception ex)    
             {
@@ -361,12 +191,180 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
+
         }
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse()
+        {
+            var request_prep = new PlaceOrderRequest(symbol, orderType, orderFilter, side, orderQty);
+            var request = m_RequestArranger.Arrange(request_prep);
+            string response = string.Empty;
+            PlaceOrderResponse response_obj = null;
+            Objects.Responses.PlaceOrderResponse response_unt = null;
+            
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
+                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId);
 
-        #endregion
+                return response_unt;
+
+            }
+            catch (Exception ex)    
+            {
+                return null;
+            }
+
+            return null;
+
+        }
+        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse()
+        {
+            var cancelOrder = new CancelOrderRequest(symbol, orderFilter: OrderFilterType.Order);
+            var request = m_RequestArranger.Arrange(cancelOrder);
+            string response = string.Empty;
+            CancelOrderResponse response_obj = null;
+            Objects.Responses.CancelOrderResponse response_unt = null;
+            
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = m_HandlerComposition.HandleCancelOrderResponse(response);
+                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.RetCode, response_obj.RetMsg,
+                    new CancelOrderData(response_obj.Result.OrderId));
+
+                return response_unt;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return null;
+
+        }
+        public QueryUnfilledResponse GetUnfilledResponse()
+        {
+            var request_prep = new QueryUnfilledRequest(category);
+            var request = m_RequestArranger.Arrange(request_prep);
+            string response = string.Empty;
+            QueryUnfilledResponse response_obj = null;
+            Objects.Responses.QueryUnfilledResponse response_unt = null;
+            
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = m_HandlerComposition.HandleQueryUnfilledResponse(response);
+                response_unt = new Objects.Responses.QueryUnfilledResponse(response_obj.Result.ResultTotalSize,
+                    response_obj.Result.Cursor, response_obj.Result.DataList);
+
+                return response_unt;
+            }
+            catch (Exception ex)    
+            {
+                return null;
+            }
+            return null;
+
+        }
+        public QueryOrderHistoryResponse GetOrderHistoryResponse()
+        {
+            var request_prep = new QueryOrderHistoryRequest(category);
+            var request = m_RequestArranger.Arrange(request_prep);
+            string response = string.Empty;
+            QueryOrderHistoryResponse response_obj = null;
+            Objects.Responses.QueryOrderHistoryResponse response_unt = null;
+            
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = m_HandlerComposition.HandleQueryOrderHistoryResponse(response);
+                response_unt = new Objects.Responses.QueryOrderHistoryResponse(response_obj.Result.ResultTotalSize, response_obj.Result.Cursor, response_obj.Result.DataList);
+
+                return response_unt;
+            }
+            catch (Exception ex)    
+            {
+                return null;
+            }
+
+            return null;
+
+        }
+        public TradeHistoryResponse GetTradeHistoryResponse()
+        {
+            var request_prep = new TradeHistoryRequest(category, limit);
+            var request = m_RequestArranger.Arrange(request_prep);
+            string response = string.Empty;
+            TradeHistoryResponse response_obj = null;
+            Objects.Responses.TradeHistoryResponse response_unt = null;
+            
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = m_HandlerComposition.HandleTradeHistoryResponse(response);
+                response_unt = new Objects.Responses.TradeHistoryResponse(response_obj.Result.ResultTotalSize,
+                    response_obj.Result.Cursor, response_obj.Result.DataList);
+                    
+
+                return response_unt;
+            }
+            catch (Exception ex)    
+            {
+                return null;
+            }
+            return null;
+
+        }
+        public WalletInfoResponse GetWalletInfoResponse()
+        {
+            var request_prep = new WalletInfoRequest();
+            var request = m_RequestArranger.Arrange(request_prep);
+            string response = string.Empty;
+            WalletInfoResponse response_obj = null;
+            Objects.Responses.WalletInfoResponse response_unt = null;
+            
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = m_HandlerComposition.HandleWalletInfoResponse(response);
+                response_unt = new Objects.Responses.WalletInfoResponse(response_obj.RetCode, response_obj.RetMsg,
+                    response_obj.ExtCode, response_obj.ExtInfo, response_obj.Result);
+
+                return response_unt;
+            }
+            catch (Exception ex)    
+            {
+                return null;
+            }
+            return null;
+
+        }
+        public QueryMyPositionsResponse GetMyPositionsResponse()
+        {
+            var request_prep = new QueryMyPositionsRequest(category);
+            var request = m_RequestArranger.Arrange(request_prep);
+            string response = string.Empty;
+            QueryMyPositionsResponse response_obj = null;
+            Objects.Responses.QueryMyPositionsResponse response_unt = null;
+            
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = m_HandlerComposition.HandleQueryMyPositionsResponse(response);
+                response_unt = new Objects.Responses.QueryMyPositionsResponse(response_obj.Result.ResultTotalSize,
+                    response_obj.Result.Cursor, response_obj.Result.DataList);
+
+                return response_unt;
+            }
+            catch (Exception ex)    
+            {
+                return null;
+            }
+            return null;
+
+        }
         
         #endregion
-
-        
     }
 }

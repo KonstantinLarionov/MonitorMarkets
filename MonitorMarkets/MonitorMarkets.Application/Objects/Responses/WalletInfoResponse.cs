@@ -5,20 +5,14 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class WalletInfoResponse
     {
-        public WalletInfoResponse(int retCode, string retMsg, string extCode, string extInfo,
-            WalletInfoData result)
+        public WalletInfoResponse(string currency, decimal balance, decimal aviailable)
         {
-            RetCode = retCode;
-            RetMsg = retMsg;
-            ExtCode = extCode;
-            ExtInfo = extInfo;
-            Result = result;
+            Currency = currency;
+            Balance = balance;
+            Aviailable = aviailable;
         }
-        public int RetCode { get; }
-        public string RetMsg { get; }
-        public string ExtCode { get; }
-        public string ExtInfo { get; }
-        public WalletInfoData Result { get; set; }
-
+        public string Currency { get; }
+        public decimal Balance { get; }
+        public decimal Aviailable { get; }
     }
 }

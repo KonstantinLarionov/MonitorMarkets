@@ -411,6 +411,41 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
+        public OrderBookResponse GetOrderBookResponse()
+        {
+        }
+        public QueryKlineResponse GetKlineResponse()
+        {
+        }
+
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse()
+        {
+        }
+
+        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse()
+        {
+        }
+
+        public QueryUnfilledResponse GetUnfilledResponse()
+        {
+        }
+
+        public QueryOrderHistoryResponse GetOrderHistoryResponse()
+        {
+        }
+
+        public TradeHistoryResponse GetTradeHistoryResponse()
+        {
+        }
+
+        public WalletInfoResponse GetWalletInfoResponse()
+        {
+        }
+
+        public QueryMyPositionsResponse GetMyPositionsResponse()
+        {
+        }
+
         #endregion
 
         #endregion

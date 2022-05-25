@@ -1,18 +1,26 @@
 ﻿using System.Collections.Generic;
 using BybitMapper.UsdcPerpetual.RestV2.Data.ObjectDTO.Market;
+using System;
 
 namespace MonitorMarkets.Application.Objects.Responses
 {
     public class QueryKlineResponse
     {
-        public QueryKlineResponse(int retCode, string retMsg, IReadOnlyList<QueryKlineData> result)
+        public QueryKlineResponse(DateTime startTime, double openPrice, double closePrice, double highPrice, double lowPrice, decimal volume)
         {
-            RetCode = retCode;
-            RetMsg = retMsg;
-            Result = result;
+            StartTime = startTime;
+            OpenPrice = openPrice;
+            ClosePrice = closePrice;
+            HighPrice = highPrice;
+            LowPrice = lowPrice;
+            Volume = volume;
         }
-        public int RetCode { get; }
-        public string RetMsg { get; }
-        public IReadOnlyList<QueryKlineData> Result { get; }
+        public DateTime StartTime { get; }
+        public double OpenPrice { get; }
+        public double ClosePrice { get; }
+        public double HighPrice { get; }
+        public double LowPrice { get; }
+        public decimal Volume { get; }
+
     }
 }

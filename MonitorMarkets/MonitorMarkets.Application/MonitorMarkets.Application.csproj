@@ -76,12 +76,18 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Extensions\ServerTimeHelper.cs" />
         <Compile Include="MarketsAdaptor\BitgetClient.cs" />
         <Compile Include="MarketsAdaptor\ByBitClient.cs" />
         <Compile Include="MarketsAdaptor\FactoryClientService.cs" />
         <Compile Include="MarketsAdaptor\IMarketClient.cs" />
         <Compile Include="Objects\Data\CancelOrderData.cs" />
         <Compile Include="Objects\Data\ContractInfoData.cs" />
+        <Compile Include="Objects\Data\Enums\OrderActionEnum.cs" />
+        <Compile Include="Objects\Data\Enums\OrderMarkerEnum.cs" />
+        <Compile Include="Objects\Data\Enums\OrderStateEnum.cs" />
+        <Compile Include="Objects\Data\Enums\OrderTypeEnum.cs" />
+        <Compile Include="Objects\Data\Enums\TriggerTypeEnum.cs" />
         <Compile Include="Objects\Responses\CancelOrderResponse.cs" />
         <Compile Include="Objects\Responses\ContractInfoResponse.cs" />
         <Compile Include="Objects\Responses\GetAllSymbolsResponse.cs" />

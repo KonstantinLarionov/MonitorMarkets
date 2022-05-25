@@ -5,15 +5,12 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class OrderBookResponse
     {
-        public OrderBookResponse(int retCode, string retMsg, IReadOnlyList<OrderBookData> result)
+        public OrderBookResponse(decimal price, decimal amount)
         {
-            RetCode = retCode;
-            RetMsg = retMsg;
-            Result = result;
+            Price = price;
+            Amount = amount;
         }
-        public int RetCode { get; set; }
-        public string RetMsg { get; set; }
-        public IReadOnlyList<OrderBookData> Result { get; set; }
-
+        public decimal Price { get; set; }
+        public decimal Amount { get; set; }
     }
 }
