@@ -23,10 +23,18 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005CBybit_005CTradingClient_005C_005FLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005CBybit_005CTradingClient_005C_005FLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005Ckosty_005CRiderProjects_005CMonitorMarkets_005CLibraries_005CBitgetMapper_005CBitgetMapper_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBinanceMapper_005CBinanceMapper_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBinanceMapper_005CBinanceMapper_002Epdb/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBinanceMapper_005CBinanceMapper_002Exml/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBinanceMapper_005CJetBrains_002EAnnotations_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBinanceMapper_005CNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBinanceMapper_005Creadme_002Ehtml/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CBybitMapper_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CBybitMapper_002Epdb/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CJetBrains_002EAnnotations_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CJetBrains_002EAnnotations_002Exml/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CMicrosoft_002EVisualStudio_002ECodeCoverage_002EShim_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=MonitorMarkets_002EApplication_002FMarketsInfo/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>
