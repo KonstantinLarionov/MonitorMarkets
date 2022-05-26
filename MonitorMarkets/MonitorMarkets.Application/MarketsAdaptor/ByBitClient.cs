@@ -311,7 +311,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
-        public TradeHistoryResponse GetTradeHistoryResponse()
+        public Objects.Responses.TradeHistoryResponse GetTradeHistoryResponse(CategoryType category, int limit)
         {
             var request_prep = new TradeHistoryRequest(category, limit);
             var request = m_RequestArranger.Arrange(request_prep);
@@ -323,11 +323,12 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleTradeHistoryResponse(response);
-                response_unt = new Objects.Responses.TradeHistoryResponse(response_obj.Result.ResultTotalSize,
-                    response_obj.Result.Cursor, response_obj.Result.DataList);
-                    
-
-                return response_unt;
+                foreach (var item in response_obj.Result.DataList)
+                {
+                    response_unt = new Objects.Responses.TradeHistoryResponse(item.Symbol, item.TradeTime, item.TradeId, item.OrderId, item.ExecPrice, item.ExecQty, item.ExecFee, item.Symbol);
+                    return response_unt;
+                }
+                
             }
             catch (Exception ex)    
             {
@@ -336,7 +337,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
-        public WalletInfoResponse GetWalletInfoResponse()
+        public Objects.Responses.WalletInfoResponse GetWalletInfoResponse()
         {
             var request_prep = new WalletInfoRequest();
             var request = m_RequestArranger.Arrange(request_prep);
@@ -348,9 +349,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleWalletInfoResponse(response);
-                response_unt = new Objects.Responses.WalletInfoResponse(response_obj.RetCode, response_obj.RetMsg,
-                    response_obj.ExtCode, response_obj.ExtInfo, response_obj.Result);
-
+                
+                response_unt = new Objects.Responses.WalletInfoResponse(response_obj.Currency, response_obj.Balance, response_obj.Aviailable);
                 return response_unt;
             }
             catch (Exception ex)    
