@@ -5,7 +5,7 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class MyPositionsResponse
     {
-        public MyPositionsResponse(string symbol, double price, decimal amount)
+        public MyPositionsResponse(string symbol, decimal price, decimal amount)
         {
             Symbol = symbol;
             Price = price;
@@ -13,7 +13,7 @@ namespace MonitorMarkets.Application.Objects.Responses
 
         }
         public string Symbol { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public decimal Amount { get; set; }
     }
 }

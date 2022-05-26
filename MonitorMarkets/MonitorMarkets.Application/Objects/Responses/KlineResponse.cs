@@ -6,7 +6,7 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class KlineResponse
     {
-        public KlineResponse(DateTime startTime, double openPrice, double closePrice, double highPrice, double lowPrice, decimal volume)
+        public KlineResponse(long startTime, decimal openPrice, decimal closePrice, decimal highPrice, decimal lowPrice, decimal volume)
         {
             StartTime = startTime;
             OpenPrice = openPrice;
@@ -15,11 +15,11 @@ namespace MonitorMarkets.Application.Objects.Responses
             LowPrice = lowPrice;
             Volume = volume;
         }
-        public DateTime StartTime { get; }
-        public double OpenPrice { get; }
-        public double ClosePrice { get; }
-        public double HighPrice { get; }
-        public double LowPrice { get; }
+        public long StartTime { get; }
+        public decimal OpenPrice { get; }
+        public decimal ClosePrice { get; }
+        public decimal HighPrice { get; }
+        public decimal LowPrice { get; }
         public decimal Volume { get; }
 
     }

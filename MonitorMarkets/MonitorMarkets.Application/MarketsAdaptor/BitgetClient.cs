@@ -12,15 +12,16 @@ using BitGetMapper.Futures.RestAPI.Responses.Account;
 using BitgetMapper.Futures.RestAPI.Responses.Market;
 using BitgetMapper.Requests;
 using MonitorMarkets.Application.Objects.Data;
+using MonitorMarkets.Application.Objects.Data.Enums;
 using MonitorMarkets.Application.Objects.Responses;
 using RestSharp;
 using CancelOrderResponse = BitgetMapper.Futures.RestAPI.Responses.Account.CancelOrderResponse;
 using GetAllSymbolsResponse = BitgetMapper.Futures.RestAPI.Responses.Market.GetAllSymbolsResponse;
-using GetCandleDataResponse = MonitorMarkets.Application.Objects.Responses.GetCandleDataResponse;
 using GetDepthResponse = BitgetMapper.Futures.RestAPI.Responses.Market.GetDepthResponse;
 using GetHistoryOrderResponse = BitGetMapper.Futures.RestAPI.Responses.Account.GetHistoryOrderResponse;
 using GetOpenOrderResponse = BitGetMapper.Futures.RestAPI.Responses.Account.GetOpenOrderResponse;
 using GetSingleAccountResponse = BitgetMapper.Futures.RestAPI.Responses.Account.GetSingleAccountResponse;
+using OrderTypeEnum = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum;
 using PlaceOrderResponse = BitgetMapper.Futures.RestAPI.Responses.Account.PlaceOrderResponse;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
@@ -241,19 +242,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #endregion
 
         #region [Account]
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="marginCoin"></param>
-        /// <param name="orderId"></param>
-        /// <returns></returns>
         
-        
-        public Objects.Responses.CancelOrderResponse GetCancelOrder(string symbol)
+        public Objects.Responses.CancelOrderResponse GetCancelOrder(string symbol, string marginCoin, string orderid)
         {
-            var cancelOrder = new CancelOrderRequest(symbol, null, null);
+            var cancelOrder = new CancelOrderRequest(symbol, marginCoin, orderid);
             var request = _requestArranger.Arrange(cancelOrder);
             string response = string.Empty;
             CancelOrderResponse response_obj = null;
@@ -263,7 +255,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleCancelOrderResponse(response);
-                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Code, response_obj.Msg, new CancelOrderData(response_obj.Data.OrderId));
+                response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Data.OrderId);
                 
                 return response_unt;
             }
@@ -274,33 +266,26 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        public Objects.Responses.GetHistoryOrderResponse GetHistoryOrderRequest(string symbol, DateTime startTime,
+        /*public Objects.Responses.OrderHistoryResponse GetHistoryOrderRequest(string symbol, DateTime startTime,
             DateTime endTime, string pageSize)
         {
             var historyOrder = new GetHistoryOrderRequest(symbol, startTime, endTime, pageSize);
             var request = _requestArranger.Arrange(historyOrder);
             GetHistoryOrderResponse response_obj = null;
             string response = string.Empty;
-            Objects.Responses.GetHistoryOrderResponse response_unt = null;
+            Objects.Responses.OrderHistoryResponse response_unt = null;
 
             try
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetHistoryOrderResponse(response);
-                response_unt = new Objects.Responses.GetHistoryOrderResponse(response_obj.Code, response_obj.Data,
-                    response_obj.Msg);
 
-                return response_unt;
+                foreach (var item in response_obj.Data.OrderList)
+                {
+                    response_unt = new Objects.Responses.OrderHistoryResponse(item.Symbol, item.OrderId,);
+                    return response_unt;
 
+                }
             }
             catch (Exception ex)
             {
@@ -308,14 +293,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <returns></returns>
-
+        }*/
         public Objects.Responses.GetOpenOrderResponse GetOpenOrderRequest(string symbol)
         {
             var openOrder = new GetOpenOrderRequest(symbol);
@@ -341,20 +319,12 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="marginCoin"></param>
-        /// <returns></returns>
-
-        public Objects.Responses.GetSingleAccountResponse GetSingleAccountRequest(string symbol, string marginCoin)
+        public Objects.Responses.WalletInfoResponse GetSingleAccountRequest(string symbol, string marginCoin)
         {
             var singleAccount = new GetSingleAccountRequest(symbol, marginCoin);
             var request = _requestArranger.Arrange(singleAccount);
             GetSingleAccountResponse response_obj = null;
-            Objects.Responses.GetSingleAccountResponse response_unt = null;
+            Objects.Responses.WalletInfoResponse response_unt = null;
 
             string response = string.Empty;
 
@@ -362,29 +332,15 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetSingleAccountResponse(response);
-                response_unt = new Objects.Responses.GetSingleAccountResponse(response_obj.Code, response_obj.Data,
-                    response_obj.Msg, response_obj.RequestTime);
+                response_unt = new Objects.Responses.WalletInfoResponse("USDT", response_obj.Data.UsdtEquity, response_obj.Data.Available);
                 return response_unt;
-
             }
             catch (Exception ex)
             {
                 return null;
             }
-
             return null;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="marginCoin"></param>
-        /// <param name="size"></param>
-        /// <param name="side"></param>
-        /// <param name="orderType"></param>
-        /// <returns></returns>
-
         public Objects.Responses.PlaceOrderResponse PlaceOrderRequest(string symbol, string marginCoin, decimal size,
             SideType side, OrderTypeEnum orderType)
         {
@@ -393,12 +349,13 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             PlaceOrderResponse response_obj = null;
             string response = string.Empty;
             Objects.Responses.PlaceOrderResponse response_unt = null;
-
+                                                                        
             try
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandlePlaceOrderResponse(response);
-                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Data.OrderId);
+                
+                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Data.OrderId, 0, 0, OrderActionEnum.Unknown, OrderMarkerEnum.Unknown);
 
                 return response_unt;
 
@@ -410,40 +367,64 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
-
         public OrderBookResponse GetOrderBookResponse()
         {
+            return null;
         }
         public KlineResponse GetKlineResponse()
         {
+            return null;
         }
-
-        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse()
+        public UnfilledResponse GetUnfilledResponse(string symbol)
         {
-        }
+            var placeOrder = new GetOpenOrderRequest(symbol);
+            var request = _requestArranger.Arrange(placeOrder);
+            UnfilledResponse response_obj = null;
+            string response = string.Empty;
+            Objects.Responses.UnfilledResponse response_unt = null;
+                                                                        
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = _composition.HandleGetOpenOrderResponse(response);
+                
+                response_unt = new Objects.Responses.UnfilledResponse();
 
-        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse()
-        {
-        }
+                return response_unt;
 
-        public UnfilledResponse GetUnfilledResponse()
-        {
-        }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
+            return null;
+
+        }
         public OrderHistoryResponse GetOrderHistoryResponse()
         {
         }
-
         public TradeHistoryResponse GetTradeHistoryResponse()
         {
         }
-
-        public WalletInfoResponse GetWalletInfoResponse()
-        {
-        }
-
         public MyPositionsResponse GetMyPositionsResponse()
         {
+        }
+        bool TryGetOrderAction(SideType in_type, out OrderActionEnum out_type)
+        {
+            out_type = OrderActionEnum.Unknown;
+            switch (in_type)
+            {
+                case :
+                    out_type = OrderActionEnum.Buy;
+                    return true;
+                case SideType.Sell:
+                    out_type = OrderActionEnum.Sell;
+                    return true;
+                default:
+                    out_type = OrderActionEnum.Unknown;
+                    return false;
+            }
         }
 
         #endregion

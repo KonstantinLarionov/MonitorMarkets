@@ -103,6 +103,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         
         #region [Request]
 
+        
         public Objects.Responses.ContractInfoResponse GetContractInfo()
         {
             var request_prep = new ContractInfoRequest();
@@ -137,9 +138,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-        }   
-        
-        
+        }
         public Objects.Responses.OrderBookResponse GetOrderBookResponse(string symbol)
         {
             var request_prep = new OrderBookRequest(symbol);
@@ -180,7 +179,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
                 foreach (var item in response_obj.Result)
                 {
-                    response_unt = new Objects.Responses.KlineResponse(FromUnixMilliseconds(item.OpenTime), item.Close, item.High, item.Low, item.Volume);
+                    response_unt = new Objects.Responses.KlineResponse(item.OpenTime, item.Open, item.Close, item.High, item.Low, item.Volume);
                     return response_unt;
 
                 }
@@ -203,6 +202,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
+                
                 OrderActionEnum orderAction = OrderActionEnum.Unknown;
                 if (response_obj.Result.SideType == SideType.Buy)
                 {
@@ -350,7 +350,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleWalletInfoResponse(response);
                 
-                response_unt = new Objects.Responses.WalletInfoResponse(response_obj.Currency, response_obj.Balance, response_obj.Aviailable);
+                response_unt = new Objects.Responses.WalletInfoResponse("BTC", response_obj.Result.WalletBalance, response_obj.Result.AvailableBalance);
                 return response_unt;
             }
             catch (Exception ex)    
@@ -360,7 +360,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
-        public QueryMyPositionsResponse GetMyPositionsResponse()
+        public Objects.Responses.MyPositionsResponse GetMyPositionsResponse(CategoryType category)
         {
             var request_prep = new QueryMyPositionsRequest(category);
             var request = m_RequestArranger.Arrange(request_prep);
@@ -372,10 +372,12 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryMyPositionsResponse(response);
-                response_unt = new Objects.Responses.MyPositionsResponse(response_obj.Result.ResultTotalSize,
-                    response_obj.Result.Cursor, response_obj.Result.DataList);
 
-                return response_unt;
+                foreach (var item in response_obj.Result.DataList)
+                {
+                    response_unt = new Objects.Responses.MyPositionsResponse(item.Symbol, item.EntryPrice, item.Size);
+                    return response_unt;
+                }
             }
             catch (Exception ex)    
             {
@@ -384,6 +386,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
+        
         
         
         /// <summary>

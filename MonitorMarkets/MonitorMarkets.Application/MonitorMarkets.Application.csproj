@@ -41,6 +41,9 @@
         <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
         </Reference>
+        <Reference Include="BouncyCastle.Crypto">
+          <HintPath>..\..\..\bitget\BouncyCastle.Crypto.dll</HintPath>
+        </Reference>
         <Reference Include="BybitMapper">
           <HintPath>..\..\..\bybitmapper\BybitMapper.dll</HintPath>
         </Reference>
@@ -80,6 +83,9 @@
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Runtime.Serialization" />
+        <Reference Include="System.Runtime.Serialization.Primitives">
+          <HintPath>..\..\..\bitget\System.Runtime.Serialization.Primitives.dll</HintPath>
+        </Reference>
         <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
           <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
           <Private>True</Private>
