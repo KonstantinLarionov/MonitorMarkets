@@ -92,7 +92,8 @@
             <Button DockPanel.Dock="Top" 
                     Background="Transparent"
                     Foreground="Black"
-                    Margin="10">
+                    Margin="10"
+                    Click="ButtonBase_OnClick">
                 Настройки
             </Button>
         </DockPanel>

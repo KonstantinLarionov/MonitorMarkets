@@ -1,0 +1,42 @@
+﻿<Window x:Class="MonitorMarkets.Vizualizer.View.GeneralSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
+        mc:Ignorable="d"
+        Title="Общие настройки" Height="450" Width="250" ResizeMode="NoResize">
+    <Grid>
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top" Margin="10">
+                <materialDesign:Card Background="White"  >
+                    <DockPanel>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="15" >
+                            <Label FontSize="20" Foreground="Black"> Биржа: </Label>
+                            <ComboBox Height="30" 
+                                      VerticalAlignment="Top" 
+                                      Width="80" 
+                                      BorderBrush="SteelBlue">
+                                 <TextBlock>1234</TextBlock>
+                                <TextBlock>1234</TextBlock>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
+                            <TextBlock HorizontalAlignment="Center" FontSize="15">Открытый ключ</TextBlock>
+                            <TextBox materialDesign:HintAssist.Hint="Text" HorizontalAlignment="Center"> </TextBox>
+                        </StackPanel>
+                        <StackPanel  Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
+                            <TextBlock HorizontalAlignment="Center" FontSize="15">Закрытый ключ</TextBlock>
+                            <TextBox materialDesign:HintAssist.Hint="Text" HorizontalAlignment="Center"> </TextBox>
+                        </StackPanel >
+                        <StackPanel  Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
+                            <TextBlock HorizontalAlignment="Center" FontSize="15">парольная фраза</TextBlock>
+                            <TextBox materialDesign:HintAssist.Hint="Text" HorizontalAlignment="Center"> </TextBox>
+                        </StackPanel>
+                    </DockPanel>
+                </materialDesign:Card>
+            </DockPanel>
+        </DockPanel>
+    </Grid>
+</Window>

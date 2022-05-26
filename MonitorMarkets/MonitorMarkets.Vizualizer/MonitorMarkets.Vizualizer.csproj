@@ -62,15 +62,12 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Include="View\ExampleWindow.xaml.cs">
-          <DependentUpon>ExampleWindow.xaml</DependentUpon>
+        <Compile Include="View\GeneralSettingsWindow.xaml.cs">
+          <DependentUpon>GeneralSettingsWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\MainWindow.xaml.cs">
           <DependentUpon>MainWindow.xaml</DependentUpon>
           <SubType>Code</SubType>
-        </Compile>
-        <Compile Include="View\Resources\GeneralSettings.xaml.cs">
-          <DependentUpon>GeneralSettings.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Resources\Menu.xaml.cs">
           <DependentUpon>Menu.xaml</DependentUpon>
@@ -101,12 +98,11 @@
       <Content Include="View\README.txt" />
     </ItemGroup>
     <ItemGroup>
-      <Page Include="View\ExampleWindow.xaml" />
+      <Page Include="View\GeneralSettingsWindow.xaml" />
       <Page Include="View\MainWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <SubType>Designer</SubType>
       </Page>
-      <Page Include="View\Resources\GeneralSettings.xaml" />
       <Page Include="View\Resources\Menu.xaml" />
       <Page Include="View\Resources\MenuLibrary\ListOfCoins.xaml" />
     </ItemGroup>

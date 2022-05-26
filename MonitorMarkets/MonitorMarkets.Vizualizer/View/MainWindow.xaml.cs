@@ -18,21 +18,16 @@ namespace MonitorMarkets.Vizualizer
         public MainWindow()
         {
             InitializeComponent();
-            this.menu = new Menu();
+            /*this.menu = new Menu();
             var example = new ExampleWindow();
-            example.Show();
+            example.Show();*/
         }
 
-        public void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            /*mainSpace.Children.Clear();
-            var button = (Button) sender;
-            switch (button.Name)
-            {
-                case  "courses" :
-                    mainSpace.Children.Add(menu);
-                    break;
-            }*/
+            var settings = new GeneralSettingsWindow();
+            settings.Show();
         }
     }
 }

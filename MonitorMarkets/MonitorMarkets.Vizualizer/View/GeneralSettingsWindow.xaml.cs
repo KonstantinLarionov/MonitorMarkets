@@ -2,9 +2,9 @@
 
 namespace MonitorMarkets.Vizualizer.View
 {
-    public partial class ExampleWindow : Window
+    public partial class GeneralSettingsWindow : Window
     {
-        public ExampleWindow()
+        public GeneralSettingsWindow()
         {
             InitializeComponent();
         }

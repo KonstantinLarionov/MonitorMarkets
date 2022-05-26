@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml
-5-48913186
+42088657057
 11190426936
-8-725083978
+7359722769
 11-485694075
-View\ExampleWindow.xaml;View\MainWindow.xaml;View\Resources\GeneralSettings.xaml;View\Resources\Menu.xaml;View\Resources\MenuLibrary\ListOfCoins.xaml;
+View\GeneralSettingsWindow.xaml;View\MainWindow.xaml;View\Resources\Menu.xaml;View\Resources\MenuLibrary\ListOfCoins.xaml;
 
-False
+True
 
