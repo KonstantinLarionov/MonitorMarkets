@@ -88,12 +88,12 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Abstractions\FactoryClientService.cs" />
+        <Compile Include="Abstractions\IMarketClient.cs" />
         <Compile Include="Extensions\ServerTimeHelper.cs" />
         <Compile Include="MarketsAdaptor\BinanceClient.cs" />
         <Compile Include="MarketsAdaptor\BitgetClient.cs" />
         <Compile Include="MarketsAdaptor\ByBitClient.cs" />
-        <Compile Include="MarketsAdaptor\FactoryClientService.cs" />
-        <Compile Include="MarketsAdaptor\IMarketClient.cs" />
         <Compile Include="MarketsInfo.Designer.cs">
           <DesignTime>True</DesignTime>
           <AutoGen>True</AutoGen>

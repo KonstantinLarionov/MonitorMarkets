@@ -1,6 +1,6 @@
 ﻿using MonitorMarkets.Application.Objects.Responses;
 
-namespace MonitorMarkets.Application.MarketsAdaptor
+namespace MonitorMarkets.Application.Abstraction
 {
     public interface IMarketClient
     {
