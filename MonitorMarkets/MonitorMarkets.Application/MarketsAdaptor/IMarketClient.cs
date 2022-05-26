@@ -13,7 +13,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #region [Private]
 
         PlaceOrderResponse GetPlaceOrderResponse();
-        PlaceOrderResponse GetCancelOrderResponse();
+        CancelOrderResponse GetCancelOrderResponse();
         UnfilledResponse GetUnfilledResponse();
         OrderHistoryResponse GetOrderHistoryResponse();
         TradeHistoryResponse GetTradeHistoryResponse();

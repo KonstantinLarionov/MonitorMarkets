@@ -23,6 +23,7 @@ using GetOpenOrderResponse = BitGetMapper.Futures.RestAPI.Responses.Account.GetO
 using GetSingleAccountResponse = BitgetMapper.Futures.RestAPI.Responses.Account.GetSingleAccountResponse;
 using OrderTypeEnum = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum;
 using PlaceOrderResponse = BitgetMapper.Futures.RestAPI.Responses.Account.PlaceOrderResponse;
+using WebSocketSharp;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
@@ -164,9 +165,13 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetCandleDataResponse(response);
-                response_unt = new Objects.Responses.KlineResponse();
 
-                return response_unt;
+                foreach (var item in response_obj)
+                {
+                    var time = Convert.ToInt64(item[0]);
+                    response_unt = new Objects.Responses.KlineResponse(time, item[1],item[2],item[3],item[4],item[5]);
+                    return response_unt;
+                }
             }
             catch (Exception ex)
             {
@@ -175,40 +180,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <returns></returns>
-        public Objects.Responses.GetDepthResponse GetDepthRequest(string symbol)
-        {
-            var depth = new GetDepthRequest(symbol);
-            var request = _requestArranger.Arrange(depth);
-            GetDepthResponse response_obj = null;
-            Objects.Responses.GetDepthResponse response_unt = null;
-
-            string response = string.Empty;
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = _composition.HandleGetDepthResponse(response);
-                response_unt = new Objects.Responses.GetDepthResponse(response_obj.Code, response_obj.Data,
-                    response_obj.Msg, response_obj.RequestTime);
-                return response_unt;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public ServerTimeResponse ServerTimeRequest()
         {
             var serverTime = new ServerTimeRequest();
@@ -249,59 +220,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Data.OrderId);
                 
                 return response_unt;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-
-            return null;
-        }
-        /*public Objects.Responses.OrderHistoryResponse GetHistoryOrderRequest(string symbol, DateTime startTime,
-            DateTime endTime, string pageSize)
-        {
-            var historyOrder = new GetHistoryOrderRequest(symbol, startTime, endTime, pageSize);
-            var request = _requestArranger.Arrange(historyOrder);
-            GetHistoryOrderResponse response_obj = null;
-            string response = string.Empty;
-            Objects.Responses.OrderHistoryResponse response_unt = null;
-
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = _composition.HandleGetHistoryOrderResponse(response);
-
-                foreach (var item in response_obj.Data.OrderList)
-                {
-                    response_unt = new Objects.Responses.OrderHistoryResponse(item.Symbol, item.OrderId,);
-                    return response_unt;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-
-            return null;
-        }*/
-        public Objects.Responses.GetOpenOrderResponse GetOpenOrderRequest(string symbol)
-        {
-            var openOrder = new GetOpenOrderRequest(symbol);
-            var request = _requestArranger.Arrange(openOrder);
-            GetOpenOrderResponse response_obj = null;
-            Objects.Responses.GetOpenOrderResponse response_unt = null;
-
-            string response = string.Empty;
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = _composition.HandleGetOpenOrderResponse(response);
-                response_unt = new Objects.Responses.GetOpenOrderResponse(response_obj.Code, response_obj.Data,
-                    response_obj.Msg, response_obj.RequestTime);
-
-                return response_unt;
-
             }
             catch (Exception ex)
             {
@@ -359,9 +277,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
         /*public Objects.Responses.OrderBookResponse GetOrderBookResponse()
-        {
-        }*/
-        /*public Objects.Responses.KlineResponse GetKlineResponse()
         {
         }*/
         public Objects.Responses.UnfilledResponse GetUnfilledResponse(string symbol)
@@ -448,6 +363,42 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #endregion
 
+        #endregion
+
+        #region WebSocket
+
+        WebSocket m_WebSocketPublic = null;
+        WebSocket m_WebSocketPrivate = null;
+        public StartSocket()
+        {
+            
+        }
+
+        public StopSocket()
+        {
+            
+        }
+
+        private StartSocketPrivate()
+        {
+            
+        }
+
+        private StopSocketPrivate()
+        {
+            
+        }
+
+        public Connect()
+        {
+            
+        }
+
+        private ConnectPrivate()
+        {
+            
+        }
+        
         #endregion
 
     }

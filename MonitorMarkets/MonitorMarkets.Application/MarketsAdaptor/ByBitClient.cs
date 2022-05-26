@@ -30,6 +30,13 @@ using TradeHistoryResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.
 using WalletInfoResponse = BybitMapper.UsdcPerpetual.RestV2.Responses.Account.Account.WalletInfoResponse;
 using MonitorMarkets.Application.Extensions;
 using MonitorMarkets.Application.Objects.Data.Enums;
+using WebSocketSharp;
+using System.Security.Authentication;
+using BybitMapper.UsdcPerpetual.MarketStreams;
+using BybitMapper.UsdcPerpetual.MarketStreams.Data.Enum;
+using BybitMapper.UsdcPerpetual.MarketStreams.Subscriptions;
+using BybitMapper.UsdcPerpetual.UserStreams;
+using BybitMapper.UsdcPerpetual.UserStreams.Subscriptions;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
@@ -102,7 +109,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #endregion
         
         #region [Request]
-
         
         public Objects.Responses.ContractInfoResponse GetContractInfo()
         {
@@ -388,10 +394,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         }
         
         
-        
-        /// <summary>
-        /// Mapper to internal type
-        /// </summary>
         bool TryGetOrderAction(SideType in_type, out OrderActionEnum out_type)
         {
             out_type = OrderActionEnum.Unknown;
@@ -461,6 +463,123 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
         }
 
+        #endregion
+        
+        #region WebSocket
+
+        WebSocket m_WebSocketPublic = null;
+        WebSocket m_WebSocketPrivate = null;
+        private string urlPrivateSocket = "wss://stream.bybit.com/perpetual/ws/v1/realtime_public";
+        public string urlPublicSocket = "wss://stream.bybit.com/trade/option/usdc/private/v1";
+
+        UserStreamsUsdcHandlerComposition PrivateUsdcPerpetualHandler;
+        MarketStreamsUsdcPerpetualHandlerComposition PublicUsdcHandler;
+        
+        public StartSocket(string symbol)
+        {
+            var subOrderBook = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Subscribe, PublicEndpointType.OrderBook200);
+            var trade = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Subscribe, PublicEndpointType.Trade);
+        }
+
+        public StopSocket(string symbol)
+        {
+            var subOrderBook = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Unsubscribe, PublicEndpointType.OrderBook200);
+            var trade = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Unsubscribe, PublicEndpointType.Trade);
+
+        }
+
+        private StartSocketPrivate(string _apiKey, string _secretkey)
+        {
+            var auth = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Auth, _apiKey, _secretkey);
+            var order = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Order);
+            var position = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Position);
+            var execution  = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Execution);
+        }
+
+        private StopSocketPrivate()
+        {
+            var order = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Unsubscribe, UserEventType.Order);
+            var position = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Unsubscribe, UserEventType.Position);
+            var execution  = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Unsubscribe, UserEventType.Execution);
+        }
+
+        public Connect()
+        {
+            m_WebSocketPublic = new WebSocket(urlPublicSocket) { EmitOnPing = true };
+            m_WebSocketPublic.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12; 
+            m_WebSocketPublic.Log.File = null;
+            m_WebSocketPublic.OnOpen += WebSocket_OnOpen;
+            m_WebSocketPublic.OnClose += WebSocket_OnClose;
+            m_WebSocketPublic.OnError += WebSocket_OnError;
+            m_WebSocketPublic.OnMessage += WebSocket_OnMessage;
+        }
+
+        private void WebSocket_OnMessage(object sender, MessageEventArgs e)
+        {
+            var defev = PublicUsdcHandler.HandleDefaultEvent(e.Data);
+
+            if (defev.PerpetualEventType == EventPerpetualType.OrderBook200)
+            {
+                var orderBook = PublicUsdcHandler.HandleOrderBookL2Event(e.Data);
+
+                Objects.Responses.OrderBookResponse response_unt = null;
+                
+                if (orderBook.Type == DataEventType.Snapshot)
+                {
+                    foreach (var item in orderBook.DataSnap.OrderBook)
+                    {
+                        response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
+                        return response_unt;
+
+                    }
+
+                }
+                if (orderBook.Type == DataEventType.Delta)
+                {
+                    if (orderBook.DataDelta.Delete.Count > 0)
+                    {
+                        foreach (var item in orderBook.DataDelta.Delete)
+                        {
+                            response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
+                            return response_unt;
+
+                        }
+                    }
+                    if (orderBook.DataDelta.Insert.Count > 0)
+                    {
+                        foreach (var item in orderBook.DataDelta.Insert)
+                        {
+                            response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
+                            return response_unt;
+
+                        }
+                    }
+                    if (orderBook.DataDelta.Update.Count > 0)
+                    {
+                        foreach (var item in orderBook.DataDelta.Update)
+                        {
+                            response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
+                            return response_unt;
+
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private ConnectPrivate()
+        {
+            m_WebSocketPrivate = new WebSocket(urlPrivateSocket) { EmitOnPing = true };
+            m_WebSocketPrivate.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12; 
+            m_WebSocketPrivate.Log.File = null;
+            m_WebSocketPrivate.OnOpen += WebSocket_OnOpen;
+            m_WebSocketPrivate.OnClose += WebSocket_OnClose;
+            m_WebSocketPrivate.OnError += WebSocket_OnError;
+            m_WebSocketPrivate.OnMessage += WebSocket_OnMessage;
+        }
+        
+        
         #endregion
     }
 }
