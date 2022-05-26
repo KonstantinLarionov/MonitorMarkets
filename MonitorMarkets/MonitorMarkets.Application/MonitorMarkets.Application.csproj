@@ -32,11 +32,23 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="BinanceMapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\..\Libraries\BinanceMapper\BinanceMapper.dll</HintPath>
+        </Reference>
+        <Reference Include="BitgetMapper">
+          <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\BitgetMapper.dll</HintPath>
+        </Reference>
         <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
         </Reference>
-        <Reference Include="BybitMapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\Libraries\BybitMapper\BybitMapper.dll</HintPath>
+        <Reference Include="BybitMapper">
+          <HintPath>..\..\..\bybitmapper\BybitMapper.dll</HintPath>
+        </Reference>
+        <Reference Include="JetBrains.Annotations">
+          <HintPath>..\..\..\bybitmapper\JetBrains.Annotations.dll</HintPath>
+        </Reference>
+        <Reference Include="JetBrains.Annotations, Version=2018.3.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
+          <HintPath>..\..\Libraries\BinanceMapper\JetBrains.Annotations.dll</HintPath>
         </Reference>
         <Reference Include="JetBrains.Annotations, Version=2020.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
           <HintPath>..\..\Libraries\BybitMapper\JetBrains.Annotations.dll</HintPath>
@@ -44,26 +56,78 @@
         <Reference Include="JetBrains.Annotations, Version=4242.42.42.42, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
           <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\JetBrains.Annotations.dll</HintPath>
         </Reference>
+        <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim">
+          <HintPath>..\..\..\Bybit\TradingClient\_Libraries\BybitMapper\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+        </Reference>
         <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
           <HintPath>..\..\Libraries\BybitMapper\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+        </Reference>
+        <Reference Include="mscorlib" />
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>..\..\..\bybitmapper\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+          <HintPath>..\..\Libraries\BinanceMapper\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75">
           <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.ComponentModel.Primitives">
+          <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\System.ComponentModel.Primitives.dll</HintPath>
+        </Reference>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Runtime.Serialization" />
+        <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+          <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System.Web" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Abstractions\FactoryClientService.cs" />
+        <Compile Include="Abstractions\IMarketClient.cs" />
+        <Compile Include="Extensions\ServerTimeHelper.cs" />
+        <Compile Include="MarketsAdaptor\BinanceClient.cs" />
         <Compile Include="MarketsAdaptor\BitgetClient.cs" />
         <Compile Include="MarketsAdaptor\ByBitClient.cs" />
+        <Compile Include="MarketsInfo.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>MarketsInfo.resx</DependentUpon>
+        </Compile>
+        <Compile Include="Objects\Data\Attributes\EnumMarketsAttribute.cs" />
+        <Compile Include="Objects\Data\ContractInfoData.cs" />
+        <Compile Include="Objects\Data\Enums\MarketsEnum.cs" />
+        <Compile Include="Objects\Data\Enums\OrderActionEnum.cs" />
+        <Compile Include="Objects\Data\Enums\OrderMarkerEnum.cs" />
+        <Compile Include="Objects\Data\Enums\OrderStateEnum.cs" />
+        <Compile Include="Objects\Data\Enums\OrderTypeEnum.cs" />
+        <Compile Include="Objects\Data\Enums\TriggerTypeEnum.cs" />
+        <Compile Include="Objects\Responses\CancelOrderResponse.cs" />
+        <Compile Include="Objects\Responses\ContractInfoResponse.cs" />
+        <Compile Include="Objects\Responses\OrderBookResponse.cs" />
+        <Compile Include="Objects\Responses\PlaceOrderResponse.cs" />
+        <Compile Include="Objects\Responses\KlineResponse.cs" />
+        <Compile Include="Objects\Responses\MyPositionsResponse.cs" />
+        <Compile Include="Objects\Responses\OrderHistoryResponse.cs" />
+        <Compile Include="Objects\Responses\UnfilledResponse.cs" />
+        <Compile Include="Objects\Responses\TradeHistoryResponse.cs" />
+        <Compile Include="Objects\Responses\WalletInfoResponse.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="Objects\README.txt" />
+      <None Include="App.config" />
+      <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="MarketsInfo.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>MarketsInfo.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
