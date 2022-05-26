@@ -36,10 +36,7 @@
           <HintPath>..\..\Libraries\BinanceMapper\BinanceMapper.dll</HintPath>
         </Reference>
         <Reference Include="BitgetMapper">
-          <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\BitgetMapper.dll</HintPath>
-        </Reference>
-        <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
+          <HintPath>..\..\..\bitget\BitgetMapper.dll</HintPath>
         </Reference>
         <Reference Include="BouncyCastle.Crypto">
           <HintPath>..\..\..\bitget\BouncyCastle.Crypto.dll</HintPath>

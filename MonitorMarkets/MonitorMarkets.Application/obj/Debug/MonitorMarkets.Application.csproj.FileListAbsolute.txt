@@ -1,2 +1,4 @@
 C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.AssemblyReference.cache
 C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.MarketsInfo.resources
+C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.GenerateResource.cache

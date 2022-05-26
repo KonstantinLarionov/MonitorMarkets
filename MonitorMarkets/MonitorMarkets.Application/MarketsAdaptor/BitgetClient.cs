@@ -151,29 +151,20 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;        }
 
-        /// <summary>
-        /// CandleData данные о свечах
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <param name="granularity"></param>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <returns>#1 Timestamp,#2 Timestamp,#3 Highest price,#4 Lowest price,#5 Closing price,#6 Base currency trading volume,#7 Quote currency trading volume</returns>
-        public Objects.Responses.GetCandleDataResponse GetCandleDataRequest(string symbol, GranularityEnum granularity,
+        public Objects.Responses.KlineResponse GetCandleDataRequest(string symbol, GranularityEnum granularity,
             DateTime start, DateTime end)
         {
             var candleData = new GetCandleDataRequest(symbol, granularity, start, end);
             var request = _requestArranger.Arrange(candleData);
             List<List<Decimal>> response_obj = null;
             string response = string.Empty;
-            Objects.Responses.GetCandleDataResponse response_unt = null;
+            Objects.Responses.KlineResponse response_unt = null;
 
             try
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetCandleDataResponse(response);
-                response_unt = new Objects.Responses.GetCandleDataResponse(response_unt.Code, response_unt.Data,
-                    response_unt.Msg, response_unt.RequestTime);
+                response_unt = new Objects.Responses.KlineResponse();
 
                 return response_unt;
             }
@@ -367,19 +358,17 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
-        public OrderBookResponse GetOrderBookResponse()
+        /*public Objects.Responses.OrderBookResponse GetOrderBookResponse()
         {
-            return null;
-        }
-        public KlineResponse GetKlineResponse()
+        }*/
+        /*public Objects.Responses.KlineResponse GetKlineResponse()
         {
-            return null;
-        }
-        public UnfilledResponse GetUnfilledResponse(string symbol)
+        }*/
+        public Objects.Responses.UnfilledResponse GetUnfilledResponse(string symbol)
         {
             var placeOrder = new GetOpenOrderRequest(symbol);
             var request = _requestArranger.Arrange(placeOrder);
-            UnfilledResponse response_obj = null;
+            GetOpenOrderResponse response_obj = null;
             string response = string.Empty;
             Objects.Responses.UnfilledResponse response_unt = null;
                                                                         
@@ -401,30 +390,60 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
 
         }
-        public OrderHistoryResponse GetOrderHistoryResponse()
+        public Objects.Responses.OrderHistoryResponse GetOrderHistoryRequest(string symbol, DateTime startTime, DateTime endTime, string pageSize)
         {
-        }
-        public TradeHistoryResponse GetTradeHistoryResponse()
-        {
-        }
-        public MyPositionsResponse GetMyPositionsResponse()
-        {
-        }
-        bool TryGetOrderAction(SideType in_type, out OrderActionEnum out_type)
-        {
-            out_type = OrderActionEnum.Unknown;
-            switch (in_type)
+            var placeOrder = new GetHistoryOrderRequest(symbol, startTime, endTime, pageSize);
+            var request = _requestArranger.Arrange(placeOrder);
+            GetHistoryOrderResponse response_obj = null;
+            string response = string.Empty;
+            Objects.Responses.OrderHistoryResponse response_unt = null;
+                                                                        
+            try
             {
-                case :
-                    out_type = OrderActionEnum.Buy;
-                    return true;
-                case SideType.Sell:
-                    out_type = OrderActionEnum.Sell;
-                    return true;
-                default:
-                    out_type = OrderActionEnum.Unknown;
-                    return false;
+                response = SendRestRequest(request);
+                response_obj = _composition.HandleGetHistoryOrderResponse(response);
+
+                foreach (var item in response_obj.Data.OrderList)
+                {
+                    response_unt = new Objects.Responses.OrderHistoryResponse(item.Symbol, item.OrderId, OrderActionEnum.Unknown, item.Price, item.Size, item.FilledQty, item.Ctime, Objects.Data.Enums.OrderTypeEnum.Unknown, TriggerTypeEnum.Unknown, OrderStateEnum.None);
+                    return response_unt;
+                }
             }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return null;
+
+        }
+        /*public Objects.Responses.TradeHistoryResponse GetTradeHistoryResponse()
+        {
+        }*/
+        public Objects.Responses.MyPositionsResponse GetMyPositionsResponse()
+        {
+            var placeOrder = new GetAllPositionRequest(ProductTypeEnum.Umcbl);
+            var request = _requestArranger.Arrange(placeOrder);
+            GetAllPositionResponse response_obj = null;
+            string response = string.Empty;
+            Objects.Responses.MyPositionsResponse response_unt = null;
+                                                                        
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = _composition.HandleGetAllPositionResponse(response);
+
+                foreach (var item in response_obj.Data)
+                {
+                    response_unt = new Objects.Responses.MyPositionsResponse(item.Symbol, item.AverageOpenPrice, item.Margin);
+                    return response_unt;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
         }
 
         #endregion
