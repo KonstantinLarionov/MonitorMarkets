@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml
-42088657057
-11190426936
-7359722769
-11-485694075
-View\GeneralSettingsWindow.xaml;View\MainWindow.xaml;View\Resources\Menu.xaml;View\Resources\MenuLibrary\ListOfCoins.xaml;
+8916669570
 
-True
+11-952745227
+11-485694075
+View\ChartsOfExchangesWindow.xaml;View\ChartsWindow.xaml;View\CurrencyRateWindow.xaml;View\GeneralSettingsWindow.xaml;View\MainWindow.xaml;View\Resources\Menu.xaml;View\Resources\MenuLibrary\ListOfCoins.xaml;View\TradingWindow.xaml;
+
+False
 

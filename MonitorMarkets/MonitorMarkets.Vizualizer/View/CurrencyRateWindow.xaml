@@ -1,0 +1,54 @@
+﻿<Window x:Class="MonitorMarkets.Vizualizer.View.CurrencyRate"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
+        xmlns:data="clr-namespace:System.Data;assembly=System.Data"
+        mc:Ignorable="d"
+        Title="CurrencyRate" d:DesignHeight="400" d:DesignWidth="600" >
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" Height="50">
+            <StackPanel Orientation="Horizontal">
+                    <Label Foreground="Black" HorizontalAlignment="Center" FontSize="15">Валютная пара: </Label>
+                    <ComboBox Width="120"
+                              VerticalAlignment="Top" 
+                              BorderBrush="MediumPurple"
+                              Foreground="Black">
+                        <TextBlock >1234</TextBlock>
+                        <TextBlock>1234</TextBlock>
+                    </ComboBox>
+                    <Label Margin="10,0,0,0" Foreground="Black" FontSize="15">Изменение в процентах: </Label>
+                    <Label>
+                        <TextBox BorderBrush="MediumPurple" Width="30" Foreground="Black">
+                        
+                        </TextBox>
+                    </Label>
+                    <Button Margin="10,0,0,0"> Показать </Button>
+                </StackPanel>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <DataGrid DockPanel.Dock="Top" Foreground="White" GridLinesVisibility="All" SelectionUnit="FullRow" Background="Gray" RowBackground="LightGray">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Биржи"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Курсы"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Изменение в процентах 24ч"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Объем 24ч"></DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid>
+                    <DataGridRow></DataGridRow>
+                </DataGrid>
+                <DataGrid>
+                    <DataGridRow></DataGridRow>
+                </DataGrid>
+                <DataGrid>
+                    <DataGridRow></DataGridRow>
+                </DataGrid>
+                <DataGrid>
+                    <DataGridRow></DataGridRow>
+                </DataGrid>
+            </DataGrid>
+        </DockPanel>
+    </DockPanel>
+</Window>

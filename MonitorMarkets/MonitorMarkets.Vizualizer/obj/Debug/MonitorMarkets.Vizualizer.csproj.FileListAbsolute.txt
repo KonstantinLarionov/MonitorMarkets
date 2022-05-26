@@ -4,7 +4,6 @@ C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizual
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.csproj.AssemblyReference.cache
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.csproj.SuggestedBindingRedirects.cache
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\App.g.cs
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer_Content.g.cs
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer_MarkupCompile.cache
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer_MarkupCompile.lref
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.g.resources
@@ -28,3 +27,11 @@ C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizual
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\Resources\MenuLibrary\ListOfCoins.baml
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\GeneralSettingsWindow.g.cs
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\GeneralSettingsWindow.baml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\TradingWindow.g.cs
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\TradingWindow.baml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ChartsOfExchangesWindow.g.cs
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\CurrencyRateWindow.g.cs
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ChartsOfExchangesWindow.baml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\CurrencyRateWindow.baml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ChartsWindow.g.cs
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ChartsWindow.baml

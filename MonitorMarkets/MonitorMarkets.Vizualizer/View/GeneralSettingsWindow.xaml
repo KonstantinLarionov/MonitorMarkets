@@ -6,34 +6,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
         mc:Ignorable="d"
-        Title="Общие настройки" Height="450" Width="250" ResizeMode="NoResize">
+        Title="General Settings" Height="450" Width="250" ResizeMode="NoResize">
     <Grid>
         <DockPanel>
-            <DockPanel DockPanel.Dock="Top" Margin="10">
-                <materialDesign:Card Background="White"  >
+            <DockPanel DockPanel.Dock="Top" Margin="10" DockPanel.LastChildFill="True">
+                <materialDesign:Card Background="White">
                     <DockPanel>
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="15" >
                             <Label FontSize="20" Foreground="Black"> Биржа: </Label>
                             <ComboBox Height="30" 
                                       VerticalAlignment="Top" 
                                       Width="80" 
-                                      BorderBrush="SteelBlue">
-                                 <TextBlock>1234</TextBlock>
+                                      BorderBrush="MediumPurple">
+                                 <TextBlock >1234</TextBlock>
                                 <TextBlock>1234</TextBlock>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
-                            <TextBlock HorizontalAlignment="Center" FontSize="15">Открытый ключ</TextBlock>
-                            <TextBox materialDesign:HintAssist.Hint="Text" HorizontalAlignment="Center"> </TextBox>
-                        </StackPanel>
-                        <StackPanel  Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
-                            <TextBlock HorizontalAlignment="Center" FontSize="15">Закрытый ключ</TextBlock>
-                            <TextBox materialDesign:HintAssist.Hint="Text" HorizontalAlignment="Center"> </TextBox>
-                        </StackPanel >
-                        <StackPanel  Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
-                            <TextBlock HorizontalAlignment="Center" FontSize="15">парольная фраза</TextBlock>
-                            <TextBox materialDesign:HintAssist.Hint="Text" HorizontalAlignment="Center"> </TextBox>
-                        </StackPanel>
+                        <DockPanel LastChildFill="False">
+                        <materialDesign:Card DockPanel.Dock="Top" Margin="10" BorderBrush="Purple" Background="White" UniformCornerRadius="20" >
+                                        <StackPanel Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
+                                            <TextBlock HorizontalAlignment="Center" FontSize="15" Foreground="Black">Открытый ключ</TextBlock>
+                                            <TextBox materialDesign:HintAssist.Hint="Text" 
+                                                     HorizontalAlignment="Center"
+                                                     Foreground="Black" Width="100" 
+                                                     BorderBrush="MediumPurple" > </TextBox>
+                                        </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card DockPanel.Dock="Top" Margin="10" BorderBrush="Purple" Background="White" UniformCornerRadius="20">
+                                        <StackPanel Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15" >
+                                            <TextBlock HorizontalAlignment="Center" FontSize="15" Foreground="Black" >Закрытый ключ</TextBlock>
+                                            <TextBox materialDesign:HintAssist.Hint="Text" 
+                                                     HorizontalAlignment="Center" 
+                                                     Foreground="Black" Width="100" 
+                                                     BorderBrush="MediumPurple"> </TextBox>
+                                        </StackPanel >
+                        </materialDesign:Card>
+                            <materialDesign:Card DockPanel.Dock="Top" Margin="10" BorderBrush="Purple" Background="White" UniformCornerRadius="20">
+                                            <StackPanel  Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
+                                                <TextBlock HorizontalAlignment="Center" FontSize="15" Foreground="Black">парольная фраза</TextBlock>
+                                                <TextBox materialDesign:HintAssist.Hint="Text" 
+                                                         HorizontalAlignment="Center" 
+                                                         VerticalAlignment="Center" 
+                                                         Foreground="Black" Width="100"
+                                                         BorderBrush="MediumPurple"> </TextBox>
+                                            </StackPanel>
+                            </materialDesign:Card>
+                        </DockPanel>
                     </DockPanel>
                 </materialDesign:Card>
             </DockPanel>

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using BinanceMapper.Futures.V1;
 using BinanceMapper.Requests;
+using MonitorMarkets.Application.Abstraction;
 using MonitorMarkets.Application.Objects.Responses;
 using RestSharp;
 

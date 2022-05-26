@@ -1,2 +1,8 @@
 C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.AssemblyReference.cache
 C:\Users\Admin\Desktop\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CoreCompileInputs.cache
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.AssemblyReference.cache
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.MarketsInfo.resources
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.GenerateResource.cache
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CoreCompileInputs.cache
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.pdb

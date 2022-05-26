@@ -7,10 +7,10 @@
         xmlns:local="clr-namespace:MonitorMarkets.Vizualizer"
         mc:Ignorable="d"
         Title="MonitorMarkets" Height="750" Width="450"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" >
    <DockPanel>
         <DockPanel DockPanel.Dock="Top" Margin="10">
-            <materialDesign:Card Background="White" Height="350">
+            <materialDesign:Card  UniformCornerRadius="20" Background="White" Height="350">
                 <DockPanel>
                     <Label Margin="10"
                            Foreground="Black" 
@@ -74,26 +74,29 @@
             <Button DockPanel.Dock="Top"
                     Background="Transparent"
                     Foreground="Black"
-                    Margin="10">
+                    Margin="10"
+                    Click="ButtonBase_Currency">
                 Курсы валют
             </Button>
             <Button DockPanel.Dock="Top"
                     Background="Transparent"
                     Foreground="Black"
-                    Margin="10">
+                    Margin="10"
+                    Click="ButtonBase_Charts">
                 Графики бирж
             </Button>
             <Button DockPanel.Dock="Top"
                     Background="Transparent"
                     Foreground="Black"
-                    Margin="10">
+                    Margin="10"
+                    Click="ButtonBase_Trading">
                 Торговля
             </Button>
             <Button DockPanel.Dock="Top" 
                     Background="Transparent"
                     Foreground="Black"
                     Margin="10"
-                    Click="ButtonBase_OnClick">
+                    Click="ButtonBase_Settings">
                 Настройки
             </Button>
         </DockPanel>
