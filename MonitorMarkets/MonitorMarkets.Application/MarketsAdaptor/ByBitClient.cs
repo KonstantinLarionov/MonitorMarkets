@@ -318,7 +318,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.OrderHistoryResponse GetOrderHistoryResponse(string symbol, long startTime, long endTime, string pageSize)
+        /*public Objects.Responses.OrderHistoryResponse GetOrderHistoryResponse(string symbol, long startTime, long endTime, string pageSize)
         {
             CategoryType category = CategoryType.Perpetual;
             var request_prep = new QueryOrderHistoryRequest(category);
@@ -357,7 +357,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-        }
+        }*/
 
         public IEnumerable<Objects.Responses.TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
             long endTime, string pageSize, int limit)

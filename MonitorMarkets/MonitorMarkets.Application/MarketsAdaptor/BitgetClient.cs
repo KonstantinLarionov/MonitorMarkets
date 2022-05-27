@@ -33,6 +33,7 @@ using GetSingleAccountResponse = BitgetMapper.Futures.RestAPI.Responses.Account.
 using OrderTypeEnum = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum;
 using PlaceOrderResponse = BitgetMapper.Futures.RestAPI.Responses.Account.PlaceOrderResponse;
 using WebSocketSharp;
+using OrderType = BybitMapper.Spot.UserStreams.Enums.OrderType;
 using SideType = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.SideType;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
@@ -167,9 +168,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public IEnumerable<Objects.Responses.KlineResponse> GetCandleDataRequest(string symbol,
-            IntervalKlineType period, long startTime, long endTime)
-        {
+        public IEnumerable<Objects.Responses.KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period, long startTime, long endTime)        {
             var periodreq = GranularityEnum.None;
             if (TryGetIntervalKineType(period, out periodreq))
             {
@@ -227,9 +226,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #region [Account]
 
-        public Objects.Responses.CancelOrderResponse GetCancelOrder(string symbol, string orderid)
+        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse(string symbol, string orderid)
         {
-            var cancelOrder = new CancelOrderRequest(symbol, "USDC", orderid);
+            var cancelOrder = new CancelOrderRequest(symbol, "USDT", orderid);
             var request = _requestArranger.Arrange(cancelOrder);
             string response = string.Empty;
             CancelOrderResponse response_obj = null;
@@ -245,15 +244,15 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)
             {
-                return null;
+                return null; 
             }
 
             return null;
         }
 
-        public Objects.Responses.WalletInfoResponse GetSingleAccountRequest(string symbol)
+        public Objects.Responses.WalletInfoResponse GetWalletInfoResponse(string symbol)
         {
-            var singleAccount = new GetSingleAccountRequest(symbol, "USDC");
+            var singleAccount = new GetSingleAccountRequest(symbol, "USDT");
             var request = _requestArranger.Arrange(singleAccount);
             GetSingleAccountResponse response_obj = null;
             Objects.Responses.WalletInfoResponse response_unt = null;
@@ -276,10 +275,17 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.PlaceOrderResponse PlaceOrderRequest(string symbol, string marginCoin, decimal size,
-            SideType side, OrderTypeEnum orderType)
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
+            OrderActionEnum orderAction)
         {
-            var placeOrder = new PlaceOrderRequest(symbol, marginCoin, size, side, orderType);
+            var side = SideType.None;
+            if (TryGetSideType(orderAction, out side))
+            {
+                
+            }
+
+            var orderSide = OrderTypeEnum.None;
+            var placeOrder = new PlaceOrderRequest(symbol, "USDT", size, side, orderType);
             var request = _requestArranger.Arrange(placeOrder);
             PlaceOrderResponse response_obj = null;
             string response = string.Empty;
@@ -617,7 +623,40 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     return false;
             }
         }
+        bool TryGetOrderType(OrderType in_type, out BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum out_type)
+        {
+            out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.None;
+            switch (in_type)
+            {
+                case OrderType.Limit :
+                    out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Limit;
+                    return true;
+                case OrderType.Market :
+                    out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Market;
+                    return true;
+                case OrderType.LimitMaker :
+                    out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Limit;
+                    return true;
 
+            }
+
+        bool TryGetSideType(OrderActionEnum in_type, out SideType out_type)
+        {
+            out_type = SideType.None;
+            switch (in_type)
+            {
+                case OrderActionEnum.Buy:
+                    out_type = SideType.Buy;
+                    return true;
+                case OrderActionEnum.Sell:
+                    out_type = SideType.Sell;
+                    return true;
+                default:
+                    out_type = SideType.Unrecognized;
+                    return false;
+            }
+            }
+        }
 
         bool TryGetIntervalKineType(IntervalKlineType in_type, out GranularityEnum out_type)
         {
