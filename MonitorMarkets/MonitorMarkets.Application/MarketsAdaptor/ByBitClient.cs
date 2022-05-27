@@ -34,17 +34,24 @@ using MonitorMarkets.Application.Extensions;
 using MonitorMarkets.Application.Objects.Data.Enums;
 using WebSocketSharp;
 using System.Security.Authentication;
+using BitgetMapper.Futures.MarketStreams.Data.Enum;
 using BybitMapper.Perpetual.RestV2.Data.ObjectDTO;
 using BybitMapper.UsdcPerpetual.MarketStreams;
 using BybitMapper.UsdcPerpetual.MarketStreams.Data.Enum;
 using BybitMapper.UsdcPerpetual.MarketStreams.Subscriptions;
 using BybitMapper.UsdcPerpetual.UserStreams;
 using BybitMapper.UsdcPerpetual.UserStreams.Subscriptions;
+using EventPerpetualType = BybitMapper.UsdcPerpetual.MarketStreams.Data.Enum.EventPerpetualType;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
     internal class ByBitClient : IMarketClient
     {
+        
+        private ServerTimeHelper m_ServerTimeHelper;
+        private ServerTimeHelper ServerTimeHelper => m_ServerTimeHelper;
+
+        
         private UsdcPepetualHandlerComposition m_HandlerComposition;
         private RequestArranger m_RequestArranger;
         private RestClient _restClient;
@@ -183,7 +190,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         public IEnumerable<Objects.Responses.KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period, long startTime, long endTime)
         {
-            var request_prep = new QueryKlineRequest(symbol, period, startTime);
+            var sTime = ServerTimeHelper.FromUnixMilliseconds(startTime);
+            var periodreq = IntervalType.Unrecognized;
+            if (TryGetIntervalKineType(period, out periodreq)) { }
+
+            var request_prep = new QueryKlineRequest(symbol, periodreq, sTime);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryKlineResponse response_obj = null;
@@ -208,14 +219,18 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse()
+        
+        
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
+            OrderActionEnum orderAction, TimeInForceEnum timeInForce)
         {
-            string symbol = "";
-            OrderType orderType = OrderType.None;
-            OrderFilterType orderFilter = OrderFilterType.Unrecognized;
-            SideType side = SideType.None;
-            decimal orderQty = 0;
-            var request_prep = new PlaceOrderRequest(symbol, orderType, orderFilter, side, orderQty);
+            var orderSide = SideType.None;
+            if (TryGetSide(orderAction, out orderSide)) { }
+            
+            var orderTypeReq = OrderType.None;
+            if(TryGetOrderTypeReq(orderType, out orderTypeReq)) { }
+            
+            var request_prep = new PlaceOrderRequest(symbol, orderTypeReq, OrderFilterType.Order, orderSide,size);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             PlaceOrderResponse response_obj = null;
@@ -456,6 +471,25 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
         }
 
+        bool TryGetOrderTypeReq(OrderTypeEnum in_type, out OrderType out_type)
+        {
+            out_type = OrderType.None;
+            switch (in_type)
+            {
+                case OrderTypeEnum.Limit:
+                    out_type = OrderType.Limit;
+                    return true;
+                case OrderTypeEnum.Market:
+                    out_type = OrderType.Market;
+                    return true;
+
+                default:
+                    out_type = OrderType.None;
+                    return false;
+
+            }
+        }
+
         bool TryGetOrderState(OrderStatusType in_type, out OrderStateEnum out_type)
         {
             switch (in_type)
@@ -490,6 +524,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     return false;
             }
         }
+        
 
         bool TryGetIntervalKineType(IntervalKlineType in_type, out IntervalType out_type)
         {
@@ -543,7 +578,26 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             }
         }
-        
+        bool TryGetSide(OrderActionEnum in_type, out SideType out_type)
+        {
+            switch (in_type)
+            {
+                case OrderActionEnum.Unknown:
+                    out_type = SideType.None;
+                    return true;
+                case OrderActionEnum.Buy:
+                    out_type = SideType.Buy;
+                    return true;
+                case OrderActionEnum.Sell:
+                    out_type = SideType.Sell;
+                    return true;
+                default:
+                    out_type = SideType.None;
+                    return false;
+
+            }
+        }
+
         #endregion
 
         #region WebSocket

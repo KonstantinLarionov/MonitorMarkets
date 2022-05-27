@@ -17,7 +17,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #region [Private]
 
-        PlaceOrderResponse GetPlaceOrderResponse();
+        PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
+            OrderActionEnum orderAction, TimeInForceEnum timeInForce);
         CancelOrderResponse GetCancelOrderResponse();
         UnfilledResponse GetUnfilledResponse();
         OrderHistoryResponse GetOrderHistoryResponse();

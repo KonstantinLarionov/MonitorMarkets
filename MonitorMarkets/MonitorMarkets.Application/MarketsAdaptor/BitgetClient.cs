@@ -19,6 +19,7 @@ using BitgetMapper.Futures.MarketStreams.Data.Enum;
 using BitgetMapper.Futures.MarketStreams.Data.Enum.ArgDataEnum;
 using BitgetMapper.Futures.MarketStreams.Subscriptions;
 using BybitMapper.Perpetual.RestV2.Data.Enums;
+using MonitorMarkets.Application.Extensions;
 using MonitorMarkets.Application.Objects.Data;
 using MonitorMarkets.Application.Objects.Data.Enums;
 using MonitorMarkets.Application.Objects.Responses;
@@ -41,6 +42,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         readonly RequestArranger _requestArranger;
         private FuturesHanlderComposition _composition;
         private RestClient _restClient;
+        readonly ServerTimeHelper m_ServerTimeHelper;
+        public ServerTimeHelper ServerTimeHelper => m_ServerTimeHelper;
 
         public BitgetClient(string rest_url)
         {
@@ -165,8 +168,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         {
             var periodreq = GranularityEnum.None;
             if (TryGetIntervalKineType(period, out periodreq)) { }
-            
-            var candleData = new GetCandleDataRequest(symbol, periodreq, startTime, endTime);
+
+            var sTime = ServerTimeHelper.FromUnixMilliseconds(startTime);
+            var eTime = ServerTimeHelper.FromUnixMilliseconds(endTime);
+                
+            var candleData = new GetCandleDataRequest(symbol, periodreq, sTime, eTime);
             var request = _requestArranger.Arrange(candleData);
             List<List<Decimal>> response_obj = null;
             string response = string.Empty;
