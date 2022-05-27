@@ -6,7 +6,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
     {
         #region [Public]
         ContractInfoResponse GetContractInfo();
-        OrderBookResponse GetOrderBookResponse();
+        
+        //OrderBookResponse GetOrderBookResponse();
         KlineResponse GetKlineResponse();
         #endregion
 
