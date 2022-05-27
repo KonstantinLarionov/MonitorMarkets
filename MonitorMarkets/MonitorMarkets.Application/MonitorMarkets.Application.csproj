@@ -120,6 +120,7 @@
         <Compile Include="Objects\Responses\KlineResponse.cs" />
         <Compile Include="Objects\Responses\MyPositionsResponse.cs" />
         <Compile Include="Objects\Responses\OrderHistoryResponse.cs" />
+        <Compile Include="Objects\Responses\OnTickResponse.cs" />
         <Compile Include="Objects\Responses\UnfilledResponse.cs" />
         <Compile Include="Objects\Responses\TradeHistoryResponse.cs" />
         <Compile Include="Objects\Responses\WalletInfoResponse.cs" />

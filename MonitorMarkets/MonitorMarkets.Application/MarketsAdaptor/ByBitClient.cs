@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using BybitMapper.Requests;
 using BybitMapper.UsdcPerpetual.RestV2;
 using BybitMapper.UsdcPerpetual.RestV2.Data.Enums;
@@ -196,7 +197,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             return null;
         }
-        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderType orderType, OrderFilterType orderFilter, SideType side, decimal orderQty, OrderMarkerEnum orderMarker)
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderType orderType, OrderFilterType orderFilter, SideType side, decimal orderQty)
         {
             var request_prep = new PlaceOrderRequest(symbol, orderType, orderFilter, side, orderQty);
             var request = m_RequestArranger.Arrange(request_prep);
@@ -219,7 +220,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     orderAction = OrderActionEnum.Sell;
                 }
 
-                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId, response_obj.Result.OrderPrice, response_obj.Result.OrderQty, orderAction, orderMarker);
+                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Result.OrderId, response_obj.Result.OrderPrice, response_obj.Result.OrderQty, orderAction);
 
                 return response_unt;
 
@@ -428,6 +429,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     return false;
             }
         }
+
         bool TryGetOrderState(OrderStatusType in_type, out OrderStateEnum out_type)
         {
             switch (in_type)
@@ -475,46 +477,65 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         UserStreamsUsdcHandlerComposition PrivateUsdcPerpetualHandler;
         MarketStreamsUsdcPerpetualHandlerComposition PublicUsdcHandler;
         
-        public StartSocket(string symbol)
+        public bool StartSocket(string symbol)
         {
             var subOrderBook = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Subscribe, PublicEndpointType.OrderBook200);
             var trade = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Subscribe, PublicEndpointType.Trade);
+            return true;
         }
 
-        public StopSocket(string symbol)
+        public bool StopSocket(string symbol)
         {
             var subOrderBook = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Unsubscribe, PublicEndpointType.OrderBook200);
             var trade = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Unsubscribe, PublicEndpointType.Trade);
-
+            return true;
         }
 
-        private StartSocketPrivate(string _apiKey, string _secretkey)
+        public bool StartSocketPrivate(string _apiKey, string _secretkey)
         {
             var auth = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Auth, _apiKey, _secretkey);
             var order = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Order);
             var position = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Position);
             var execution  = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Execution);
+            return true;
         }
 
-        private StopSocketPrivate()
+        public bool StopSocketPrivate()
         {
             var order = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Unsubscribe, UserEventType.Order);
             var position = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Unsubscribe, UserEventType.Position);
             var execution  = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Unsubscribe, UserEventType.Execution);
+            return true;
         }
-
-        public Connect()
+        
+        public bool Connect()
         {
             m_WebSocketPublic = new WebSocket(urlPublicSocket) { EmitOnPing = true };
             m_WebSocketPublic.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12; 
             m_WebSocketPublic.Log.File = null;
-            m_WebSocketPublic.OnOpen += WebSocket_OnOpen;
-            m_WebSocketPublic.OnClose += WebSocket_OnClose;
-            m_WebSocketPublic.OnError += WebSocket_OnError;
+            //m_WebSocketPublic.OnOpen += WebSocket_OnOpen;
+            //m_WebSocketPublic.OnClose += WebSocket_OnClose;
+            //m_WebSocketPublic.OnError += WebSocket_OnError;
             m_WebSocketPublic.OnMessage += WebSocket_OnMessage;
+            return true;
         }
 
-        private void WebSocket_OnMessage(object sender, MessageEventArgs e)
+         bool WebSocket_OnMessage(object sender, MessageEventArgs e)
+        {
+            if (sender == m_WebSocketPrivate)
+            {
+                OnBaseWebSocketPrivateMessage(sender, e);
+            }
+
+            if (sender == m_WebSocketPublic)
+            {
+                OnBaseWebSocketPublicMessage(sender, e);
+
+            }
+            return true;
+        }
+
+         void OnBaseWebSocketPublicMessage(object sender, MessageEventArgs e)
         {
             var defev = PublicUsdcHandler.HandleDefaultEvent(e.Data);
 
@@ -526,6 +547,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 
                 if (orderBook.Type == DataEventType.Snapshot)
                 {
+                    //orderBook.DataSnap.OrderBook.Select(x => { });
+                    
                     foreach (var item in orderBook.DataSnap.OrderBook)
                     {
                         response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
@@ -566,17 +589,70 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
                 }
             }
+
+            if (defev.PerpetualEventType == EventPerpetualType.Trade)
+            {
+                var trade = PublicUsdcHandler.HandleTradeEvent(e.Data);
+                Objects.Responses.OnTickResponse response_unt = null;
+
+                foreach (var item in trade.Data)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
+                    
+                    response_unt =
+                        new Objects.Responses.OnTickResponse(item.Timestamp, item.Price, item.Size, orderAction);
+                    return response_unt;
+                }
+            }        }
+
+         void OnBaseWebSocketPrivateMessage(object sender, MessageEventArgs e)
+        {
+            var defev = PublicUsdcHandler.HandleDefaultEvent(e.Data);
+
+            if (defev.PerpetualEventType == EventPerpetualType.Order)
+            {
+                var order = PrivateUsdcPerpetualHandler.HandleOrderUsdcEvent(e.Data);
+                Objects.Responses.PlaceOrderResponse response_unt = null;
+
+                foreach (var item in order.Data.Result)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
+
+                    response_unt = new Objects.Responses.PlaceOrderResponse(item.OrderId, item.Price, item.Qty,
+                        orderAction);
+                }
+            }
+
+            if (defev.PerpetualEventType == EventPerpetualType.Trade)
+            {
+                var trade = PrivateUsdcPerpetualHandler.HandleExecutionUsdcEvent(e.Data);
+                Objects.Responses.OnTickResponse response_unt = null;
+
+                foreach (var item in trade.Data.Result)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
+
+                    response_unt =
+                        new Objects.Responses.OnTickResponse(item.TradeTime, item.ExecPrice, item.ExecQty, orderAction);
+                    return response_unt;
+                }
+            }
+            
         }
 
-        private ConnectPrivate()
+        public bool ConnectPrivate()
         {
             m_WebSocketPrivate = new WebSocket(urlPrivateSocket) { EmitOnPing = true };
             m_WebSocketPrivate.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12; 
             m_WebSocketPrivate.Log.File = null;
-            m_WebSocketPrivate.OnOpen += WebSocket_OnOpen;
-            m_WebSocketPrivate.OnClose += WebSocket_OnClose;
-            m_WebSocketPrivate.OnError += WebSocket_OnError;
+            //m_WebSocketPrivate.OnOpen += WebSocket_OnOpen;
+            //m_WebSocketPrivate.OnClose += WebSocket_OnClose;
+            //m_WebSocketPrivate.OnError += WebSocket_OnError;
             m_WebSocketPrivate.OnMessage += WebSocket_OnMessage;
+            return true;
         }
         
         
