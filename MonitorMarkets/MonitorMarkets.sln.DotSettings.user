@@ -8,6 +8,16 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005CBitgetMapper_005CBitgetMapper_005CBitgetMapper_005Cbin_005CDebug_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005CBitgetMapper_005CBitgetMapper_005CBitgetMapper_005Cbin_005CDebug_005CSystem_002EComponentModel_002EPrimitives_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005CBitgetMapper_005CBitgetMapper_005CBitgetMapper_005Cbin_005CDebug_005CSystem_002ERuntime_002ESerialization_002EPrimitives_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CBitgetMapper_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CBitgetMapper_002Epdb/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CBouncyCastle_002ECrypto_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CJetBrains_002EAnnotations_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CJetBrains_002EAnnotations_002Exml/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CNewtonsoft_002EJson_002Epdb/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CSystem_002EComponentModel_002EPrimitives_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbitget_005CSystem_002ERuntime_002ESerialization_002EPrimitives_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbybitmapper_005CBybitMapper_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbybitmapper_005CBybitMapper_002Edll_002Econfig/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CAdmin_005CDesktop_005Cbybitmapper_005CBybitMapper_002Epdb/@EntryIndexedValue">True</s:Boolean>
@@ -36,5 +46,8 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CMicrosoft_002EVisualStudio_002ECodeCoverage_002EShim_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005C_002Erider_005CMonitorMarkets_005CLibraries_005CBybitMapper_005CNewtonsoft_002EJson_002Exml/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Admin\Desktop\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\BitgetMapper.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=MonitorMarkets_002EApplication_002FMarketsInfo/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>

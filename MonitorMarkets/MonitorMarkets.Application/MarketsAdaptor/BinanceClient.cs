@@ -35,7 +35,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             throw new System.NotImplementedException();
         }
 
-        public PlaceOrderResponse GetCancelOrderResponse()
+        public CancelOrderResponse GetCancelOrderResponse()
         {
             throw new System.NotImplementedException();
         }
