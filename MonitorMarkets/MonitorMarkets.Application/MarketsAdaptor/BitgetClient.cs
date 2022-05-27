@@ -18,7 +18,6 @@ using BitgetMapper.Futures.AccountStreams.Data.Enum.PositionsDataEnums;
 using BitgetMapper.Futures.MarketStreams.Data.Enum;
 using BitgetMapper.Futures.MarketStreams.Data.Enum.ArgDataEnum;
 using BitgetMapper.Futures.MarketStreams.Subscriptions;
-using BybitMapper.Perpetual.RestV2.Data.Enums;
 using MonitorMarkets.Application.Extensions;
 using MonitorMarkets.Application.Objects.Data;
 using MonitorMarkets.Application.Objects.Data.Enums;
@@ -33,7 +32,7 @@ using GetSingleAccountResponse = BitgetMapper.Futures.RestAPI.Responses.Account.
 using OrderTypeEnum = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum;
 using PlaceOrderResponse = BitgetMapper.Futures.RestAPI.Responses.Account.PlaceOrderResponse;
 using WebSocketSharp;
-using OrderType = BybitMapper.Spot.UserStreams.Enums.OrderType;
+
 using SideType = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.SideType;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
@@ -275,17 +274,17 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
-            OrderActionEnum orderAction)
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, Objects.Data.Enums.OrderTypeEnum orderType, decimal size, decimal price,
+            OrderActionEnum orderAction, SideTypeOrderEnum sideOrderTypeEnum)
         {
-            var side = SideType.None;
-            if (TryGetSideType(orderAction, out side))
+            var side = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.None;
+            if (TryGetFromOrderType(orderType, out side))
             {
-                
             }
 
-            var orderSide = OrderTypeEnum.None;
-            var placeOrder = new PlaceOrderRequest(symbol, "USDT", size, side, orderType);
+            var sideOrder = SideType.None;
+            if(TryGetSideType(sideOrderTypeEnum, out sideOrder))
+            var placeOrder = new PlaceOrderRequest(symbol,"USDT", size, sideOrder, side);
             var request = _requestArranger.Arrange(placeOrder);
             PlaceOrderResponse response_obj = null;
             string response = string.Empty;
@@ -623,36 +622,47 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     return false;
             }
         }
-        bool TryGetOrderType(OrderType in_type, out BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum out_type)
+
+        bool TryGetFromOrderType(Objects.Data.Enums.OrderTypeEnum in_type,
+            out BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum out_type)
         {
             out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.None;
             switch (in_type)
             {
-                case OrderType.Limit :
+                case Objects.Data.Enums.OrderTypeEnum.Limit:
                     out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Limit;
                     return true;
-                case OrderType.Market :
+                case Objects.Data.Enums.OrderTypeEnum.Market:
                     out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Market;
                     return true;
-                case OrderType.LimitMaker :
-                    out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Limit;
-                    return true;
+                default:
+                    out_type = OrderTypeEnum.None;
+                    return false;
 
             }
+        }
 
-        bool TryGetSideType(OrderActionEnum in_type, out SideType out_type)
+
+        bool TryGetSideType(SideTypeOrderEnum in_type, out SideType out_type)
         {
             out_type = SideType.None;
             switch (in_type)
             {
-                case OrderActionEnum.Buy:
-                    out_type = SideType.Buy;
+                case SideTypeOrderEnum.CloseLong:
+                    out_type = SideType.CloseLong;
                     return true;
-                case OrderActionEnum.Sell:
-                    out_type = SideType.Sell;
+                case SideTypeOrderEnum.CloseShort:
+                    out_type = SideType.CloseShort;
                     return true;
+                case SideTypeOrderEnum.OpenLong:
+                    out_type = SideType.OpenLong;
+                    return true;
+                case SideTypeOrderEnum.OpenShort:
+                    out_type = SideType.OpenShort;
+                    return true;
+
                 default:
-                    out_type = SideType.Unrecognized;
+                    out_type = SideType.None;
                     return false;
             }
             }
@@ -699,4 +709,3 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #endregion
 
     }
-}

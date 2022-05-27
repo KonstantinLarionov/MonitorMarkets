@@ -113,6 +113,7 @@
         <Compile Include="Objects\Data\Enums\OrderMarkerEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderStateEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderTypeEnum.cs" />
+        <Compile Include="Objects\Data\Enums\SideTypeOrderEnum.cs" />
         <Compile Include="Objects\Data\Enums\TimeInForceEnum.cs" />
         <Compile Include="Objects\Data\Enums\TriggerTypeEnum.cs" />
         <Compile Include="Objects\Responses\CancelOrderResponse.cs" />

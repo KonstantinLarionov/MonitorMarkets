@@ -222,7 +222,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         
         
         public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
-            OrderActionEnum orderAction)
+            OrderActionEnum orderAction, SideTypeOrderEnum sideOrderType)
         {
             var orderSide = SideType.None;
             if (TryGetSide(orderAction, out orderSide)) { }
