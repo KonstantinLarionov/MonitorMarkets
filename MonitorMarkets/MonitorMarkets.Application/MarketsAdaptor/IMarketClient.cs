@@ -18,12 +18,12 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #region [Private]
 
         PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
-            OrderActionEnum orderAction, TimeInForceEnum timeInForce);
-        CancelOrderResponse GetCancelOrderResponse();
-        UnfilledResponse GetUnfilledResponse();
-        OrderHistoryResponse GetOrderHistoryResponse();
-        IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse();
-        WalletInfoResponse GetWalletInfoResponse();
+            OrderActionEnum orderAction);
+        CancelOrderResponse GetCancelOrderResponse(string symbol, string orderid);
+        UnfilledResponse GetActiveOrderHistory(string symbol);
+        IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
+            long endTime, string pageSize, int limit);
+        WalletInfoResponse GetWalletInfoResponse(string symbol);
         IEnumerable<MyPositionsResponse> GetMyPositionsResponse();
 
         #endregion

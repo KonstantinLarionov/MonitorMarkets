@@ -222,7 +222,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         
         
         public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
-            OrderActionEnum orderAction, TimeInForceEnum timeInForce)
+            OrderActionEnum orderAction)
         {
             var orderSide = SideType.None;
             if (TryGetSide(orderAction, out orderSide)) { }
@@ -231,6 +231,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             if(TryGetOrderTypeReq(orderType, out orderTypeReq)) { }
             
             var request_prep = new PlaceOrderRequest(symbol, orderTypeReq, OrderFilterType.Order, orderSide,size);
+            
+            request_prep.OrderPrice = price;
+
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             PlaceOrderResponse response_obj = null;
@@ -241,7 +244,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandlePlaceOrderResponse(response);
 
-                OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                orderAction = OrderActionEnum.Unknown;
                 if (response_obj.Result.SideType == SideType.Buy)
                 {
                     orderAction = OrderActionEnum.Buy;
@@ -265,11 +268,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse()
+        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse(string symbol, string orderid)
         {
-            string symbol = "";
-            OrderFilterType orderFilter = OrderFilterType.Order;
             var cancelOrder = new CancelOrderRequest(symbol, orderFilter: OrderFilterType.Order);
+            cancelOrder.OrderId = orderid;
             var request = m_RequestArranger.Arrange(cancelOrder);
             string response = string.Empty;
             CancelOrderResponse response_obj = null;
@@ -291,7 +293,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.UnfilledResponse GetUnfilledResponse()
+        public Objects.Responses.UnfilledResponse GetActiveOrderHistory(string symbol)
         {
             CategoryType category = CategoryType.Perpetual;
             var request_prep = new QueryUnfilledRequest(category);
@@ -316,7 +318,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.OrderHistoryResponse GetOrderHistoryResponse()
+        public Objects.Responses.OrderHistoryResponse GetOrderHistoryResponse(string symbol, long startTime, long endTime, string pageSize)
         {
             CategoryType category = CategoryType.Perpetual;
             var request_prep = new QueryOrderHistoryRequest(category);
@@ -357,10 +359,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public IEnumerable<Objects.Responses.TradeHistoryResponse> GetTradeHistoryResponse()
+        public IEnumerable<Objects.Responses.TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
+            long endTime, string pageSize, int limit)
         {
             CategoryType category = CategoryType.Perpetual;
-            int limit = 20;
             var request_prep = new TradeHistoryRequest(category, limit);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
@@ -372,7 +374,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleTradeHistoryResponse(response);
                 response_unt = response_obj.Result.DataList.Select(x => 
-                    new Objects.Responses.TradeHistoryResponse(x.Symbol, x.TradeTime, x.TradeId, x.OrderId, x.ExecPrice,
+                    new Objects.Responses.TradeHistoryResponse(x.Symbol, x.TradeTime, x.OrderId, x.ExecPrice,
                         x.ExecQty, x.ExecFee, x.Symbol));
                 return response_unt;
             }
@@ -384,7 +386,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.WalletInfoResponse GetWalletInfoResponse()
+        public Objects.Responses.WalletInfoResponse GetWalletInfoResponse(string symbol)
         {
             var request_prep = new WalletInfoRequest();
             var request = m_RequestArranger.Arrange(request_prep);
