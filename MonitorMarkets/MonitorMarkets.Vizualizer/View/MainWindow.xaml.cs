@@ -1,7 +1,8 @@
 ﻿
 using System.Windows;
 using System.Windows.Controls;
-
+using MonitorMarkets.Application.Abstraction;
+using MonitorMarkets.Application.Objects.Data.Enums;
 using MonitorMarkets.Vizualizer.View;
 using MonitorMarkets.Vizualizer.View.Resources.MenuLibrary;
 using Menu = MonitorMarkets.Vizualizer.View.Resources.Menu;
@@ -19,8 +20,8 @@ namespace MonitorMarkets.Vizualizer
         //private readonly FactoryClientService _factory;
         public MainWindow()
         {
-            /*_factory = FactoryClientService.GetInstance();
-            _factory.GetMarket(MarketsEnum.Binance);*/
+            //_factory = FactoryClientService.GetInstance();
+            //_factory.GetMarket(MarketsEnum.Binance);
             InitializeComponent();
         }
 
