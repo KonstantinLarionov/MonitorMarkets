@@ -634,7 +634,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return true;
         }
 
-        public bool StartSocketPrivate()
+        public bool StartSocketPrivate(Func<long> timestamp)
         {
             var auth = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Auth, ApiKey, SecretKey);
             var order = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Order);

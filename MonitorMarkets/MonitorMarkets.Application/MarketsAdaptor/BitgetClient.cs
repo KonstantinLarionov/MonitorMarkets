@@ -32,7 +32,6 @@ using GetSingleAccountResponse = BitgetMapper.Futures.RestAPI.Responses.Account.
 using OrderTypeEnum = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum;
 using PlaceOrderResponse = BitgetMapper.Futures.RestAPI.Responses.Account.PlaceOrderResponse;
 using WebSocketSharp;
-
 using SideType = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.SideType;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
@@ -130,7 +129,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
         }
 
-
         #endregion
 
         #region [Requests]
@@ -167,7 +165,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public IEnumerable<Objects.Responses.KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period, long startTime, long endTime)        {
+        public IEnumerable<Objects.Responses.KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period,
+            long startTime, long endTime)
+        {
             var periodreq = GranularityEnum.None;
             if (TryGetIntervalKineType(period, out periodreq))
             {
@@ -220,7 +220,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return response_obj;
         }
 
-
         #endregion
 
         #region [Account]
@@ -243,7 +242,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
             catch (Exception ex)
             {
-                return null; 
+                return null;
             }
 
             return null;
@@ -274,7 +273,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol, Objects.Data.Enums.OrderTypeEnum orderType, decimal size, decimal price,
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol,
+            Objects.Data.Enums.OrderTypeEnum orderType, decimal size, decimal price,
             OrderActionEnum orderAction, SideTypeOrderEnum sideOrderTypeEnum)
         {
             var side = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.None;
@@ -283,8 +283,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             var sideOrder = SideType.None;
-            if(TryGetSideType(sideOrderTypeEnum, out sideOrder))
-            var placeOrder = new PlaceOrderRequest(symbol,"USDT", size, sideOrder, side);
+            if (TryGetSideType(sideOrderTypeEnum, out sideOrder))
+            {
+            }
+
+            var placeOrder = new PlaceOrderRequest(symbol, "USDT", size, sideOrder, side);
             var request = _requestArranger.Arrange(placeOrder);
             PlaceOrderResponse response_obj = null;
             string response = string.Empty;
@@ -299,7 +302,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     new Objects.Responses.PlaceOrderResponse(response_obj.Data.OrderId, 0, 0, OrderActionEnum.Unknown);
 
                 return response_unt;
-
             }
             catch (Exception ex)
             {
@@ -328,7 +330,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 response_unt = new Objects.Responses.UnfilledResponse();
 
                 return response_unt;
-
             }
             catch (Exception ex)
             {
@@ -336,10 +337,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-
         }
 
-        public  IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
+        public IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
             long endTime, string pageSize, int limit)
         {
             var sTime = ServerTimeHelper.FromUnixMilliseconds(startTime);
@@ -354,7 +354,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetHistoryOrderResponse(response);
-                
+
                 response_unt = response_obj.Data.OrderList.Select(x =>
                     new Objects.Responses.TradeHistoryResponse(x.Symbol, x.Ctime, x.OrderId, x.Price, x.Size, x.Fee,
                         x.MarginCoin));
@@ -366,7 +366,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-
         }
 
         /*public Objects.Responses.TradeHistoryResponse GetTradeHistoryResponse()
@@ -435,14 +434,12 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return true;
         }
 
-        public bool StartSocketPrivate()
+        public bool StartSocketPrivate(Func<long> timestamp)
         {
-
             string instId = "";
             var auth =
-                CombineStreamsSubs.Create(EventTypeEnum.Subscirbe, ApiKey, SecretKey, Passphrase,
-                    Func<long> timestampfactory);
-            var account =
+                CombineStreamsSubs.Create(EventTypeEnum.Subscirbe, ApiKey, SecretKey, Passphrase, timestamp);
+            var account = 
                 CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Account);
             var order = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl,
                 ChannelEnum.Orders);
@@ -638,33 +635,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 default:
                     out_type = OrderTypeEnum.None;
                     return false;
-
-            }
-        }
-
-
-        bool TryGetSideType(SideTypeOrderEnum in_type, out SideType out_type)
-        {
-            out_type = SideType.None;
-            switch (in_type)
-            {
-                case SideTypeOrderEnum.CloseLong:
-                    out_type = SideType.CloseLong;
-                    return true;
-                case SideTypeOrderEnum.CloseShort:
-                    out_type = SideType.CloseShort;
-                    return true;
-                case SideTypeOrderEnum.OpenLong:
-                    out_type = SideType.OpenLong;
-                    return true;
-                case SideTypeOrderEnum.OpenShort:
-                    out_type = SideType.OpenShort;
-                    return true;
-
-                default:
-                    out_type = SideType.None;
-                    return false;
-            }
             }
         }
 
@@ -702,10 +672,33 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 default:
                     out_type = GranularityEnum.None;
                     return false;
-
             }
-
         }
-        #endregion
 
+        bool TryGetSideType(SideTypeOrderEnum in_type, out SideType out_type)
+        {
+            out_type = SideType.None;
+            switch (in_type)
+            {
+                case SideTypeOrderEnum.CloseLong:
+                    out_type = SideType.CloseLong;
+                    return true;
+                case SideTypeOrderEnum.CloseShort:
+                    out_type = SideType.CloseShort;
+                    return true;
+                case SideTypeOrderEnum.OpenLong:
+                    out_type = SideType.OpenLong;
+                    return true;
+                case SideTypeOrderEnum.OpenShort:
+                    out_type = SideType.OpenShort;
+                    return true;
+
+                default:
+                    out_type = SideType.None;
+                    return false;
+            }
+        }
     }
+
+    #endregion
+}

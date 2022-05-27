@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlTypes;
 using MonitorMarkets.Application.Objects.Responses;
 using MonitorMarkets.Application.Objects.Data.Enums;
@@ -42,7 +43,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         /// Включение приватных каналов (трейды ордера позиции)
         /// </summary>
         /// <returns>Результат проверки после получения первых сообщений сокета по всех каналам</returns>
-        bool StartSocketPrivate();
+        bool StartSocketPrivate(Func<long> timestamp);
         /// <summary>
         /// Отключение приватных каналов
         /// </summary>
