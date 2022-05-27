@@ -22,18 +22,14 @@ namespace MonitorMarkets.Vizualizer
             /*_factory = FactoryClientService.GetInstance();
             _factory.GetMarket(MarketsEnum.Binance);*/
             InitializeComponent();
-            /*this.menu = new Menu();
-            var example = new ExampleWindow();
-            example.Show();*/
         }
 
 
         private void ButtonBase_Settings(object sender, RoutedEventArgs e)
         {
-            int chld = VisualChildrenCount;
             bool isWindowOpen = false;
 
-            foreach (Window w in Application.Current.Windows)
+            foreach (Window w in System.Windows.Application.Current.Windows)
             {
                 if (w is GeneralSettingsWindow)
                 {
@@ -43,20 +39,21 @@ namespace MonitorMarkets.Vizualizer
             }
 
             if (!isWindowOpen)
+                
             {
-                GeneralSettingsWindow newwindow = new GeneralSettingsWindow();
-                newwindow.Show();
+                GeneralSettingsWindow settings = new GeneralSettingsWindow();
+                settings.Owner = this;
+                settings.Show();
             }
         }
 
         private void ButtonBase_Trading(object sender, RoutedEventArgs e)
         {
-            int chld = VisualChildrenCount;
             bool isWindowOpen = false;
 
-            foreach (Window w in Application.Current.Windows)
+            foreach (Window w in System.Windows.Application.Current.Windows)
             {
-                if (w is GeneralSettingsWindow)
+                if (w is TradingWindow)
                 {
                     isWindowOpen = true;
                     w.Activate();
@@ -64,22 +61,56 @@ namespace MonitorMarkets.Vizualizer
             }
 
             if (!isWindowOpen)
+                
             {
-                GeneralSettingsWindow newwindow = new GeneralSettingsWindow();
-                newwindow.Show();
+                TradingWindow trade = new TradingWindow();
+                trade.Owner = this;
+                trade.Show();
             }
         }
 
         private void ButtonBase_Charts(object sender, RoutedEventArgs e)
         {
-            var charts = new ChartsOfExchanges();
-            charts.Show();
+            bool isWindowOpen = false;
+
+            foreach (Window w in System.Windows.Application.Current.Windows)
+            {
+                if (w is ChartsOfExchangesWindow)
+                {
+                    isWindowOpen = true;
+                    w.Activate();
+                }
+            }
+
+            if (!isWindowOpen)
+                
+            {
+                ChartsOfExchangesWindow currency = new ChartsOfExchangesWindow();
+                currency.Owner = this;
+                currency.Show();
+            }
         }
 
         private void ButtonBase_Currency(object sender, RoutedEventArgs e)
-        {
-            var currency = new CurrencyRate();
-            currency.Show();
+        { 
+            bool isWindowOpen = false;
+
+            foreach (Window w in System.Windows.Application.Current.Windows)
+            {
+                if (w is CurrencyRateWindow)
+                {
+                    isWindowOpen = true;
+                    w.Activate();
+                }
+            }
+
+            if (!isWindowOpen)
+                
+            {
+                CurrencyRateWindow currency = new CurrencyRateWindow();
+                currency.Owner = this;
+                currency.Show();
+            }
         }
     }
 }

@@ -4,9 +4,18 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
+        xmlns:enums="clr-namespace:MonitorMarkets.Application.Objects.Data.Enums;assembly=MonitorMarkets.Application"
         mc:Ignorable="d"
         Title="General Settings" Height="450" Width="250" ResizeMode="NoResize">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="DatafromEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:MarketsEnum"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid>
         <DockPanel>
             <DockPanel DockPanel.Dock="Top" Margin="10" DockPanel.LastChildFill="True">
@@ -15,11 +24,11 @@
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="15" >
                             <Label FontSize="20" Foreground="Black"> Биржа: </Label>
                             <ComboBox Height="30" 
+                                      FontSize="16"
                                       VerticalAlignment="Top" 
                                       Width="80" 
-                                      BorderBrush="MediumPurple">
-                                 <TextBlock >1234</TextBlock>
-                                <TextBlock>1234</TextBlock>
+                                      BorderBrush="MediumPurple"
+                                      ItemsSource="{Binding Source={StaticResource DatafromEnum}}">
                             </ComboBox>
                         </StackPanel>
                         <DockPanel LastChildFill="False">

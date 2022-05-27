@@ -1,10 +1,18 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup;
+using MonitorMarkets.Application.MarketsAdaptor;
+using MonitorMarkets.Application.Objects.Data.Enums;
 
 namespace MonitorMarkets.Vizualizer.View
 {
-    public partial class ChartsOfExchanges : Window
+    public partial class ChartsOfExchangesWindow : Window
     {
-        public ChartsOfExchanges()
+        public ChartsOfExchangesWindow()
         {
             InitializeComponent();
         }

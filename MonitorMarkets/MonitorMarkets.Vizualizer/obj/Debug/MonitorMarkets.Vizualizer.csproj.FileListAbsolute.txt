@@ -35,3 +35,17 @@ C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizual
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\CurrencyRateWindow.baml
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ChartsWindow.g.cs
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\View\ChartsWindow.baml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\websocket-sharp-with-proxy-support.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\MonitorMarkets.Application.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BinanceMapper.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\RestSharp.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BitgetMapper.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BybitMapper.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\MonitorMarkets.Application.pdb
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\MonitorMarkets.Application.dll.config
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BinanceMapper.pdb
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BinanceMapper.xml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\RestSharp.xml
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BitgetMapper.pdb
+C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BybitMapper.pdb

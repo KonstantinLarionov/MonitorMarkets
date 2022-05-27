@@ -2,9 +2,9 @@
 
 namespace MonitorMarkets.Vizualizer.View
 {
-    public partial class CurrencyRate : Window
+    public partial class CurrencyRateWindow : Window
     {
-        public CurrencyRate()
+        public CurrencyRateWindow()
         {
             InitializeComponent();
         }

@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:enums="clr-namespace:MonitorMarkets.Application.Objects.Data.Enums;assembly=MonitorMarkets.Application"
         mc:Ignorable="d"
         Title="Trading" Height="750" Width="450" ResizeMode="NoResize" >
+    <Window.Resources>
+        <ObjectDataProvider x:Key="DatafromEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:MarketsEnum" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <DockPanel LastChildFill="False">
         <materialDesign:Card Margin="10" Background="WhiteSmoke">
             <DockPanel LastChildFill="False">
@@ -19,11 +28,13 @@
                                 <ComboBox HorizontalAlignment="Right"
                                     Margin="0,10,0,0"      
                                     Height="30" 
+                                    Name="Box"
                                     VerticalAlignment="Top" 
                                     Width="150" 
-                                    BorderBrush="MediumPurple">
-                                    <TextBlock >1234</TextBlock>
-                                    <TextBlock>1234</TextBlock>
+                                    FontSize="18"
+                                    BorderBrush="MediumPurple"
+                                    ItemsSource="{Binding Source={StaticResource DatafromEnum}}">
+                                    
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,10,0,0">
@@ -94,7 +105,8 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Label FontSize="20" Foreground="Black" Content="БиржаНейм:"></Label>
+                                    <TextBlock FontSize="20" >1234
+                                    </TextBlock>
                                     <Label FontSize="20" Foreground="Black" Content="ВалютаНейм"></Label>
                                 </StackPanel>
                                 
@@ -117,8 +129,9 @@
                                 Margin="0,0,10,0" 
                                 Content="Закрыть все"
                                 Background="DarkRed"
-                                BorderBrush="DarkRed"
-                                ></Button>
+                                BorderBrush="DarkRed">
+                                
+                            </Button>
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>

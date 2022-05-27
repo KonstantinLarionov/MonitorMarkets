@@ -9,7 +9,7 @@ namespace MonitorMarkets.Vizualizer
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : System.Windows.Application
+    public partial class App
     {
         [DllImport("user32", CharSet = CharSet.Unicode)]
         static extern IntPtr FindWindow(string cls, string win);

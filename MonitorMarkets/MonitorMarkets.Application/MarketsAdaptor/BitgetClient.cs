@@ -11,6 +11,7 @@ using BitgetMapper.Futures.RestAPI.Responses.Account;
 using BitGetMapper.Futures.RestAPI.Responses.Account;
 using BitgetMapper.Futures.RestAPI.Responses.Market;
 using BitgetMapper.Requests;
+using MonitorMarkets.Application.Abstraction;
 using MonitorMarkets.Application.Objects.Data;
 using MonitorMarkets.Application.Objects.Data.Enums;
 using MonitorMarkets.Application.Objects.Responses;
@@ -151,6 +152,46 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;        }
+
+        public OrderBookResponse GetOrderBookResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public KlineResponse GetKlineResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UnfilledResponse GetUnfilledResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OrderHistoryResponse GetOrderHistoryResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TradeHistoryResponse GetTradeHistoryResponse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public WalletInfoResponse GetWalletInfoResponse()
+        {
+            throw new NotImplementedException();
+        }
 
         public Objects.Responses.KlineResponse GetCandleDataRequest(string symbol, GranularityEnum granularity,
             DateTime start, DateTime end)
@@ -337,28 +378,37 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         }*/
         public Objects.Responses.MyPositionsResponse GetMyPositionsResponse()
         {
-            var placeOrder = new GetAllPositionRequest(ProductTypeEnum.Umcbl);
-            var request = _requestArranger.Arrange(placeOrder);
-            GetAllPositionResponse response_obj = null;
-            string response = string.Empty;
-            Objects.Responses.MyPositionsResponse response_unt = null;
-                                                                        
-            try
-            {
-                response = SendRestRequest(request);
-                response_obj = _composition.HandleGetAllPositionResponse(response);
+            throw new NotImplementedException();
+        }
 
-                foreach (var item in response_obj.Data)
-                {
-                    response_unt = new Objects.Responses.MyPositionsResponse(item.Symbol, item.AverageOpenPrice, item.Margin);
-                    return response_unt;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-            return null;
+        public bool StartSocket()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool StopSocket()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool StartSocketPrivate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool StopSocketPrivate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Connect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ConnectPrivate(string apikey, string secret, string passphrase)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -369,19 +419,19 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         WebSocket m_WebSocketPublic = null;
         WebSocket m_WebSocketPrivate = null;
-        public StartSocket()
+        /*public StartSocket()
         {
-            
+            throw new NotImplementedException();
         }
 
         public StopSocket()
         {
-            
+            throw new NotImplementedException();
         }
 
         private StartSocketPrivate()
         {
-            
+            throw new NotImplementedException();
         }
 
         private StopSocketPrivate()
@@ -398,6 +448,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         {
             
         }
+        */
         
         #endregion
 
