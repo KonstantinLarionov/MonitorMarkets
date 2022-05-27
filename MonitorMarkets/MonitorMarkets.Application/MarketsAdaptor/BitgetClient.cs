@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Authentication;
 using BitgetMapper.Futures.RestAPI;
 using BitgetMapper.Futures.RestAPI.Data.DTO;
 using BitgetMapper.Futures.RestAPI.Data.DTO.Enum;
@@ -11,6 +12,11 @@ using BitgetMapper.Futures.RestAPI.Responses.Account;
 using BitGetMapper.Futures.RestAPI.Responses.Account;
 using BitgetMapper.Futures.RestAPI.Responses.Market;
 using BitgetMapper.Requests;
+using BitgetMapper.Futures.MarketStreams;
+using BitgetMapper.Futures.AccountStreams;
+using BitgetMapper.Futures.MarketStreams.Data.Enum;
+using BitgetMapper.Futures.MarketStreams.Data.Enum.ArgDataEnum;
+using BitgetMapper.Futures.MarketStreams.Subscriptions;
 using MonitorMarkets.Application.Objects.Data;
 using MonitorMarkets.Application.Objects.Data.Enums;
 using MonitorMarkets.Application.Objects.Responses;
@@ -367,37 +373,201 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #region WebSocket
 
+        public MarketStreamsFuturesHandlerComposition MarketHandler = new MarketStreamsFuturesHandlerComposition(new MarketStreamsFuturesHandlerFactory());
+        public AccountStreamsFuturesHandlerComposition AccountHandler = new AccountStreamsFuturesHandlerComposition(new AccountStreamsFuturesHandlerFactory());
+        
+        private string urlPrivateSocket = "wss://ws.bitget.com/mix/v1/stream";
+
+        string ApiKey = string.Empty;
+        string SecretKey = string.Empty;
+        string Passphrase = string.Empty;
+        private string urlPublicSocket = "wss://ws.bitget.com/mix/v1/stream";
+        
         WebSocket m_WebSocketPublic = null;
         WebSocket m_WebSocketPrivate = null;
-        public StartSocket()
+        public bool StartSocket()
         {
-            
+            string instId = "";
+            var subOrderBook =
+                CombineStreamsSubs.CreatePublicEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Books, instId);
+            var trade = CombineStreamsSubs.CreatePublicEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Trade, instId);
+            return true;
+        }
+        public bool StopSocket()
+        {
+            return true;
         }
 
-        public StopSocket()
+        public bool StartSocketPrivate()
         {
             
+            string instId = "";
+            var auth =
+                CombineStreamsSubs.Create(EventTypeEnum.Subscirbe, ApiKey, SecretKey, Passphrase, Func<long> timestampfactory);
+            var account = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Account);
+            var order = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Orders);
+            var position = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Positions);
+
+            return true;
         }
 
-        private StartSocketPrivate()
+        public bool StopSocketPrivate()
         {
+            var account = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Account);
+            var order = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Orders);
+            var position = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Positions);
             
+            return true;
         }
 
-        private StopSocketPrivate()
+        public bool Connect()
         {
-            
+            m_WebSocketPublic = new WebSocket(urlPublicSocket) { EmitOnPing = true };
+            m_WebSocketPublic.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
+            m_WebSocketPublic.Log.File = null;
+            //m_WebSocketPublic.OnOpen += WebSocket_OnOpen;
+            //m_WebSocketPublic.OnClose += WebSocket_OnClose;
+            //m_WebSocketPublic.OnError += WebSocket_OnError;
+            m_WebSocketPublic.OnMessage += WebSocket_OnMessage;
+            return true;
         }
 
-        public Connect()
+        void WebSocket_OnMessage(object sender, MessageEventArgs e)
         {
-            
+            if (sender == m_WebSocketPrivate)
+            {
+                OnBaseWebSocketPrivateMessage(sender, e);
+            }
+            if (sender == m_WebSocketPublic)
+            {
+                OnBaseWebSocketPublicMessage(sender, e);
+            }
         }
 
-        private ConnectPrivate()
+
+        public bool ConnectPrivate(string apiKey, string secretKey, string passphrase)
         {
-            
+            ApiKey = apiKey;
+            SecretKey = secretKey;
+            Passphrase = passphrase;
+            m_WebSocketPrivate = new WebSocket(urlPrivateSocket) { EmitOnPing = true };
+            m_WebSocketPrivate.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
+            m_WebSocketPrivate.Log.File = null;
+            //m_WebSocketPrivate.OnOpen += WebSocket_OnOpen;
+            //m_WebSocketPrivate.OnClose += WebSocket_OnClose;
+            //m_WebSocketPrivate.OnError += WebSocket_OnError;
+            m_WebSocketPrivate.OnMessage += WebSocket_OnMessage;
+            return true;
         }
+                
+        private void OnBaseWebSocketPublicMessage(object sender, MessageEventArgs e)
+        {
+            var defev = MarketHandler.HandleDefaultEvent(e.Data);
+
+            if (defev.PerpetualEventType == EventPerpetualType.OrderBook)
+            {
+                var orderBook = MarketHandler.HandleOrderBookEvent(e.Data);
+
+                Objects.Responses.OrderBookResponse response_unt = null;
+
+                if (orderBook.Data == MarketHandler)
+                {
+                    //orderBook.DataSnap.OrderBook.Select(x => { });
+
+                    foreach (var item in orderBook.Data)
+                    {
+                        response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
+                        //return response_unt;
+                    }
+                }
+            }
+
+            if (defev.PerpetualEventType == EventPerpetualType.Trades)
+            {
+                var trade = MarketHandler.HandleTradesChannelEvent(e.Data);
+                Objects.Responses.OnTickResponse response_unt = null;
+
+                foreach (var item in trade.Data)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideEnum, out orderAction)) { }
+
+                    response_unt =
+                        new Objects.Responses.OnTickResponse(item.Ts, item.Px, item.Sz, orderAction);
+                    //return response_unt;
+                }
+            }
+        }
+        private void OnBaseWebSocketPrivateMessage(object sender, MessageEventArgs e)
+        {
+            var defev = MarketHandler.HandleDefaultEvent(e.Data);
+
+            if (defev.PerpetualEventType == EventPerpetualType.Order)
+            {
+                var order = AccountHandler.HandleOrderEvent(e.Data);
+                Objects.Responses.PlaceOrderResponse response_unt = null;
+
+                foreach (var item in order.Data)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideEnum, out orderAction)) { }
+
+                    response_unt = new Objects.Responses.PlaceOrderResponse(item.OrdId, item.Px, item.Sz, orderAction);
+                }
+            }
+
+            /*if (defev.PerpetualEventType == EventPerpetualType.Account)
+            {
+                var trade = AccountHandler.HandleAccountEvent(e.Data);
+                Objects.Responses.OnTickResponse response_unt = null;
+
+                foreach (var item in trade.Data)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideEnum, out orderAction))
+                    {
+                    }
+
+                    response_unt =
+                        new Objects.Responses.OnTickResponse(item.TradeTime, item.ExecPrice, item.ExecQty, orderAction);
+                    //return response_unt;
+                }
+            }*/
+            
+            if (defev.PerpetualEventType == EventPerpetualType.Positions)
+            {
+                var position = AccountHandler.HandlePositionsEvent(e.Data);
+                Objects.Responses.MyPositionsResponse response_unt = null;}
+                
+                foreach (var item in position.)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideEnum, out orderAction)) { }
+                    response_unt = new Objects.Responses.MyPositionsResponse(item.TradeTime, item.ExecPrice, item.ExecQty, orderAction);
+                    //return response_unt;
+                }
+            }
+
+        }
+
+        bool TryGetOrderAction(SideEnum in_type, out OrderActionEnum out_type)
+        {
+            out_type = OrderActionEnum.Unknown;
+            switch (in_type)
+            {
+                case SideEnum.Buy:
+                    out_type = OrderActionEnum.Buy;
+                    return true;
+                case SideEnum.Sell:
+                    out_type = OrderActionEnum.Sell;
+                    return true;
+
+                default:
+                    out_type = OrderActionEnum.Unknown;
+                    return false;
+            }
+        }
+
         
         #endregion
 

@@ -33,6 +33,7 @@ using MonitorMarkets.Application.Extensions;
 using MonitorMarkets.Application.Objects.Data.Enums;
 using WebSocketSharp;
 using System.Security.Authentication;
+using BybitMapper.Perpetual.RestV2.Data.ObjectDTO;
 using BybitMapper.UsdcPerpetual.MarketStreams;
 using BybitMapper.UsdcPerpetual.MarketStreams.Data.Enum;
 using BybitMapper.UsdcPerpetual.MarketStreams.Subscriptions;
@@ -509,6 +510,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #region WebSocket
 
+        string ApiKey = string.Empty;
+        string SecretKey = string.Empty;
+        string Passphrase = string.Empty;
+        
         WebSocket m_WebSocketPublic = null;
         WebSocket m_WebSocketPrivate = null;
         private string urlPrivateSocket = "wss://stream.bybit.com/perpetual/ws/v1/realtime_public";
@@ -517,25 +522,27 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         UserStreamsUsdcHandlerComposition PrivateUsdcPerpetualHandler;
         MarketStreamsUsdcPerpetualHandlerComposition PublicUsdcHandler;
 
-        public bool StartSocket(string symbol)
+        public bool StartSocket()
         {
+            string symbol = "";
             var subOrderBook =
                 UsdcMarketCombineStremsSubs.Create(symbol, SubType.Subscribe, PublicEndpointType.OrderBook200);
             var trade = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Subscribe, PublicEndpointType.Trade);
             return true;
         }
 
-        public bool StopSocket(string symbol)
+        public bool StopSocket()
         {
+            string symbol = "";
             var subOrderBook =
                 UsdcMarketCombineStremsSubs.Create(symbol, SubType.Unsubscribe, PublicEndpointType.OrderBook200);
             var trade = UsdcMarketCombineStremsSubs.Create(symbol, SubType.Unsubscribe, PublicEndpointType.Trade);
             return true;
         }
 
-        public bool StartSocketPrivate(string _apiKey, string _secretkey)
+        public bool StartSocketPrivate()
         {
-            var auth = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Auth, _apiKey, _secretkey);
+            var auth = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Auth, ApiKey, SecretKey);
             var order = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Order);
             var position = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Position);
             var execution = CombineStremsSubsUsdcPerpetualUser.Create(SubType.Subscribe, UserEventType.Execution);
@@ -686,8 +693,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
         }
 
-        public bool ConnectPrivate()
+        public bool ConnectPrivate(string apiKey, string secretKey, string passphrase)
         {
+            ApiKey = apiKey;
+            SecretKey = secretKey;
+            Passphrase = passphrase;
             m_WebSocketPrivate = new WebSocket(urlPrivateSocket) { EmitOnPing = true };
             m_WebSocketPrivate.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
             m_WebSocketPrivate.Log.File = null;
