@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Internal;
 using System.Globalization;
 using System.Linq;
 using BybitMapper.Requests;
@@ -130,7 +131,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleContractInfoResponce(response);
                 List<ContractInfoData> listData = new List<ContractInfoData>();
-
+                
                 foreach (var item in response_obj.Result)
                 {
                     listData.Add(new ContractInfoData(item.Symbol, item.Status, item.BaseCoin, item.QuoteCoin,
@@ -180,28 +181,24 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }*/
 
-        public Objects.Responses.KlineResponse GetKlineResponse()
+        public IEnumerable<Objects.Responses.KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period, long startTime, long endTime)
         {
-            string symbol = "";
-            IntervalType period = IntervalType.Unrecognized;
-            DateTime startTime = DateTime.Now;
             var request_prep = new QueryKlineRequest(symbol, period, startTime);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryKlineResponse response_obj = null;
-            Objects.Responses.KlineResponse response_unt = null;
+            IEnumerable<Objects.Responses.KlineResponse> response_unt = null;
 
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryKlineResponse(response);
 
-                foreach (var item in response_obj.Result)
-                {
-                    response_unt = new Objects.Responses.KlineResponse(item.OpenTime, item.Open, item.Close, item.High,
-                        item.Low, item.Volume);
-                    return response_unt;
-                }
+                response_unt = response_obj.Result.Select(x => new Objects.Responses.KlineResponse(x.OpenTime,
+                    x.Open, x.Close, x.High,
+                    x.Low, x.Volume));
+                
+                return response_unt;
             }
             catch (Exception ex)
             {
@@ -321,19 +318,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 foreach (var item in response_obj.Result.DataList)
                 {
                     OrderActionEnum orderAction = OrderActionEnum.Unknown;
-                    if (TryGetOrderAction(item.SideType, out orderAction))
-                    {
-                    }
-
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
                     OrderTypeEnum orderState = OrderTypeEnum.Unknown;
-                    if (TryGetOrderType(item.OrderType, out orderState))
-                    {
-                    }
-
+                    if (TryGetOrderType(item.OrderType, out orderState)) { }
                     OrderStateEnum orderType = OrderStateEnum.None;
-                    if (TryGetOrderState(item.OrderStatusType, out orderType))
-                    {
-                    }
+                    if (TryGetOrderState(item.OrderStatusType, out orderType)) { }
 
                     decimal remain_amount = item.Qty;
 
@@ -353,7 +342,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.TradeHistoryResponse GetTradeHistoryResponse()
+        public IEnumerable<Objects.Responses.TradeHistoryResponse> GetTradeHistoryResponse()
         {
             CategoryType category = CategoryType.Perpetual;
             int limit = 20;
@@ -361,18 +350,16 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             TradeHistoryResponse response_obj = null;
-            Objects.Responses.TradeHistoryResponse response_unt = null;
+            IEnumerable<Objects.Responses.TradeHistoryResponse> response_unt = null;
 
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleTradeHistoryResponse(response);
-                foreach (var item in response_obj.Result.DataList)
-                {
-                    response_unt = new Objects.Responses.TradeHistoryResponse(item.Symbol, item.TradeTime, item.TradeId,
-                        item.OrderId, item.ExecPrice, item.ExecQty, item.ExecFee, item.Symbol);
-                    return response_unt;
-                }
+                response_unt = response_obj.Result.DataList.Select(x => 
+                    new Objects.Responses.TradeHistoryResponse(x.Symbol, x.TradeTime, x.TradeId, x.OrderId, x.ExecPrice,
+                        x.ExecQty, x.ExecFee, x.Symbol));
+                return response_unt;
             }
             catch (Exception ex)
             {
@@ -407,25 +394,23 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return null;
         }
 
-        public Objects.Responses.MyPositionsResponse GetMyPositionsResponse()
+        public IEnumerable<Objects.Responses.MyPositionsResponse> GetMyPositionsResponse()
         {
             CategoryType category = CategoryType.Perpetual;
             var request_prep = new QueryMyPositionsRequest(category);
             var request = m_RequestArranger.Arrange(request_prep);
             string response = string.Empty;
             QueryMyPositionsResponse response_obj = null;
-            Objects.Responses.MyPositionsResponse response_unt = null;
+            IEnumerable<Objects.Responses.MyPositionsResponse> response_unt = null;
 
             try
             {
                 response = SendRestRequest(request);
                 response_obj = m_HandlerComposition.HandleQueryMyPositionsResponse(response);
 
-                foreach (var item in response_obj.Result.DataList)
-                {
-                    response_unt = new Objects.Responses.MyPositionsResponse(item.Symbol, item.EntryPrice, item.Size);
-                    return response_unt;
-                }
+                response_unt = response_obj.Result.DataList.Select(x =>
+                    new Objects.Responses.MyPositionsResponse(x.Symbol, x.EntryPrice, x.Size));
+                return response_unt;
             }
             catch (Exception ex)
             {
@@ -506,6 +491,59 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
         }
 
+        bool TryGetIntervalKineType(IntervalKlineType in_type, out IntervalType out_type)
+        {
+            switch (in_type)
+            {
+                case IntervalKlineType.Unrecognized:
+                    out_type = IntervalType.Unrecognized;
+                    return true;
+                case IntervalKlineType.OneMinute:
+                    out_type = IntervalType.OneMinute;
+                    return true;
+                case IntervalKlineType.ThreeMinute:
+                    out_type = IntervalType.ThreeMinute;
+                    return true;
+                case IntervalKlineType.FiveMinute:
+                    out_type = IntervalType.FiveMinute;
+                    return true;
+                case IntervalKlineType.FifteenMinute:
+                    out_type = IntervalType.FifteenMinute;
+                    return true;
+                case IntervalKlineType.ThirtyMinute:
+                    out_type = IntervalType.ThirtyMinute;
+                    return true;
+                case IntervalKlineType.OneHour:
+                    out_type = IntervalType.OneHour;
+                    return true;
+                case IntervalKlineType.TwoHour:
+                    out_type = IntervalType.TwoHour;
+                    return true;
+                case IntervalKlineType.FourHour:
+                    out_type = IntervalType.FourHour;
+                    return true;
+                case IntervalKlineType.SixHour:
+                    out_type = IntervalType.SixHour;
+                    return true;
+                case IntervalKlineType.TwelveHours:
+                    out_type = IntervalType.TwelveHours;
+                    return true;
+                case IntervalKlineType.OneDay:
+                    out_type = IntervalType.OneDay;
+                    return true;
+                case IntervalKlineType.OneM:
+                    out_type = IntervalType.OneM;
+                    return true;
+                case IntervalKlineType.OneW:
+                    out_type = IntervalType.OneW;
+                    return true;
+                default:
+                    out_type = IntervalType.Unrecognized;
+                    return false;
+
+            }
+        }
+        
         #endregion
 
         #region WebSocket
@@ -595,41 +633,25 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 if (orderBook.Type == DataEventType.Snapshot)
                 {
                     //orderBook.DataSnap.OrderBook.Select(x => { });
-
-                    foreach (var item in orderBook.DataSnap.OrderBook)
-                    {
-                        response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
-                        //return response_unt;
-                    }
+                    
+                    orderBook.DataSnap.OrderBook.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                    
                 }
 
                 if (orderBook.Type == DataEventType.Delta)
                 {
                     if (orderBook.DataDelta.Delete.Count > 0)
                     {
-                        foreach (var item in orderBook.DataDelta.Delete)
-                        {
-                            response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
-                            //return response_unt;
-                        }
+                        orderBook.DataDelta.Delete.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
                     }
-
                     if (orderBook.DataDelta.Insert.Count > 0)
                     {
-                        foreach (var item in orderBook.DataDelta.Insert)
-                        {
-                            response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
-                            //return response_unt;
-                        }
+                        orderBook.DataDelta.Insert.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
                     }
 
                     if (orderBook.DataDelta.Update.Count > 0)
                     {
-                        foreach (var item in orderBook.DataDelta.Update)
-                        {
-                            response_unt = new Objects.Responses.OrderBookResponse(item.Price, item.Size);
-                            //return response_unt;
-                        }
+                        orderBook.DataDelta.Update.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
                     }
                 }
             }
@@ -665,10 +687,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 foreach (var item in order.Data.Result)
                 {
                     OrderActionEnum orderAction = OrderActionEnum.Unknown;
-                    if (TryGetOrderAction(item.SideType, out orderAction))
-                    {
-                    }
-
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
+                    
                     response_unt = new Objects.Responses.PlaceOrderResponse(item.OrderId, item.Price, item.Qty,
                         orderAction);
                 }
@@ -682,9 +702,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 foreach (var item in trade.Data.Result)
                 {
                     OrderActionEnum orderAction = OrderActionEnum.Unknown;
-                    if (TryGetOrderAction(item.SideType, out orderAction))
-                    {
-                    }
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
 
                     response_unt =
                         new Objects.Responses.OnTickResponse(item.TradeTime, item.ExecPrice, item.ExecQty, orderAction);

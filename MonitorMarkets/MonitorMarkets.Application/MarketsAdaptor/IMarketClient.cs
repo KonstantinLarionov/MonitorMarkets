@@ -1,14 +1,18 @@
-﻿using MonitorMarkets.Application.Objects.Responses;
+﻿using System.Collections.Generic;
+using System.Data.SqlTypes;
+using MonitorMarkets.Application.Objects.Responses;
+using MonitorMarkets.Application.Objects.Data.Enums;
+
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
     public interface IMarketClient
     {
         #region [Public]
-        ContractInfoResponse GetContractInfo();
+        ContractInfoResponse GetContractInfo(); 
         
         //OrderBookResponse GetOrderBookResponse();
-        KlineResponse GetKlineResponse();
+        IEnumerable<KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period, long startTime, long endTime);
         #endregion
 
         #region [Private]
@@ -17,9 +21,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         CancelOrderResponse GetCancelOrderResponse();
         UnfilledResponse GetUnfilledResponse();
         OrderHistoryResponse GetOrderHistoryResponse();
-        TradeHistoryResponse GetTradeHistoryResponse();
+        IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse();
         WalletInfoResponse GetWalletInfoResponse();
-        MyPositionsResponse GetMyPositionsResponse();
+        IEnumerable<MyPositionsResponse> GetMyPositionsResponse();
 
         #endregion
 

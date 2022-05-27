@@ -107,6 +107,7 @@
         </Compile>
         <Compile Include="Objects\Data\Attributes\EnumMarketsAttribute.cs" />
         <Compile Include="Objects\Data\ContractInfoData.cs" />
+        <Compile Include="Objects\Data\Enums\IntervalKlineType.cs" />
         <Compile Include="Objects\Data\Enums\MarketsEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderActionEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderMarkerEnum.cs" />
