@@ -7,8 +7,9 @@ namespace MonitorMarkets.Database
     {
         public LoggerContext() :base("DefaultConnection")
         {}
-        
-        public DbSet<Log> Users { get; set; }
-         
+        public DbSet<Log> EUsers { get; set; }
+        public DbSet<OrdersEntities> EOrders { get; set; }
+        public DbSet<PositionsEntities> EPositions { get; set; }
+        public DbSet<WalletEntities> EWallet { get; set; }
     }
 }

@@ -50,6 +50,9 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Entities\Log.cs" />
+        <Compile Include="Entities\OrdersEntities.cs" />
+        <Compile Include="Entities\PositionsEntities.cs" />
+        <Compile Include="Entities\WalletEntities.cs" />
         <Compile Include="LoggerContext.cs" />
         <Compile Include="LoggerRepository.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
