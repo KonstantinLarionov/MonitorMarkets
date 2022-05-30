@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorMarkets.Vizualizer",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorMarkets.Application", "MonitorMarkets.Application\MonitorMarkets.Application.csproj", "{BD6C422F-207C-49D6-9E27-D48C8C17D2FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorMarkets.Database", "MonitorMarkets.Database\MonitorMarkets.Database.csproj", "{1F1BB5AC-9EAF-49A8-92AF-7B7AA53AD125}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BD6C422F-207C-49D6-9E27-D48C8C17D2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6C422F-207C-49D6-9E27-D48C8C17D2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6C422F-207C-49D6-9E27-D48C8C17D2FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1BB5AC-9EAF-49A8-92AF-7B7AA53AD125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1BB5AC-9EAF-49A8-92AF-7B7AA53AD125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1BB5AC-9EAF-49A8-92AF-7B7AA53AD125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1BB5AC-9EAF-49A8-92AF-7B7AA53AD125}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
