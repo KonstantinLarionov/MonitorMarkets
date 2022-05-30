@@ -504,6 +504,14 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             return true;
         }
 
+        public event EventHandler<IEnumerable<MonitorMarkets.Application.Objects.Responses.OrderBookResponse>> OrderbookEvent;
+        public event EventHandler<OnTickResponse> OntickPublicEvent;
+        public event EventHandler<OnTickResponse> OntickPrivateEvent;
+        public event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse> PlaceorderEvent;
+        public event EventHandler<MyPositionsResponse> MypositionsEvent;
+        public event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse>
+            PlaceorderPrivateEvent;
+        
         private void OnBaseWebSocketPublicMessage(object sender, MessageEventArgs e)
         {
             var defev = MarketHandler.HandleDefaultEvent(e.Data);
@@ -520,13 +528,17 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
                     foreach (var item in orderBook.Data)
                     {
-                        response_unt = item.Asks.Select(x =>
+                        var orderBookAsksResponses = item.Asks.Select(x =>
                             new Objects.Responses.OrderBookResponse(x[0], -x[1]));
-                        response_unt = item.Bids.Select(x =>
+                        var orderBookBidsResponses = item.Bids.Select(x =>
                             new Objects.Responses.OrderBookResponse(x[0], -x[1]));
+                        
+                        OrderbookEvent?.Invoke(sender, orderBookAsksResponses);
+                        OrderbookEvent?.Invoke(sender, orderBookBidsResponses);
 
                         //return response_unt;
                     }
+                    
                 }
             }
 
@@ -542,8 +554,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     {
                     }
 
-                    response_unt =
+                    var onTickResponse =
                         new Objects.Responses.OnTickResponse(item.Ts, item.Px, item.Sz, orderAction);
+                    OntickPublicEvent?.Invoke(sender, onTickResponse);
+
                     //return response_unt;
                 }
             }
@@ -565,7 +579,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     {
                     }
 
-                    response_unt = new Objects.Responses.PlaceOrderResponse(item.OrdId, item.Px, item.Sz, orderAction);
+                    var placeOrderPrivateResponse = new Objects.Responses.PlaceOrderResponse(item.OrdId, item.Px, item.Sz, orderAction);
+                    PlaceorderPrivateEvent?.Invoke(sender, placeOrderPrivateResponse);
                 }
             }
 
@@ -594,8 +609,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
                 foreach (var item in positions.Data)
                 {
-                    response_unt =
+                    var myPositionsResponse =
                         new Objects.Responses.MyPositionsResponse(item.MarginCoin, item.AverageOpenPrice, item.Margin);
+                    MypositionsEvent?.Invoke(sender, myPositionsResponse);
                     //return response_unt;
                 }
             }

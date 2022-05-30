@@ -668,14 +668,24 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             if (sender == m_WebSocketPrivate)
             {
                 OnBaseWebSocketPrivateMessage(sender, e);
+                
             }
 
             if (sender == m_WebSocketPublic)
             {
                 OnBaseWebSocketPublicMessage(sender, e);
+                
             }
         }
 
+        public event EventHandler<IEnumerable<MonitorMarkets.Application.Objects.Responses.OrderBookResponse>> OrderbookEvent;
+        public event EventHandler<OnTickResponse> OntickPublicEvent;
+        public event EventHandler<OnTickResponse> OntickPrivateEvent;
+        public event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse> PlaceorderEvent;
+        public event EventHandler<MyPositionsResponse> MypositionsEvent;
+        public event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse>
+            PlaceorderPrivateEvent;
+        
         private void OnBaseWebSocketPublicMessage(object sender, MessageEventArgs e)
         {
             var defev = PublicUsdcHandler.HandleDefaultEvent(e.Data);
@@ -690,24 +700,27 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 {
                     //orderBook.DataSnap.OrderBook.Select(x => { });
                     
-                    orderBook.DataSnap.OrderBook.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
-                    
+                    var orderBookResponse = orderBook.DataSnap.OrderBook.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                    OrderbookEvent?.Invoke(sender, orderBookResponse);
                 }
 
                 if (orderBook.Type == DataEventType.Delta)
                 {
                     if (orderBook.DataDelta.Delete.Count > 0)
                     {
-                        orderBook.DataDelta.Delete.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                        var orderBookResponse = orderBook.DataDelta.Delete.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                        OrderbookEvent?.Invoke(sender, orderBookResponse);
                     }
                     if (orderBook.DataDelta.Insert.Count > 0)
                     {
-                        orderBook.DataDelta.Insert.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                        var orderBookResponse = orderBook.DataDelta.Insert.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                        OrderbookEvent?.Invoke(sender, orderBookResponse);
                     }
 
                     if (orderBook.DataDelta.Update.Count > 0)
                     {
-                        orderBook.DataDelta.Update.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                        var orderBookResponse = orderBook.DataDelta.Update.Select(x => new Objects.Responses.OrderBookResponse(x.Price, x.Size));
+                        OrderbookEvent?.Invoke(sender, orderBookResponse);
                     }
                 }
             }
@@ -715,17 +728,16 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             if (defev.PerpetualEventType == EventPerpetualType.Trade)
             {
                 var trade = PublicUsdcHandler.HandleTradeEvent(e.Data);
-                Objects.Responses.OnTickResponse response_unt = null;
 
+                
                 foreach (var item in trade.Data)
                 {
                     OrderActionEnum orderAction = OrderActionEnum.Unknown;
-                    if (TryGetOrderAction(item.SideType, out orderAction))
-                    {
-                    }
-
-                    response_unt =
-                        new Objects.Responses.OnTickResponse(item.Timestamp, item.Price, item.Size, orderAction);
+                    if (TryGetOrderAction(item.SideType, out orderAction)) { }
+                    
+                    var onTickResponse = new Objects.Responses.OnTickResponse(item.Timestamp, item.Price, item.Size, orderAction);
+                    OntickPublicEvent?.Invoke(sender, onTickResponse);
+                    
                     //return response_unt;
                 }
             }
@@ -739,14 +751,18 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 var order = PrivateUsdcPerpetualHandler.HandleOrderUsdcEvent(e.Data);
                 Objects.Responses.PlaceOrderResponse response_unt = null;
-
+                
+                
                 foreach (var item in order.Data.Result)
                 {
                     OrderActionEnum orderAction = OrderActionEnum.Unknown;
                     if (TryGetOrderAction(item.SideType, out orderAction)) { }
                     
-                    response_unt = new Objects.Responses.PlaceOrderResponse(item.OrderId, item.Price, item.Qty,
+                    
+                    var placeOrderResponse = new Objects.Responses.PlaceOrderResponse(item.OrderId, item.Price, item.Qty,
                         orderAction);
+                    PlaceorderEvent?.Invoke(sender, placeOrderResponse);
+                    
                 }
             }
 
@@ -760,8 +776,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                     OrderActionEnum orderAction = OrderActionEnum.Unknown;
                     if (TryGetOrderAction(item.SideType, out orderAction)) { }
 
-                    response_unt =
+                    var onTickResponse =
                         new Objects.Responses.OnTickResponse(item.TradeTime, item.ExecPrice, item.ExecQty, orderAction);
+                    OntickPrivateEvent?.Invoke(sender, onTickResponse);
+
                     //return response_unt;
                 }
             }

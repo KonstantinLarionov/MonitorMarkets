@@ -62,5 +62,14 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         /// <param name="passphrase"></param>
         /// <returns></returns>
         bool ConnectPrivate(string apikey, string secret, string passphrase);
+        
+        event EventHandler<IEnumerable<MonitorMarkets.Application.Objects.Responses.OrderBookResponse>> OrderbookEvent;
+        event EventHandler<OnTickResponse> OntickPublicEvent;
+        event EventHandler<OnTickResponse> OntickPrivateEvent;
+        event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse> PlaceorderEvent;
+        event EventHandler<MyPositionsResponse> MypositionsEvent;
+        event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse>
+            PlaceorderPrivateEvent;
+
     }
 }
