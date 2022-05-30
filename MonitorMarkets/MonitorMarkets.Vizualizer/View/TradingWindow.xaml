@@ -28,14 +28,13 @@
                                 <ComboBox HorizontalAlignment="Right"
                                     Margin="0,10,0,0"      
                                     Height="30" 
-                                    Name="Box"
+                                    Name="SelectedMarket"
                                     VerticalAlignment="Top" 
                                     Width="150" 
                                     FontSize="18"
                                     BorderBrush="MediumPurple"
                                     ItemsSource="{Binding Source={StaticResource DatafromEnum}}"
-                                    SelectionChanged="Box_OnSelectionChanged"
-                                    MouseDoubleClick="">
+                                    SelectionChanged="Box_OnSelectionChanged" >
                                     
                                 </ComboBox>
                             </StackPanel>
@@ -110,7 +109,8 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock FontSize="20" Foreground="Black">БиржаНейм
+                                    <TextBlock Name="MarketBar">
+                                        
                                     </TextBlock>
                                     <Label FontSize="20" Foreground="Black" Content="ВалютаНейм"></Label>
                                 </StackPanel>

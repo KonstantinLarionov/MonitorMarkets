@@ -6,10 +6,10 @@ namespace MonitorMarkets.Application.Objects.Data.Enums
     public enum MarketsEnum
     {
         [EnumMarkets("Binance", null, null,null, false)]
-        Binance,
+        Binance = 0,
         [EnumMarkets("Bybit", null, null,null, false)]
-        Bybit,
+        Bybit = 1,
         [EnumMarkets("Bitget", null, null,null, false)]
-        Bitget
+        Bitget= 2
     }
 }
