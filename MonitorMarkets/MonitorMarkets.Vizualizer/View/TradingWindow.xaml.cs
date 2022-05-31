@@ -29,20 +29,21 @@ namespace MonitorMarkets.Vizualizer.View
             //var marketBinance = enumMarket.GetEnumName(MarketsEnum.Binance);
             Enum.TryParse<MarketsEnum>(SelectedMarket.SelectedValue.ToString(), out status);
         }
-
-        private  void PrintAuthorInfo(System.Type type )
+        
+        /// <summary>
+        /// Gets an attribute on an enum field value
+        /// </summary>
+        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
+        /// <param name="enumVal">The enum value</param>
+        /// <returns>The attribute of type T that exists on the enum value</returns>
+        /// <example><![CDATA[string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;]]></example>
+        ///
+        /*public static T GetAttributeOfType<T>(this Enum enumVal) where T:Attribute
         {
-            // Using reflection.  
-            var attrs = status.GetCustomAttributes(); // Reflection.  
-
-            // Displaying output.  
-            foreach (Attribute attr in attrs)
-            {
-                if (attr is EnumMarketsAttribute)
-                {
-                    EnumMarketsAttribute a = (EnumMarketsAttribute) attr;
-                }
-            }
-        }
+            var type = enumVal.GetType();
+            var memInfo = type.GetMember(enumVal.ToString());
+            var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
+            return (attributes.Length > 0) ? (T)attributes[0] : null;
+        }*/
     }
 }
