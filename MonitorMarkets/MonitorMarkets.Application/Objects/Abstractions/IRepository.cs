@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MonitorMarkets.Application.Objects.Abstractions
 {
-    public interface IRepository<T> where T : class 
+    public interface IRepository<T> 
     {
         void Create(T item);
         T FindById(int id);
