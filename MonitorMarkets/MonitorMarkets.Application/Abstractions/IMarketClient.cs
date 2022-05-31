@@ -1,24 +1,31 @@
-﻿using MonitorMarkets.Application.Objects.Responses;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using MonitorMarkets.Application.Objects.Responses;
+using MonitorMarkets.Application.Objects.Data.Enums;
+
 
 namespace MonitorMarkets.Application.Abstraction
 {
     public interface IMarketClient
     {
         #region [Public]
-        ContractInfoResponse GetContractInfo();
-        OrderBookResponse GetOrderBookResponse();
-        KlineResponse GetKlineResponse();
+        ContractInfoResponse GetContractInfo(); 
+        
+        //OrderBookResponse GetOrderBookResponse();
+        IEnumerable<KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period, long startTime, long endTime);
         #endregion
 
         #region [Private]
 
-        PlaceOrderResponse GetPlaceOrderResponse();
-        CancelOrderResponse GetCancelOrderResponse();
-        UnfilledResponse GetUnfilledResponse();
-        OrderHistoryResponse GetOrderHistoryResponse();
-        TradeHistoryResponse GetTradeHistoryResponse();
-        WalletInfoResponse GetWalletInfoResponse();
-        MyPositionsResponse GetMyPositionsResponse();
+        PlaceOrderResponse GetPlaceOrderResponse(string symbol, OrderTypeEnum orderType, decimal size, decimal price,
+            OrderActionEnum orderAction, SideTypeOrderEnum sideOrderType);
+        CancelOrderResponse GetCancelOrderResponse(string symbol, string orderid);
+        UnfilledResponse GetActiveOrderHistory(string symbol);
+        IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
+            long endTime, string pageSize, int limit);
+        WalletInfoResponse GetWalletInfoResponse(string symbol);
+        IEnumerable<MyPositionsResponse> GetMyPositionsResponse();
 
         #endregion
 
@@ -36,7 +43,7 @@ namespace MonitorMarkets.Application.Abstraction
         /// Включение приватных каналов (трейды ордера позиции)
         /// </summary>
         /// <returns>Результат проверки после получения первых сообщений сокета по всех каналам</returns>
-        bool StartSocketPrivate();
+        bool StartSocketPrivate(Func<long> timestamp);
         /// <summary>
         /// Отключение приватных каналов
         /// </summary>
@@ -55,5 +62,14 @@ namespace MonitorMarkets.Application.Abstraction
         /// <param name="passphrase"></param>
         /// <returns></returns>
         bool ConnectPrivate(string apikey, string secret, string passphrase);
+        
+        event EventHandler<IEnumerable<MonitorMarkets.Application.Objects.Responses.OrderBookResponse>> OrderbookEvent;
+        event EventHandler<OnTickResponse> OntickPublicEvent;
+        event EventHandler<OnTickResponse> OntickPrivateEvent;
+        event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse> PlaceorderEvent;
+        event EventHandler<MyPositionsResponse> MypositionsEvent;
+        event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse>
+            PlaceorderPrivateEvent;
+
     }
 }
