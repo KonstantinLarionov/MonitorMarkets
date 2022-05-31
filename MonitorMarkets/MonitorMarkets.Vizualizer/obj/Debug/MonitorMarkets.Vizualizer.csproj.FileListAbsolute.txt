@@ -49,3 +49,7 @@ C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizual
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\RestSharp.xml
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BitgetMapper.pdb
 C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\BybitMapper.pdb
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.csproj.AssemblyReference.cache
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.csproj.SuggestedBindingRedirects.cache
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.exe
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.pdb

@@ -21,12 +21,6 @@ namespace MonitorMarkets.Vizualizer.View
 
         public void Box_OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            //var enumtype = SelectedMarket.Text;
-            //MarketsEnum markets = (MarketsEnum) Enum.Parse(typeof(MarketsEnum), (string) SelectedMarket.SelectedValue);
-            /*enumMarket= (MarketsEnum) Enum.Parse(typeof(MarketsEnum), SelectedMarket.SelectedItem);
-            MarketBar.Text = (market);
-            var qwe = enumtype.GetType().FullName;*/
-            //var marketBinance = enumMarket.GetEnumName(MarketsEnum.Binance);
             Enum.TryParse<MarketsEnum>(SelectedMarket.SelectedValue.ToString(), out status);
         }
         
@@ -38,6 +32,7 @@ namespace MonitorMarkets.Vizualizer.View
         /// <returns>The attribute of type T that exists on the enum value</returns>
         /// <example><![CDATA[string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;]]></example>
         ///
+        
         /*public static T GetAttributeOfType<T>(this Enum enumVal) where T:Attribute
         {
             var type = enumVal.GetType();
