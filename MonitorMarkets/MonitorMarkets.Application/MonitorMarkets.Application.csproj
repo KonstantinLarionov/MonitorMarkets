@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -38,11 +39,23 @@
         <Reference Include="BitgetMapper">
           <HintPath>..\..\..\bitget\BitgetMapper.dll</HintPath>
         </Reference>
+        <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
+        </Reference>
         <Reference Include="BouncyCastle.Crypto">
           <HintPath>..\..\..\bitget\BouncyCastle.Crypto.dll</HintPath>
         </Reference>
         <Reference Include="BybitMapper">
           <HintPath>..\..\..\bybitmapper\BybitMapper.dll</HintPath>
+        </Reference>
+        <Reference Include="BybitMapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\..\Libraries\BybitMapper\BybitMapper.dll</HintPath>
+        </Reference>
+        <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+          <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+        </Reference>
+        <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+          <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
         </Reference>
         <Reference Include="JetBrains.Annotations">
           <HintPath>..\..\..\bybitmapper\JetBrains.Annotations.dll</HintPath>
@@ -74,6 +87,7 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.ComponentModel.Primitives">
           <HintPath>..\..\..\BitgetMapper\BitgetMapper\BitgetMapper\bin\Debug\System.ComponentModel.Primitives.dll</HintPath>
         </Reference>
@@ -105,13 +119,21 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>MarketsInfo.resx</DependentUpon>
         </Compile>
+        <Compile Include="Objects\Abstractions\IRepository.cs" />
+        <Compile Include="Objects\DataBase\LogInfo.cs" />
+        <Compile Include="Objects\DataBase\OrderEntitiesInfo.cs" />
+        <Compile Include="Objects\DataBase\PositionsEntitiesInfo.cs" />
+        <Compile Include="Objects\DataBase\WalletEntitiesInfo.cs" />
         <Compile Include="Objects\Data\Attributes\EnumMarketsAttribute.cs" />
         <Compile Include="Objects\Data\ContractInfoData.cs" />
+        <Compile Include="Objects\Data\Enums\IntervalKlineType.cs" />
         <Compile Include="Objects\Data\Enums\MarketsEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderActionEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderMarkerEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderStateEnum.cs" />
         <Compile Include="Objects\Data\Enums\OrderTypeEnum.cs" />
+        <Compile Include="Objects\Data\Enums\SideTypeOrderEnum.cs" />
+        <Compile Include="Objects\Data\Enums\TimeInForceEnum.cs" />
         <Compile Include="Objects\Data\Enums\TriggerTypeEnum.cs" />
         <Compile Include="Objects\Responses\CancelOrderResponse.cs" />
         <Compile Include="Objects\Responses\ContractInfoResponse.cs" />
@@ -120,6 +142,7 @@
         <Compile Include="Objects\Responses\KlineResponse.cs" />
         <Compile Include="Objects\Responses\MyPositionsResponse.cs" />
         <Compile Include="Objects\Responses\OrderHistoryResponse.cs" />
+        <Compile Include="Objects\Responses\OnTickResponse.cs" />
         <Compile Include="Objects\Responses\UnfilledResponse.cs" />
         <Compile Include="Objects\Responses\TradeHistoryResponse.cs" />
         <Compile Include="Objects\Responses\WalletInfoResponse.cs" />
@@ -136,6 +159,14 @@
       </EmbeddedResource>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+      <PropertyGroup>
+        <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+      </PropertyGroup>
+      <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+      <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    </Target>
+    <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">

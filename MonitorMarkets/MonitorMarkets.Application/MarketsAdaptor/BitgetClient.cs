@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Authentication;
 using BitgetMapper.Futures.RestAPI;
 using BitgetMapper.Futures.RestAPI.Data.DTO;
 using BitgetMapper.Futures.RestAPI.Data.DTO.Enum;
-using BitGetMapper.Futures.RestAPI.Data.DTO.Enum;
 using BitgetMapper.Futures.RestAPI.Data.DTO.Market;
 using BitgetMapper.Futures.RestAPI.Requests.Account;
 using BitgetMapper.Futures.RestAPI.Requests.Market;
@@ -11,7 +12,14 @@ using BitgetMapper.Futures.RestAPI.Responses.Account;
 using BitGetMapper.Futures.RestAPI.Responses.Account;
 using BitgetMapper.Futures.RestAPI.Responses.Market;
 using BitgetMapper.Requests;
+using BitgetMapper.Futures.MarketStreams;
+using BitgetMapper.Futures.AccountStreams;
+using BitgetMapper.Futures.AccountStreams.Data.Enum.PositionsDataEnums;
+using BitgetMapper.Futures.MarketStreams.Data.Enum;
+using BitgetMapper.Futures.MarketStreams.Data.Enum.ArgDataEnum;
+using BitgetMapper.Futures.MarketStreams.Subscriptions;
 using MonitorMarkets.Application.Abstraction;
+using MonitorMarkets.Application.Extensions;
 using MonitorMarkets.Application.Objects.Data;
 using MonitorMarkets.Application.Objects.Data.Enums;
 using MonitorMarkets.Application.Objects.Responses;
@@ -25,6 +33,7 @@ using GetSingleAccountResponse = BitgetMapper.Futures.RestAPI.Responses.Account.
 using OrderTypeEnum = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum;
 using PlaceOrderResponse = BitgetMapper.Futures.RestAPI.Responses.Account.PlaceOrderResponse;
 using WebSocketSharp;
+using SideType = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.SideType;
 
 namespace MonitorMarkets.Application.MarketsAdaptor
 {
@@ -33,6 +42,8 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         readonly RequestArranger _requestArranger;
         private FuturesHanlderComposition _composition;
         private RestClient _restClient;
+        readonly ServerTimeHelper m_ServerTimeHelper;
+        public ServerTimeHelper ServerTimeHelper => m_ServerTimeHelper;
 
         public BitgetClient(string rest_url)
         {
@@ -119,7 +130,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
         }
 
-
         #endregion
 
         #region [Requests]
@@ -141,7 +151,9 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 List<ContractInfoData> listData = new List<ContractInfoData>();
                 foreach (var item in response_obj.Data)
                 {
-                    listData.Add(new ContractInfoData(item.Symbol, null, item.BaseCoin, item.QuoteCoin, item.TakerFeeRate, item.MakerFeeRate, null, null, null, null, null, null,null, null, null, null, null));
+                    listData.Add(new ContractInfoData(item.Symbol, null, item.BaseCoin, item.QuoteCoin,
+                        item.TakerFeeRate, item.MakerFeeRate, null, null, null, null, null, null, null, null, null,
+                        null, null));
                 }
 
                 response_unt = new ContractInfoResponse(response_obj.Code, response_obj.Msg, listData);
@@ -151,68 +163,34 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 return null;
             }
 
-            return null;        }
-
-        public OrderBookResponse GetOrderBookResponse()
-        {
-            throw new NotImplementedException();
+            return null;
         }
 
-        public KlineResponse GetKlineResponse()
+        public IEnumerable<Objects.Responses.KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period,
+            long startTime, long endTime)
         {
-            throw new NotImplementedException();
-        }
+            var periodreq = GranularityEnum.None;
+            if (TryGetIntervalKineType(period, out periodreq))
+            {
+            }
 
-        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse()
-        {
-            throw new NotImplementedException();
-        }
+            var sTime = ServerTimeHelper.FromUnixMilliseconds(startTime);
+            var eTime = ServerTimeHelper.FromUnixMilliseconds(endTime);
 
-        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UnfilledResponse GetUnfilledResponse()
-        {
-            throw new NotImplementedException();
-        }
-
-        public OrderHistoryResponse GetOrderHistoryResponse()
-        {
-            throw new NotImplementedException();
-        }
-
-        public TradeHistoryResponse GetTradeHistoryResponse()
-        {
-            throw new NotImplementedException();
-        }
-
-        public WalletInfoResponse GetWalletInfoResponse()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Objects.Responses.KlineResponse GetCandleDataRequest(string symbol, GranularityEnum granularity,
-            DateTime start, DateTime end)
-        {
-            var candleData = new GetCandleDataRequest(symbol, granularity, start, end);
+            var candleData = new GetCandleDataRequest(symbol, periodreq, sTime, eTime);
             var request = _requestArranger.Arrange(candleData);
             List<List<Decimal>> response_obj = null;
             string response = string.Empty;
-            Objects.Responses.KlineResponse response_unt = null;
+            IEnumerable<Objects.Responses.KlineResponse> response_unt = null;
 
             try
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetCandleDataResponse(response);
 
-                foreach (var item in response_obj)
-                {
-                    var time = Convert.ToInt64(item[0]);
-                    response_unt = new Objects.Responses.KlineResponse(time, item[1],item[2],item[3],item[4],item[5]);
-                    return response_unt;
-                }
+                response_unt = response_obj.Select(x =>
+                    new Objects.Responses.KlineResponse(Convert.ToInt64(x[0]), x[1], x[2], x[3], x[4], x[5]));
+                return response_unt;
             }
             catch (Exception ex)
             {
@@ -221,6 +199,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
+
         public ServerTimeResponse ServerTimeRequest()
         {
             var serverTime = new ServerTimeRequest();
@@ -245,10 +224,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         #endregion
 
         #region [Account]
-        
-        public Objects.Responses.CancelOrderResponse GetCancelOrder(string symbol, string marginCoin, string orderid)
+
+        public Objects.Responses.CancelOrderResponse GetCancelOrderResponse(string symbol, string orderid)
         {
-            var cancelOrder = new CancelOrderRequest(symbol, marginCoin, orderid);
+            var cancelOrder = new CancelOrderRequest(symbol, "USDT", orderid);
             var request = _requestArranger.Arrange(cancelOrder);
             string response = string.Empty;
             CancelOrderResponse response_obj = null;
@@ -259,7 +238,7 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleCancelOrderResponse(response);
                 response_unt = new Objects.Responses.CancelOrderResponse(response_obj.Data.OrderId);
-                
+
                 return response_unt;
             }
             catch (Exception ex)
@@ -269,9 +248,10 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
-        public Objects.Responses.WalletInfoResponse GetSingleAccountRequest(string symbol, string marginCoin)
+
+        public Objects.Responses.WalletInfoResponse GetWalletInfoResponse(string symbol)
         {
-            var singleAccount = new GetSingleAccountRequest(symbol, marginCoin);
+            var singleAccount = new GetSingleAccountRequest(symbol, "USDT");
             var request = _requestArranger.Arrange(singleAccount);
             GetSingleAccountResponse response_obj = null;
             Objects.Responses.WalletInfoResponse response_unt = null;
@@ -282,33 +262,47 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetSingleAccountResponse(response);
-                response_unt = new Objects.Responses.WalletInfoResponse("USDT", response_obj.Data.UsdtEquity, response_obj.Data.Available);
+                response_unt = new Objects.Responses.WalletInfoResponse("USDT", response_obj.Data.UsdtEquity,
+                    response_obj.Data.Available);
                 return response_unt;
             }
             catch (Exception ex)
             {
                 return null;
             }
+
             return null;
         }
-        public Objects.Responses.PlaceOrderResponse PlaceOrderRequest(string symbol, string marginCoin, decimal size,
-            SideType side, OrderTypeEnum orderType)
+
+        public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol,
+            Objects.Data.Enums.OrderTypeEnum orderType, decimal size, decimal price,
+            OrderActionEnum orderAction, SideTypeOrderEnum sideOrderTypeEnum)
         {
-            var placeOrder = new PlaceOrderRequest(symbol, marginCoin, size, side, orderType);
+            var side = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.None;
+            if (TryGetFromOrderType(orderType, out side))
+            {
+            }
+
+            var sideOrder = SideType.None;
+            if (TryGetSideType(sideOrderTypeEnum, out sideOrder))
+            {
+            }
+
+            var placeOrder = new PlaceOrderRequest(symbol, "USDT", size, sideOrder, side);
             var request = _requestArranger.Arrange(placeOrder);
             PlaceOrderResponse response_obj = null;
             string response = string.Empty;
             Objects.Responses.PlaceOrderResponse response_unt = null;
-                                                                        
+
             try
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandlePlaceOrderResponse(response);
-                
-                response_unt = new Objects.Responses.PlaceOrderResponse(response_obj.Data.OrderId, 0, 0, OrderActionEnum.Unknown, OrderMarkerEnum.Unknown);
+
+                response_unt =
+                    new Objects.Responses.PlaceOrderResponse(response_obj.Data.OrderId, 0, 0, OrderActionEnum.Unknown);
 
                 return response_unt;
-
             }
             catch (Exception ex)
             {
@@ -317,26 +311,26 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
             return null;
         }
+
         /*public Objects.Responses.OrderBookResponse GetOrderBookResponse()
         {
         }*/
-        public Objects.Responses.UnfilledResponse GetUnfilledResponse(string symbol)
+        public Objects.Responses.UnfilledResponse GetActiveOrderHistory(string symbol)
         {
             var placeOrder = new GetOpenOrderRequest(symbol);
             var request = _requestArranger.Arrange(placeOrder);
             GetOpenOrderResponse response_obj = null;
             string response = string.Empty;
             Objects.Responses.UnfilledResponse response_unt = null;
-                                                                        
+
             try
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetOpenOrderResponse(response);
-                
+
                 response_unt = new Objects.Responses.UnfilledResponse();
 
                 return response_unt;
-
             }
             catch (Exception ex)
             {
@@ -344,26 +338,28 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-
         }
-        public Objects.Responses.OrderHistoryResponse GetOrderHistoryRequest(string symbol, DateTime startTime, DateTime endTime, string pageSize)
+
+        public IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
+            long endTime, string pageSize, int limit)
         {
-            var placeOrder = new GetHistoryOrderRequest(symbol, startTime, endTime, pageSize);
+            var sTime = ServerTimeHelper.FromUnixMilliseconds(startTime);
+            var eTime = ServerTimeHelper.FromUnixMilliseconds(endTime);
+            var placeOrder = new GetHistoryOrderRequest(symbol, sTime, eTime, pageSize);
             var request = _requestArranger.Arrange(placeOrder);
             GetHistoryOrderResponse response_obj = null;
             string response = string.Empty;
-            Objects.Responses.OrderHistoryResponse response_unt = null;
-                                                                        
+            IEnumerable<TradeHistoryResponse> response_unt = null;
+
             try
             {
                 response = SendRestRequest(request);
                 response_obj = _composition.HandleGetHistoryOrderResponse(response);
 
-                foreach (var item in response_obj.Data.OrderList)
-                {
-                    response_unt = new Objects.Responses.OrderHistoryResponse(item.Symbol, item.OrderId, OrderActionEnum.Unknown, item.Price, item.Size, item.FilledQty, item.Ctime, Objects.Data.Enums.OrderTypeEnum.Unknown, TriggerTypeEnum.Unknown, OrderStateEnum.None);
-                    return response_unt;
-                }
+                response_unt = response_obj.Data.OrderList.Select(x =>
+                    new Objects.Responses.TradeHistoryResponse(x.Symbol, x.Ctime, x.OrderId, x.Price, x.Size, x.Fee,
+                        x.MarginCoin));
+                return response_unt;
             }
             catch (Exception ex)
             {
@@ -371,44 +367,34 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
 
             return null;
-
         }
+
         /*public Objects.Responses.TradeHistoryResponse GetTradeHistoryResponse()
         {
         }*/
-        public Objects.Responses.MyPositionsResponse GetMyPositionsResponse()
+        public IEnumerable<Objects.Responses.MyPositionsResponse> GetMyPositionsResponse()
         {
-            throw new NotImplementedException();
-        }
+            var placeOrder = new GetAllPositionRequest(ProductTypeEnum.Umcbl);
+            var request = _requestArranger.Arrange(placeOrder);
+            GetAllPositionResponse response_obj = null;
+            string response = string.Empty;
+            IEnumerable<Objects.Responses.MyPositionsResponse> response_unt = null;
 
-        public bool StartSocket()
-        {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                response = SendRestRequest(request);
+                response_obj = _composition.HandleGetAllPositionResponse(response);
 
-        public bool StopSocket()
-        {
-            throw new NotImplementedException();
-        }
+                response_unt = response_obj.Data.Select(x =>
+                    new Objects.Responses.MyPositionsResponse(x.Symbol, x.AverageOpenPrice, x.Margin));
+                return response_unt;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
-        public bool StartSocketPrivate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool StopSocketPrivate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Connect()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool ConnectPrivate(string apikey, string secret, string passphrase)
-        {
-            throw new NotImplementedException();
+            return null;
         }
 
         #endregion
@@ -417,40 +403,319 @@ namespace MonitorMarkets.Application.MarketsAdaptor
 
         #region WebSocket
 
+        public MarketStreamsFuturesHandlerComposition MarketHandler =
+            new MarketStreamsFuturesHandlerComposition(new MarketStreamsFuturesHandlerFactory());
+
+        public AccountStreamsFuturesHandlerComposition AccountHandler =
+            new AccountStreamsFuturesHandlerComposition(new AccountStreamsFuturesHandlerFactory());
+
+        private string urlPrivateSocket = "wss://ws.bitget.com/mix/v1/stream";
+
+        string ApiKey = string.Empty;
+        string SecretKey = string.Empty;
+        string Passphrase = string.Empty;
+        private string urlPublicSocket = "wss://ws.bitget.com/mix/v1/stream";
+
         WebSocket m_WebSocketPublic = null;
         WebSocket m_WebSocketPrivate = null;
-        /*public StartSocket()
+
+        public bool StartSocket()
         {
-            throw new NotImplementedException();
+            string instId = "";
+            var subOrderBook =
+                CombineStreamsSubs.CreatePublicEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Mc, ChannelEnum.Books,
+                    instId);
+            var trade = CombineStreamsSubs.CreatePublicEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Mc,
+                ChannelEnum.Trade, instId);
+            return true;
         }
 
-        public StopSocket()
+        public bool StopSocket()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-        private StartSocketPrivate()
+        public bool StartSocketPrivate(Func<long> timestamp)
         {
-            throw new NotImplementedException();
+            string instId = "";
+            var auth =
+                CombineStreamsSubs.Create(EventTypeEnum.Subscirbe, ApiKey, SecretKey, Passphrase, timestamp);
+            var account = 
+                CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Account);
+            var order = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl,
+                ChannelEnum.Orders);
+            var position =
+                CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl,
+                    ChannelEnum.Positions);
+
+            return true;
         }
 
-        private StopSocketPrivate()
+        public bool StopSocketPrivate()
         {
-            
+            var account =
+                CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl, ChannelEnum.Account);
+            var order = CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl,
+                ChannelEnum.Orders);
+            var position =
+                CombineStreamsSubs.CreatePrivateEvent(EventTypeEnum.Subscirbe, InstTypeEnum.Umcbl,
+                    ChannelEnum.Positions);
+
+            return true;
         }
 
-        public Connect()
+        public bool Connect()
         {
-            
+            m_WebSocketPublic = new WebSocket(urlPublicSocket) { EmitOnPing = true };
+            m_WebSocketPublic.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
+            m_WebSocketPublic.Log.File = null;
+            //m_WebSocketPublic.OnOpen += WebSocket_OnOpen;
+            //m_WebSocketPublic.OnClose += WebSocket_OnClose;
+            //m_WebSocketPublic.OnError += WebSocket_OnError;
+            m_WebSocketPublic.OnMessage += WebSocket_OnMessage;
+            return true;
         }
 
-        private ConnectPrivate()
+        void WebSocket_OnMessage(object sender, MessageEventArgs e)
         {
-            
+            if (sender == m_WebSocketPrivate)
+            {
+                OnBaseWebSocketPrivateMessage(sender, e);
+            }
+
+            if (sender == m_WebSocketPublic)
+            {
+                OnBaseWebSocketPublicMessage(sender, e);
+            }
         }
-        */
+
+
+        public bool ConnectPrivate(string apiKey, string secretKey, string passphrase)
+        {
+            ApiKey = apiKey;
+            SecretKey = secretKey;
+            Passphrase = passphrase;
+            m_WebSocketPrivate = new WebSocket(urlPrivateSocket) { EmitOnPing = true };
+            m_WebSocketPrivate.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
+            m_WebSocketPrivate.Log.File = null;
+            //m_WebSocketPrivate.OnOpen += WebSocket_OnOpen;
+            //m_WebSocketPrivate.OnClose += WebSocket_OnClose;
+            //m_WebSocketPrivate.OnError += WebSocket_OnError;
+            m_WebSocketPrivate.OnMessage += WebSocket_OnMessage;
+            return true;
+        }
+
+        public event EventHandler<IEnumerable<MonitorMarkets.Application.Objects.Responses.OrderBookResponse>> OrderbookEvent;
+        public event EventHandler<OnTickResponse> OntickPublicEvent;
+        public event EventHandler<OnTickResponse> OntickPrivateEvent;
+        public event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse> PlaceorderEvent;
+        public event EventHandler<MyPositionsResponse> MypositionsEvent;
+        public event EventHandler<MonitorMarkets.Application.Objects.Responses.PlaceOrderResponse>
+            PlaceorderPrivateEvent;
         
-        #endregion
+        private void OnBaseWebSocketPublicMessage(object sender, MessageEventArgs e)
+        {
+            var defev = MarketHandler.HandleDefaultEvent(e.Data);
 
+            if (defev.PerpetualEventType == EventPerpetualType.OrderBook)
+            {
+                var orderBook = MarketHandler.HandleOrderBookEvent(e.Data);
+
+                IEnumerable<Objects.Responses.OrderBookResponse> response_unt = null;
+
+                if (orderBook.Data == MarketHandler)
+                {
+                    //orderBook.DataSnap.OrderBook.Select(x => { });
+
+                    foreach (var item in orderBook.Data)
+                    {
+                        var orderBookAsksResponses = item.Asks.Select(x =>
+                            new Objects.Responses.OrderBookResponse(x[0], -x[1]));
+                        var orderBookBidsResponses = item.Bids.Select(x =>
+                            new Objects.Responses.OrderBookResponse(x[0], -x[1]));
+                        
+                        OrderbookEvent?.Invoke(sender, orderBookAsksResponses);
+                        OrderbookEvent?.Invoke(sender, orderBookBidsResponses);
+
+                        //return response_unt;
+                    }
+                    
+                }
+            }
+
+            if (defev.PerpetualEventType == EventPerpetualType.Trades)
+            {
+                var trade = MarketHandler.HandleTradesChannelEvent(e.Data);
+                Objects.Responses.OnTickResponse response_unt = null;
+
+                foreach (var item in trade.Data)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideEnum, out orderAction))
+                    {
+                    }
+
+                    var onTickResponse =
+                        new Objects.Responses.OnTickResponse(item.Ts, item.Px, item.Sz, orderAction);
+                    OntickPublicEvent?.Invoke(sender, onTickResponse);
+
+                    //return response_unt;
+                }
+            }
+        }
+
+        private void OnBaseWebSocketPrivateMessage(object sender, MessageEventArgs e)
+        {
+            var defev = MarketHandler.HandleDefaultEvent(e.Data);
+
+            if (defev.PerpetualEventType == EventPerpetualType.Order)
+            {
+                var order = AccountHandler.HandleOrderEvent(e.Data);
+                Objects.Responses.PlaceOrderResponse response_unt = null;
+
+                foreach (var item in order.Data)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideEnum, out orderAction))
+                    {
+                    }
+
+                    var placeOrderPrivateResponse = new Objects.Responses.PlaceOrderResponse(item.OrdId, item.Px, item.Sz, orderAction);
+                    PlaceorderPrivateEvent?.Invoke(sender, placeOrderPrivateResponse);
+                }
+            }
+
+            /*if (defev.PerpetualEventType == EventPerpetualType.Account)
+            {
+                var trade = AccountHandler.HandleAccountEvent(e.Data);
+                Objects.Responses.OnTickResponse response_unt = null;
+
+                foreach (var item in trade.Data)
+                {
+                    OrderActionEnum orderAction = OrderActionEnum.Unknown;
+                    if (TryGetOrderAction(item.SideEnum, out orderAction))
+                    {
+                    }
+
+                    response_unt =
+                        new Objects.Responses.OnTickResponse(item.TradeTime, item.ExecPrice, item.ExecQty, orderAction);
+                    //return response_unt;
+                }
+            }*/
+
+            if (defev.PerpetualEventType == EventPerpetualType.Positions)
+            {
+                var positions = AccountHandler.HandlePositionsEvent(e.Data);
+                Objects.Responses.MyPositionsResponse response_unt = null;
+
+                foreach (var item in positions.Data)
+                {
+                    var myPositionsResponse =
+                        new Objects.Responses.MyPositionsResponse(item.MarginCoin, item.AverageOpenPrice, item.Margin);
+                    MypositionsEvent?.Invoke(sender, myPositionsResponse);
+                    //return response_unt;
+                }
+            }
+        }
+
+
+        bool TryGetOrderAction(SideEnum in_type, out OrderActionEnum out_type)
+        {
+            out_type = OrderActionEnum.Unknown;
+            switch (in_type)
+            {
+                case SideEnum.Buy:
+                    out_type = OrderActionEnum.Buy;
+                    return true;
+                case SideEnum.Sell:
+                    out_type = OrderActionEnum.Sell;
+                    return true;
+
+                default:
+                    out_type = OrderActionEnum.Unknown;
+                    return false;
+            }
+        }
+
+        bool TryGetFromOrderType(Objects.Data.Enums.OrderTypeEnum in_type,
+            out BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum out_type)
+        {
+            out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.None;
+            switch (in_type)
+            {
+                case Objects.Data.Enums.OrderTypeEnum.Limit:
+                    out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Limit;
+                    return true;
+                case Objects.Data.Enums.OrderTypeEnum.Market:
+                    out_type = BitGetMapper.Futures.RestAPI.Data.DTO.Enum.OrderTypeEnum.Market;
+                    return true;
+                default:
+                    out_type = OrderTypeEnum.None;
+                    return false;
+            }
+        }
+
+        bool TryGetIntervalKineType(IntervalKlineType in_type, out GranularityEnum out_type)
+        {
+            switch (in_type)
+            {
+                case IntervalKlineType.Unrecognized:
+                    out_type = GranularityEnum.None;
+                    return true;
+                case IntervalKlineType.OneMinute:
+                    out_type = GranularityEnum.Minute;
+                    return true;
+                case IntervalKlineType.FiveMinute:
+                    out_type = GranularityEnum.FiveMinute;
+                    return true;
+                case IntervalKlineType.FifteenMinute:
+                    out_type = GranularityEnum.FiveteenMinute;
+                    return true;
+                case IntervalKlineType.ThirtyMinute:
+                    out_type = GranularityEnum.ThrityMinute;
+                    return true;
+                case IntervalKlineType.OneHour:
+                    out_type = GranularityEnum.Hour;
+                    return true;
+                case IntervalKlineType.FourHour:
+                    out_type = GranularityEnum.FourHour;
+                    return true;
+                case IntervalKlineType.OneDay:
+                    out_type = GranularityEnum.Day;
+                    return true;
+                case IntervalKlineType.OneW:
+                    out_type = GranularityEnum.Week;
+                    return true;
+                default:
+                    out_type = GranularityEnum.None;
+                    return false;
+            }
+        }
+
+        bool TryGetSideType(SideTypeOrderEnum in_type, out SideType out_type)
+        {
+            out_type = SideType.None;
+            switch (in_type)
+            {
+                case SideTypeOrderEnum.CloseLong:
+                    out_type = SideType.CloseLong;
+                    return true;
+                case SideTypeOrderEnum.CloseShort:
+                    out_type = SideType.CloseShort;
+                    return true;
+                case SideTypeOrderEnum.OpenLong:
+                    out_type = SideType.OpenLong;
+                    return true;
+                case SideTypeOrderEnum.OpenShort:
+                    out_type = SideType.OpenShort;
+                    return true;
+
+                default:
+                    out_type = SideType.None;
+                    return false;
+            }
+        }
     }
+
+    #endregion
 }
