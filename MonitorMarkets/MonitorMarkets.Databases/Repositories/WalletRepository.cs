@@ -27,7 +27,7 @@ namespace MonitorMarkets.Databases.Repositories
             _db.SaveChanges();
         }
 
-        public WalletEntitiesInfo FindById(int id)
+        public WalletEntitiesInfo FindById(string id)
         {
             return _dbSet.Find(id);
         }

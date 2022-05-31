@@ -38,180 +38,143 @@ public class HomeController : Controller
 
     #region Add
     
+    /// <summary>
+    /// Добавление логов
+    /// </summary>
+    /// <param name="logInfo"></param>
     [HttpPost]
     [Route("AddLog")]
     public void AddLog(LogInfo logInfo)
     {
-        LogInfo ram = new LogInfo
-        {
-            TypeError = logInfo.TypeError,
-            MsgError = logInfo.MsgError,
-            Time = logInfo.Time,
-        };
-        dbLog.Create(ram);
+        dbLog.Create(logInfo);
     }
     
-    
+    /// <summary>
+    /// Добавление ордеров
+    /// </summary>
+    /// <param name="orderInfo"></param>
     [HttpPost]
     [Route("AddOrder")]
     public void AddOrder(OrdersEntitiesInfo orderInfo)
     {
-        OrdersEntitiesInfo ram = new OrdersEntitiesInfo
-        {
-            Price = orderInfo.Price,
-            Amount = orderInfo.Amount,
-            Direction = orderInfo.Direction,
-            StatusOrder = orderInfo.StatusOrder,
-        };
-        dbOrder.Create(ram);
+        dbOrder.Create(orderInfo);
     }
     
-    
+    /// <summary>
+    /// Добавление позиций
+    /// </summary>
+    /// <param name="posInfo"></param>
     [HttpPost]
     [Route("AddPositions")]
     public void AddPositions(PositionsEntitiesInfo posInfo)
     {
-        PositionsEntitiesInfo ram = new PositionsEntitiesInfo
-        {
-            Symbol = posInfo.Symbol,
-            Price = posInfo.Price,
-            Amount = posInfo.Amount,
-            StatusPosition = posInfo.StatusPosition,
-        };
-        dbPositions.Create(ram);
+        dbPositions.Create(posInfo);
     }
    
-    
+    /// <summary>
+    /// Добавление кошелька
+    /// </summary>
+    /// <param name="walletInfo"></param>
     [HttpPost]
     [Route("AddWallet")]
     public void AddWallet(WalletEntitiesInfo walletInfo)
     {
-        WalletEntitiesInfo ram = new WalletEntitiesInfo
-        {
-            Currency = walletInfo.Currency,
-            Balance = walletInfo.Balance,
-            Aviailable = walletInfo.Aviailable,
-        };
-        dbWallet.Create(ram);
+        dbWallet.Create(walletInfo);
     }
 
     #endregion
 
     #region Delete
-
+    
+    /// <summary>
+    /// Удаление логов
+    /// </summary>
+    /// <param name="logInfo"></param>
     [HttpPost]
     [Route("DelLog")]
     public void DelLog(LogInfo logInfo)
     {
-        LogInfo ram = new LogInfo
-        {
-            TypeError = logInfo.TypeError,
-            MsgError = logInfo.MsgError,
-            Time = logInfo.Time,
-        };
-
-        dbLog.Remove(ram);
+        dbLog.Remove(logInfo);
     }
 
+    /// <summary>
+    /// Удаление ордеров
+    /// </summary>
+    /// <param name="orderInfo"></param>
     [HttpPost]
     [Route("DelOrder")]
     public void DelOrder(OrdersEntitiesInfo orderInfo)
     {
-        OrdersEntitiesInfo ram = new OrdersEntitiesInfo
-        {
-            Price = orderInfo.Price,
-            Amount = orderInfo.Amount,
-            Direction = orderInfo.Direction,
-            StatusOrder = orderInfo.StatusOrder,
-        };
-        
-        dbOrder.Remove(ram);
+        dbOrder.Remove(orderInfo);
     }
 
+    /// <summary>
+    /// Удаление позиций
+    /// </summary>
+    /// <param name="posInfo"></param>
     [HttpPost]
     [Route("DelPositions")]
     public void DelPositions(PositionsEntitiesInfo posInfo)
     {
-        PositionsEntitiesInfo ram = new PositionsEntitiesInfo
-        {
-            Symbol = posInfo.Symbol,
-            Price = posInfo.Price,
-            Amount = posInfo.Amount,
-            StatusPosition = posInfo.StatusPosition,
-        };
-        dbPositions.Remove(ram);
+        dbPositions.Remove(posInfo);
     }
     
+    /// <summary>
+    /// Удаление кошелька
+    /// </summary>
+    /// <param name="walletInfo"></param>
     [HttpPost]
     [Route("DelWallet")]
     public void DelWallet(WalletEntitiesInfo walletInfo)
     {
-        WalletEntitiesInfo ram = new WalletEntitiesInfo
-        {
-            Currency = walletInfo.Currency,
-            Balance = walletInfo.Balance,
-            Aviailable = walletInfo.Aviailable,
-        };
-        dbWallet.Remove(ram);
+        dbWallet.Remove(walletInfo);
     }
     #endregion
 
     #region Update
 
+    /// <summary>
+    /// Обновление логов
+    /// </summary>
+    /// <param name="logInfo"></param>
     [HttpPost]
     [Route("UpLog")]
     public void UpLog(LogInfo logInfo)
     {
-        LogInfo ram = new LogInfo
-        {
-            TypeError = logInfo.TypeError,
-            MsgError = logInfo.MsgError,
-            Time = logInfo.Time,
-        };
-
-        dbLog.Update(ram);
+        dbLog.Update(logInfo);
     }
 
+    /// <summary>
+    /// Обновление ордеров
+    /// </summary>
+    /// <param name="orderInfo"></param>
     [HttpPost]
     [Route("UpOrder")]
     public void UpOrder(OrdersEntitiesInfo orderInfo)
     {
-        OrdersEntitiesInfo ram = new OrdersEntitiesInfo
-        {
-            Price = orderInfo.Price,
-            Amount = orderInfo.Amount,
-            Direction = orderInfo.Direction,
-            StatusOrder = orderInfo.StatusOrder,
-        };
-        
-        dbOrder.Update(ram);
+        dbOrder.Update(orderInfo);
     }
 
+    /// <summary>
+    /// Обновление позиций
+    /// </summary>
+    /// <param name="posInfo"></param>
     [HttpPost]
     [Route("UpPositions")]
     public void UpPositions(PositionsEntitiesInfo posInfo)
     {
-        PositionsEntitiesInfo ram = new PositionsEntitiesInfo
-        {
-            Symbol = posInfo.Symbol,
-            Price = posInfo.Price,
-            Amount = posInfo.Amount,
-            StatusPosition = posInfo.StatusPosition,
-        };
-        dbPositions.Update(ram);
+        dbPositions.Update(posInfo);
     }
     
+    /// <summary>
+    /// Обновление кошелька
+    /// </summary>
+    /// <param name="walletInfo"></param>
     [HttpPost]
     [Route("UpWallet")]
     public void UpWallet(WalletEntitiesInfo walletInfo)
     {
-        WalletEntitiesInfo ram = new WalletEntitiesInfo
-        {
-            Currency = walletInfo.Currency,
-            Balance = walletInfo.Balance,
-            Aviailable = walletInfo.Aviailable,
-        };
-        dbWallet.Update(ram);
+        dbWallet.Update(walletInfo);
     }
 
 
@@ -219,32 +182,56 @@ public class HomeController : Controller
 
     #region FindById
 
+    /// <summary>
+    /// Поиск лога по id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("FLog")]
-    public void FLog(int id)
+    public LogInfo FLog(string id)
     {
-        dbLog.FindById(id);
+        var search = dbLog.FindById(id);
+        return search;
     }
 
+    /// <summary>
+    /// Поиск ордера по id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("FOrder")]
-    public void FOrder(int id)
+    public OrdersEntitiesInfo FOrder(string id)
     {
-        dbOrder.FindById(id);
+        var search = dbOrder.FindById(id);
+        return search;
     }
 
+    /// <summary>
+    /// Поиск позиций по id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("FPositions")]
-    public void FPositions(int id)
+    public PositionsEntitiesInfo FPositions(string id)
     {
-        dbPositions.FindById(id);
+        var search = dbPositions.FindById(id);
+        return search;
     }
     
+    /// <summary>
+    /// Поиск кошелька по id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("FWallet")]
-    public void FWallet(int id)
+    public WalletEntitiesInfo FWallet(string id)
     {
-        dbWallet.FindById(id);
+        var search = dbWallet.FindById(id);
+        return search;
     }
 
 
