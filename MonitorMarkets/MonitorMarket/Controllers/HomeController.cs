@@ -36,17 +36,17 @@ public class HomeController : Controller
 
     #region Swagger
 
-    #region Post
+    #region Add
     
     [HttpPost]
     [Route("AddLog")]
-    public void AddLog(string typeError, string msgError)
+    public void AddLog(LogInfo logInfo)
     {
         LogInfo ram = new LogInfo
         {
-            TypeError = typeError,
-            MsgError = msgError,
-            Time = DateTime.Now,
+            TypeError = logInfo.TypeError,
+            MsgError = logInfo.MsgError,
+            Time = logInfo.Time,
         };
         dbLog.Create(ram);
     }
@@ -54,14 +54,14 @@ public class HomeController : Controller
     
     [HttpPost]
     [Route("AddOrder")]
-    public void AddOrder(decimal price, decimal amount)
+    public void AddOrder(OrdersEntitiesInfo orderInfo)
     {
         OrdersEntitiesInfo ram = new OrdersEntitiesInfo
         {
-            Price = price,
-            Amount = amount,
-            Direction = OrderActionEnum.Buy,
-            StatusOrder = StatusOrderEnum.Accepted,
+            Price = orderInfo.Price,
+            Amount = orderInfo.Amount,
+            Direction = orderInfo.Direction,
+            StatusOrder = orderInfo.StatusOrder,
         };
         dbOrder.Create(ram);
     }
@@ -69,14 +69,14 @@ public class HomeController : Controller
     
     [HttpPost]
     [Route("AddPositions")]
-    public void AddPositions(string symbol, decimal price, decimal amount)
+    public void AddPositions(PositionsEntitiesInfo posInfo)
     {
         PositionsEntitiesInfo ram = new PositionsEntitiesInfo
         {
-            Symbol = symbol,
-            Price = price,
-            Amount = amount,
-            StatusPosition = OrderActionEnum.Buy,
+            Symbol = posInfo.Symbol,
+            Price = posInfo.Price,
+            Amount = posInfo.Amount,
+            StatusPosition = posInfo.StatusPosition,
         };
         dbPositions.Create(ram);
     }
@@ -84,13 +84,13 @@ public class HomeController : Controller
     
     [HttpPost]
     [Route("AddWallet")]
-    public void AddWallet(string currency, decimal balance, decimal aviailable)
+    public void AddWallet(WalletEntitiesInfo walletInfo)
     {
         WalletEntitiesInfo ram = new WalletEntitiesInfo
         {
-            Currency = currency,
-            Balance = balance,
-            Aviailable = aviailable,
+            Currency = walletInfo.Currency,
+            Balance = walletInfo.Balance,
+            Aviailable = walletInfo.Aviailable,
         };
         dbWallet.Create(ram);
     }
@@ -101,13 +101,13 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("DelLog")]
-    public void DelLog(string typeError, string msgError)
+    public void DelLog(LogInfo logInfo)
     {
         LogInfo ram = new LogInfo
         {
-            TypeError = typeError,
-            MsgError = msgError,
-            Time = DateTime.Now,
+            TypeError = logInfo.TypeError,
+            MsgError = logInfo.MsgError,
+            Time = logInfo.Time,
         };
 
         dbLog.Remove(ram);
@@ -115,14 +115,14 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("DelOrder")]
-    public void DelOrder(decimal price, decimal amount)
+    public void DelOrder(OrdersEntitiesInfo orderInfo)
     {
         OrdersEntitiesInfo ram = new OrdersEntitiesInfo
         {
-            Price = price,
-            Amount = amount,
-            Direction = OrderActionEnum.Buy,
-            StatusOrder = StatusOrderEnum.Accepted,
+            Price = orderInfo.Price,
+            Amount = orderInfo.Amount,
+            Direction = orderInfo.Direction,
+            StatusOrder = orderInfo.StatusOrder,
         };
         
         dbOrder.Remove(ram);
@@ -130,27 +130,27 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("DelPositions")]
-    public void DelPositions(string symbol, decimal price, decimal amount)
+    public void DelPositions(PositionsEntitiesInfo posInfo)
     {
         PositionsEntitiesInfo ram = new PositionsEntitiesInfo
         {
-            Symbol = symbol,
-            Price = price,
-            Amount = amount,
-            StatusPosition = OrderActionEnum.Buy,
+            Symbol = posInfo.Symbol,
+            Price = posInfo.Price,
+            Amount = posInfo.Amount,
+            StatusPosition = posInfo.StatusPosition,
         };
         dbPositions.Remove(ram);
     }
     
     [HttpPost]
     [Route("DelWallet")]
-    public void DelWallet(string currency, decimal balance, decimal aviailable)
+    public void DelWallet(WalletEntitiesInfo walletInfo)
     {
         WalletEntitiesInfo ram = new WalletEntitiesInfo
         {
-            Currency = currency,
-            Balance = balance,
-            Aviailable = aviailable,
+            Currency = walletInfo.Currency,
+            Balance = walletInfo.Balance,
+            Aviailable = walletInfo.Aviailable,
         };
         dbWallet.Remove(ram);
     }
@@ -160,13 +160,13 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("UpLog")]
-    public void UpLog(string typeError, string msgError)
+    public void UpLog(LogInfo logInfo)
     {
         LogInfo ram = new LogInfo
         {
-            TypeError = typeError,
-            MsgError = msgError,
-            Time = DateTime.Now,
+            TypeError = logInfo.TypeError,
+            MsgError = logInfo.MsgError,
+            Time = logInfo.Time,
         };
 
         dbLog.Update(ram);
@@ -174,14 +174,14 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("UpOrder")]
-    public void UpOrder(decimal price, decimal amount)
+    public void UpOrder(OrdersEntitiesInfo orderInfo)
     {
         OrdersEntitiesInfo ram = new OrdersEntitiesInfo
         {
-            Price = price,
-            Amount = amount,
-            Direction = OrderActionEnum.Buy,
-            StatusOrder = StatusOrderEnum.Accepted,
+            Price = orderInfo.Price,
+            Amount = orderInfo.Amount,
+            Direction = orderInfo.Direction,
+            StatusOrder = orderInfo.StatusOrder,
         };
         
         dbOrder.Update(ram);
@@ -189,27 +189,27 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("UpPositions")]
-    public void UpPositions(string symbol, decimal price, decimal amount)
+    public void UpPositions(PositionsEntitiesInfo posInfo)
     {
         PositionsEntitiesInfo ram = new PositionsEntitiesInfo
         {
-            Symbol = symbol,
-            Price = price,
-            Amount = amount,
-            StatusPosition = OrderActionEnum.Buy,
+            Symbol = posInfo.Symbol,
+            Price = posInfo.Price,
+            Amount = posInfo.Amount,
+            StatusPosition = posInfo.StatusPosition,
         };
         dbPositions.Update(ram);
     }
     
     [HttpPost]
     [Route("UpWallet")]
-    public void UpWallet(string currency, decimal balance, decimal aviailable)
+    public void UpWallet(WalletEntitiesInfo walletInfo)
     {
         WalletEntitiesInfo ram = new WalletEntitiesInfo
         {
-            Currency = currency,
-            Balance = balance,
-            Aviailable = aviailable,
+            Currency = walletInfo.Currency,
+            Balance = walletInfo.Balance,
+            Aviailable = walletInfo.Aviailable,
         };
         dbWallet.Update(ram);
     }
