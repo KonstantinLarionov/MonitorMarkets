@@ -11,6 +11,7 @@ using MonitorMarkets.Databases.Entities;
 using MonitorMarkets.Application.Objects.Data.Enums;
 using OrderActionEnum = MonitorMarkets.Application.Objects.DataBase.OrderActionEnum;
 using StatusOrderEnum = MonitorMarkets.Application.Objects.DataBase.StatusOrderEnum;
+using Swagger.Net.Annotations;
 
 namespace MonitorMarket.Controllers;
 
@@ -44,10 +45,14 @@ public class HomeController : Controller
     /// <param name="logInfo"></param>
     [HttpPost]
     [Route("AddLog")]
+    [SwaggerResponse(HttpStatusCode.OK, "Log added in database")]
+    [SwaggerResponse(HttpStatusCode.NotFound, "Error")]
+
     public void AddLog(LogInfo logInfo)
     {
         dbLog.Create(logInfo);
     }
+
     
     /// <summary>
     /// Добавление ордеров
