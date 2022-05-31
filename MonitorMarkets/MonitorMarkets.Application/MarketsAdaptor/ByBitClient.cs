@@ -41,6 +41,7 @@ using BybitMapper.UsdcPerpetual.MarketStreams.Data.Enum;
 using BybitMapper.UsdcPerpetual.MarketStreams.Subscriptions;
 using BybitMapper.UsdcPerpetual.UserStreams;
 using BybitMapper.UsdcPerpetual.UserStreams.Subscriptions;
+using MonitorMarkets.Application.Abstraction;
 using EventPerpetualType = BybitMapper.UsdcPerpetual.MarketStreams.Data.Enum.EventPerpetualType;
 
 namespace MonitorMarkets.Application.MarketsAdaptor

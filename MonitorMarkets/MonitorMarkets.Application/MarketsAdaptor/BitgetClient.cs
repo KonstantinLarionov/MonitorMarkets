@@ -18,6 +18,7 @@ using BitgetMapper.Futures.AccountStreams.Data.Enum.PositionsDataEnums;
 using BitgetMapper.Futures.MarketStreams.Data.Enum;
 using BitgetMapper.Futures.MarketStreams.Data.Enum.ArgDataEnum;
 using BitgetMapper.Futures.MarketStreams.Subscriptions;
+using MonitorMarkets.Application.Abstraction;
 using MonitorMarkets.Application.Extensions;
 using MonitorMarkets.Application.Objects.Data;
 using MonitorMarkets.Application.Objects.Data.Enums;

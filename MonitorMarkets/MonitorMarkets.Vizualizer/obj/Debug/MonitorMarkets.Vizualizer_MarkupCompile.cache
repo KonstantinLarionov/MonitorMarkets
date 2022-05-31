@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\
+D:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\
 MonitorMarkets.Vizualizer
 none
 false
 DEBUG;TRACE
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml
+D:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml
 8916669570
 
 11-952745227
-13-217658522
+13368372894
 View\ChartsOfExchangesWindow.xaml;View\ChartsWindow.xaml;View\CurrencyRateWindow.xaml;View\GeneralSettingsWindow.xaml;View\MainWindow.xaml;View\Resources\Menu.xaml;View\Resources\MenuLibrary\ListOfCoins.xaml;View\TradingWindow.xaml;
 
-False
+True
 
