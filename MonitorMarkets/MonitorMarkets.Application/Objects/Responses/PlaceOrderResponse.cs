@@ -6,19 +6,18 @@ namespace MonitorMarkets.Application.Objects.Responses
 {
     public class PlaceOrderResponse
     {
-        public PlaceOrderResponse(string id, decimal price, decimal amount, OrderActionEnum direction,
-            OrderMarkerEnum marker)
+        public PlaceOrderResponse(string id, decimal price, decimal amount, OrderActionEnum direction)
         {
             Id = id;
             Price = price;
             Amount = amount;
             Direction = direction;
-            Marker = marker;
+            //Marker = marker;
         }
         public string Id { get; set; }
         public decimal Price { get; set; }
         public decimal Amount { get; set; }
         public OrderActionEnum Direction { get; set; }
-        public OrderMarkerEnum Marker { get; set; }
+        //public OrderMarkerEnum Marker { get; set; }
     }
 }
