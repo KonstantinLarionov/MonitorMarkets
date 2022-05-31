@@ -1,8 +1,9 @@
-﻿namespace MonitorMarkets.Databases.Entities;
-
-public class WalletEntities
+﻿namespace MonitorMarkets.Databases.Entities
 {
-    public string Currency { get; }
-    public decimal Balance { get; }
-    public decimal Aviailable { get; }
+    public class WalletEntities
+    {
+        public string Currency { get; }
+        public decimal Balance { get; }
+        public decimal Aviailable { get; }
+    }
 }

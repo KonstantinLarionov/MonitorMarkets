@@ -1,12 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using MonitorMarkets.Application.Objects.DataBase;
+using Microsoft.AspNetCore.Mvc.Core;
 
-namespace MonitorMarkets.Databases;
 
-public class ServiceCollection
+namespace MonitorMarkets.Databases
 {
-    public static void AddInfrastructureHandler(this IServiceCollection services)
+    public static class ServiceCollection
     {
-        services.AddTransient<>()
+        public static void AddInfrastructureHandler(this IServiceCollection services)
+        {
+            services.AddTransient<IRespository<LogInfo>>();
+        }
     }
 }
