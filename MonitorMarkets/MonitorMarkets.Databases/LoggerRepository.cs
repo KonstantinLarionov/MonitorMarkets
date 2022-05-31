@@ -8,10 +8,10 @@ using System.Linq.Expressions;
 
 namespace MonitorMarkets.Databases
 {
-    public class LoggerRepository : IRepository
+    public class LoggerRepository<T> : IRepository<T> where T : class
     {
         LoggerContext _context;
-        DbSet<Log> _dbSet;
+        DbSet<T> _dbSet;
 
         public void Create(T item)
         {
