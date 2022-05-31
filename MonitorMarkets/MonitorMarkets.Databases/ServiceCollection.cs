@@ -12,10 +12,10 @@ namespace MonitorMarkets.Databases
         public static void AddInfrastructureDataBase(this IServiceCollection services)
         {
             services.AddEntityFrameworkMySql().AddDbContext<LoggerContext>();
-            services.AddTransient<IRepository<LogInfo>>();
-            services.AddTransient<IRepository<OrdersEntitiesInfo>>();
-            services.AddTransient<IRepository<PositionsEntitiesInfo>>();
-            services.AddTransient<IRepository<WalletEntitiesInfo>>();
+            services.AddTransient<IRepository<LogInfo>, LoggerRepository<LogInfo>>();
+            services.AddTransient<IRepository<OrdersEntitiesInfo>, LoggerRepository<OrdersEntitiesInfo>>();
+            services.AddTransient<IRepository<PositionsEntitiesInfo>, LoggerRepository<PositionsEntitiesInfo>>();
+            services.AddTransient<IRepository<WalletEntitiesInfo>, LoggerRepository<WalletEntitiesInfo>>();
         }
     }
 }
