@@ -39,11 +39,17 @@
         <Reference Include="BitgetMapper">
           <HintPath>..\..\..\bitget\BitgetMapper.dll</HintPath>
         </Reference>
+        <Reference Include="BitgetMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\..\Libraries\BitgetMapper\BitgetMapper.dll</HintPath>
+        </Reference>
         <Reference Include="BouncyCastle.Crypto">
           <HintPath>..\..\..\bitget\BouncyCastle.Crypto.dll</HintPath>
         </Reference>
         <Reference Include="BybitMapper">
           <HintPath>..\..\..\bybitmapper\BybitMapper.dll</HintPath>
+        </Reference>
+        <Reference Include="BybitMapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\..\Libraries\BybitMapper\BybitMapper.dll</HintPath>
         </Reference>
         <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
           <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
