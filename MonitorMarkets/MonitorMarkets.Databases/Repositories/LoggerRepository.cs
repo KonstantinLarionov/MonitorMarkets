@@ -26,8 +26,8 @@ namespace MonitorMarkets.Databases.Repositories
             _db.Add(item);
             _db.SaveChanges();
         }
-
-        public LogInfo FindById(int id)
+        
+        public LogInfo FindById(string id)
         {
             return _dbSet.Find(id);
         }

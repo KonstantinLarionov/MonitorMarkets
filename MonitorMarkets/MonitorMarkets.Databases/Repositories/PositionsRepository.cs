@@ -27,7 +27,7 @@ namespace MonitorMarkets.Databases.Repositories
             _db.SaveChanges();
         }
 
-        public PositionsEntitiesInfo FindById(int id)
+        public PositionsEntitiesInfo FindById(string id)
         {
             return _dbSet.Find(id);
         }
