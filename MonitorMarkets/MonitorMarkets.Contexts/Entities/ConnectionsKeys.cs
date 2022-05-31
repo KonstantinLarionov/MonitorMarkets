@@ -5,6 +5,6 @@
         public string PublicKeys { get; set; }
         public string SecretKey { get; set; }
         public string PassPhrase { get; set; }
-        public bool IsActive { get; }
+        public bool IsActive { get; set; }
     }
 }

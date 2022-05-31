@@ -1,21 +1,15 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System.Data.Entity;
 using MonitorMarkets.Contexts.Entities;
 
 namespace MonitorMarkets.Contexts
 {
-    public class DesktopContext:DbContext
+    public class DesktopContext: DbContext
     {
         public DbSet<ConnectionsKeys> ConnectionsKeys { get; set; }
 
-        public DesktopContext()
+        public DesktopContext() : base("MonitorMarket")
         {
-            Database.EnsureCreated();
-        }
-
-        protected void OnCofiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Filename = DesktopContext.db");
         }
     }
 }
