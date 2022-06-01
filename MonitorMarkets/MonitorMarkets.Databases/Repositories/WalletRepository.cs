@@ -23,7 +23,11 @@ namespace MonitorMarkets.Databases.Repositories
 
         public void Create(WalletEntitiesInfo item)
         {
-            _db.Add(item);
+            var itemDb = new WalletEntities()
+            {
+                Id = Guid.NewGuid().ToString(), Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
+            };
+            _db.Add(itemDb);
             _db.SaveChanges();
         }
 
@@ -33,13 +37,21 @@ namespace MonitorMarkets.Databases.Repositories
         }
         public void Update(WalletEntitiesInfo item)
         {
-            _db.Entry(item).State = EntityState.Modified;
+            var itemDb = new WalletEntities()
+            {
+                Id = Guid.NewGuid().ToString(), Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
+            };
+            _db.Entry(itemDb).State = EntityState.Modified;
             _db.SaveChanges();
         }
 
         public void Remove(WalletEntitiesInfo item)
         {
-            _db.Remove(item);
+            var itemDb = new WalletEntities()
+            {
+                Id = Guid.NewGuid().ToString(), Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
+            };
+            _db.Remove(itemDb);
             _db.SaveChanges();
         }
         

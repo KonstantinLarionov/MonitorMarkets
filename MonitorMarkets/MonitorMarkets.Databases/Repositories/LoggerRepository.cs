@@ -15,6 +15,7 @@ namespace MonitorMarkets.Databases.Repositories
         LoggerContext _db;
 
         private DbSet<LogInfo> _dbSet;
+        
         public LoggerRepository(LoggerContext context)
         {
             _db = context;
@@ -23,7 +24,8 @@ namespace MonitorMarkets.Databases.Repositories
 
         public void Create(LogInfo item)
         {
-            _db.Add(item);
+            var itemDb = new Log { Id = Guid.NewGuid().ToString(), MsgError = item.MsgError, Time = item.Time, TypeError = item.TypeError };
+            _db.Add(itemDb);
             _db.SaveChanges();
         }
         
@@ -33,13 +35,15 @@ namespace MonitorMarkets.Databases.Repositories
         }
         public void Update(LogInfo item)
         {
-            _db.Entry(item).State = EntityState.Modified;
+            var itemDb = new Log { Id = Guid.NewGuid().ToString(), MsgError = item.MsgError, Time = item.Time, TypeError = item.TypeError };
+            _db.Entry(itemDb).State = EntityState.Modified;
             _db.SaveChanges();
         }
 
         public void Remove(LogInfo item)
         {
-            _db.Remove(item);
+            var itemDb = new Log { Id = Guid.NewGuid().ToString(), MsgError = item.MsgError, Time = item.Time, TypeError = item.TypeError };
+            _db.Remove(itemDb);
             _db.SaveChanges();
         }
         
