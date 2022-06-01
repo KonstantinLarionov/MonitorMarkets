@@ -54,6 +54,7 @@ public class HomeController : Controller
     {
         dbLog.Create(logInfo);
     }
+    
 
 
     /// <summary>
