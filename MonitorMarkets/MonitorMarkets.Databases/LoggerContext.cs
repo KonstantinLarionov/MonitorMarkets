@@ -6,10 +6,10 @@ namespace MonitorMarkets.Databases
 {
     public class LoggerContext : DbContext
     {
-        public DbSet<LogInfo> EUsers { get; set; }
-        public DbSet<OrdersEntitiesInfo> EOrders { get; set; }
-        public DbSet<PositionsEntitiesInfo> EPositions { get; set; }
-        public DbSet<WalletEntitiesInfo> EWallet { get; set; }
+        public DbSet<Log> EUsers { get; set; }
+        public DbSet<OrdersEntities> EOrders { get; set; }
+        public DbSet<PositionsEntities> EPositions { get; set; }
+        public DbSet<WalletEntities> EWallet { get; set; }
 
         public LoggerContext(DbContextOptions options) : base(options)
         {

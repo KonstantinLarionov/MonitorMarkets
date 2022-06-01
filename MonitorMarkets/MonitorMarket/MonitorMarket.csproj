@@ -6,6 +6,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\MonitorMarket.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\MonitorMarket.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\MonitorMarkets.Databases\MonitorMarkets.Databases.csproj" />
     </ItemGroup>
@@ -13,6 +21,7 @@
     <ItemGroup>
       <PackageReference Include="Swagger-Net" Version="8.4.11.101" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.1" />
     </ItemGroup>
 
     <ItemGroup>

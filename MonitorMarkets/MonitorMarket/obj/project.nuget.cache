@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OQCkcas44YAnbzGtzejmBdRETwlKVYSfFh4mpki9Qw/4PQqvckOOYKwpetDwXhiOoxWdoPqjccSenZ6YKQrUoA==",
+  "dgSpecHash": "g8HKjhpqBMmsuuYjRZDxfT9NtXub/gWYAs9wUxooutIKXqWzKlhzblLoM9fsQuNi5gIGZFEXM6UGY+Dm6Rfzsw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj",
   "expectedPackageFiles": [
@@ -71,6 +71,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swagger-net\\8.4.11.101\\swagger-net.8.4.11.101.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore\\6.3.1\\swashbuckle.aspnetcore.6.3.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.annotations\\6.3.1\\swashbuckle.aspnetcore.annotations.6.3.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.3.1\\swashbuckle.aspnetcore.swagger.6.3.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.3.1\\swashbuckle.aspnetcore.swaggergen.6.3.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.3.1\\swashbuckle.aspnetcore.swaggerui.6.3.1.nupkg.sha512",

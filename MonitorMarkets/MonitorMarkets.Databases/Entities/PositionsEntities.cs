@@ -1,4 +1,4 @@
-﻿using MonitorMarkets.Application.Objects.Data.Enums;
+﻿using MonitorMarkets.Application.Objects.DataBase;
 
 namespace MonitorMarkets.Databases.Entities
 {

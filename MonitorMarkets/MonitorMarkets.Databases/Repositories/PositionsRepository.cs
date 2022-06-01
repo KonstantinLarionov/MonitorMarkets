@@ -23,7 +23,11 @@ namespace MonitorMarkets.Databases.Repositories
 
         public void Create(PositionsEntitiesInfo item)
         {
-            _db.Add(item);
+            var itemDb = new PositionsEntities()
+            {
+                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
+            };
+            _db.Add(itemDb);
             _db.SaveChanges();
         }
 
@@ -33,13 +37,21 @@ namespace MonitorMarkets.Databases.Repositories
         }
         public void Update(PositionsEntitiesInfo item)
         {
-            _db.Entry(item).State = EntityState.Modified;
+            var itemDb = new PositionsEntities()
+            {
+                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
+            };
+            _db.Entry(itemDb).State = EntityState.Modified;
             _db.SaveChanges();
         }
 
         public void Remove(PositionsEntitiesInfo item)
         {
-            _db.Remove(item);
+            var itemDb = new PositionsEntities()
+            {
+                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
+            };
+            _db.Remove(itemDb);
             _db.SaveChanges();
         }
         
