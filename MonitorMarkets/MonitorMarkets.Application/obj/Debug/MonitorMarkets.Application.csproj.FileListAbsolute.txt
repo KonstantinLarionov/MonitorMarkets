@@ -49,4 +49,3 @@ C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Deb
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\bin\Debug\System.Runtime.Serialization.Primitives.dll
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CoreCompileInputs.cache
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CopyComplete
-C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.AssemblyReference.cache
