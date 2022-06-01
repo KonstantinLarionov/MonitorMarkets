@@ -49,6 +49,7 @@ public class HomeController : Controller
     /// <response code="400">неправильные параметры</response>
     [HttpPost]
     [Route("AddLog")] 
+    [ProducesResponseType(typeof(LogInfo), 200)]
     public void AddLog(LogInfo logInfo)
     {
         dbLog.Create(logInfo);
@@ -64,6 +65,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("AddOrder")]
+    [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
+
     public void AddOrder(OrdersEntitiesInfo orderInfo)
     {
         dbOrder.Create(orderInfo);
@@ -78,6 +81,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("AddPositions")]
+    [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
+
     public void AddPositions(PositionsEntitiesInfo posInfo)
     {
         dbPositions.Create(posInfo);
@@ -92,6 +97,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("AddWallet")]
+    [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
+
     public void AddWallet(WalletEntitiesInfo walletInfo)
     {
         dbWallet.Create(walletInfo);
@@ -110,6 +117,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("DelLog")]
+    [ProducesResponseType(typeof(LogInfo), 200)]
+
     public void DelLog(LogInfo logInfo)
     {
         dbLog.Remove(logInfo);
@@ -124,6 +133,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("DelOrder")]
+    [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
+
     public void DelOrder(OrdersEntitiesInfo orderInfo)
     {
         dbOrder.Remove(orderInfo);
@@ -138,6 +149,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("DelPositions")]
+    [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
+
     public void DelPositions(PositionsEntitiesInfo posInfo)
     {
         dbPositions.Remove(posInfo);
@@ -152,6 +165,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("DelWallet")]
+    [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
+
     public void DelWallet(WalletEntitiesInfo walletInfo)
     {
         dbWallet.Remove(walletInfo);
@@ -168,6 +183,8 @@ public class HomeController : Controller
     /// <response code="400">неправильные параметры</response>
     [HttpPost]
     [Route("UpLog")]
+    [ProducesResponseType(typeof(LogInfo), 200)]
+
     public void UpLog(LogInfo logInfo)
     {
         dbLog.Update(logInfo);
@@ -182,6 +199,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("UpOrder")]
+    [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
+
     public void UpOrder(OrdersEntitiesInfo orderInfo)
     {
         dbOrder.Update(orderInfo);
@@ -196,6 +215,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("UpPositions")]
+    [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
+
     public void UpPositions(PositionsEntitiesInfo posInfo)
     {
         dbPositions.Update(posInfo);
@@ -210,6 +231,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("UpWallet")]
+    [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
+
     public void UpWallet(WalletEntitiesInfo walletInfo)
     {
         dbWallet.Update(walletInfo);
@@ -230,6 +253,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("FLog")]
+    [ProducesResponseType(typeof(LogInfo), 200)]
+
     public LogInfo FLog(string id)
     {
         var search = dbLog.FindById(id);
@@ -246,6 +271,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("FOrder")]
+    [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
+
     public OrdersEntitiesInfo FOrder(string id)
     {
         var search = dbOrder.FindById(id);
@@ -262,6 +289,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("FPositions")]
+    [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
+
     public PositionsEntitiesInfo FPositions(string id)
     {
         var search = dbPositions.FindById(id);
@@ -278,6 +307,8 @@ public class HomeController : Controller
 
     [HttpPost]
     [Route("FWallet")]
+    [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
+
     public WalletEntitiesInfo FWallet(string id)
     {
         var search = dbWallet.FindById(id);
