@@ -9,25 +9,32 @@ public class KeysRepository:IRepository<ConnectionKeys>
     DesktopContext _context;
     DbSet<ConnectionKeys> _dbSet;
 
-    public void Create(ConnectionKeys item)
+    public int Create(ConnectionKeys item)
     {
         _dbSet.Add(item);
-        _context.SaveChanges();
+        var res = _context.SaveChanges();
+        return res;
     }
 
-    public ConnectionKeys FindById(int id)
+    public ConnectionKeys FindById(Guid id)
     {
         return _dbSet.Find(id);
     }
-    public void Update(ConnectionKeys item)
+
+    public int Remove(Guid id)
     {
-        _context.Entry(item).State = EntityState.Modified;
-        _context.SaveChanges();
+        Remove(id);
+        var res = _context.SaveChanges();
+        return res;
     }
 
-    public void Remove(ConnectionKeys item)
+    public int Update(ConnectionKeys item, Guid id)
     {
-        _dbSet.Remove(item);
-        _context.SaveChanges();
+        _dbSet.Find(id);
+        _context.Entry(item).State = EntityState.Modified;
+        var res = _context.SaveChanges();
+        return res;
     }
+
+
 }
