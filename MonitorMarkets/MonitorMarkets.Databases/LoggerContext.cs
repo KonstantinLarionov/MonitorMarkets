@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MonitorMarkets.Application.Objects.DataBase;
 using MonitorMarkets.Databases.Entities;
 
 namespace MonitorMarkets.Databases
@@ -10,7 +11,7 @@ namespace MonitorMarkets.Databases
         public DbSet<PositionsEntities> EPositions { get; set; }
         public DbSet<WalletEntities> EWallet { get; set; }
 
-        public LoggerContext()
+        public LoggerContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -22,6 +23,5 @@ namespace MonitorMarkets.Databases
                 new MySqlServerVersion(new Version(8, 0, 11))
             );
         }
-
     }
 }
