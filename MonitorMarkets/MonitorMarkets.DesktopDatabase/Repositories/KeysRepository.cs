@@ -15,6 +15,11 @@ public class KeysRepository:IRepository<ConnectionKeys>
         _context.SaveChanges();
     }
 
+    public ConnectionKeys FindById(string id)
+    {
+        throw new NotImplementedException();
+    }
+
     public ConnectionKeys FindById(int id)
     {
         return _dbSet.Find(id);
