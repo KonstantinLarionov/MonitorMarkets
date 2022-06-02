@@ -1,4 +1,5 @@
 ﻿
+<<<<<<< HEAD
 FC:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml;;
 FC:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\ChartsWindow.xaml;;
 FC:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\CurrencyRateWindow.xaml;;
@@ -6,4 +7,13 @@ FC:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\Ge
 FC:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\MainWindow.xaml;;
 FC:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\Resources\Menu.xaml;;
 FC:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\TradingWindow.xaml;;
+=======
+FD:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\App.xaml;;
+FD:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\ChartsWindow.xaml;;
+FD:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\CurrencyRateWindow.xaml;;
+FD:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\GeneralSettingsWindow.xaml;;
+FD:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\MainWindow.xaml;;
+FD:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\Resources\Menu.xaml;;
+FD:\.rider\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\View\TradingWindow.xaml;;
+>>>>>>> origin/main
 
