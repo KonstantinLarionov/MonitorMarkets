@@ -14,11 +14,11 @@ namespace MonitorMarkets.Databases.Repositories
     {
         LoggerContext _db;
 
-        private DbSet<OrdersEntitiesInfo> _dbSet;
+        private DbSet<OrdersEntities> _dbSet;
         public OrderRepository(LoggerContext context)
         {
             _db = context;
-            _dbSet = context.Set<OrdersEntitiesInfo>();
+            _dbSet = context.Set<OrdersEntities>();
         }
 
         public void Create(OrdersEntitiesInfo item)
@@ -35,7 +35,12 @@ namespace MonitorMarkets.Databases.Repositories
 
         public OrdersEntitiesInfo FindById(string id)
         {
-            return _dbSet.Find(id);
+            var item = _dbSet.Find(id);
+            var orderInfo = new OrdersEntitiesInfo()
+            {
+                Price = item.Price, Amount = item.Amount, Direction = item.Direction, StatusOrder = item.StatusOrder
+            };
+            return orderInfo;
         }
         public void Update(OrdersEntitiesInfo item)
         {

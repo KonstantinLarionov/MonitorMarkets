@@ -29,8 +29,8 @@ public class PositionsController : Controller
     /// <response code="200">Positions добавлен в базу данных</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPost]
-    [Route("AddPositions")]
+    [HttpPut]
+    [Route("positions/addpositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
     public void AddPositions(PositionsEntitiesInfo posInfo)
@@ -50,7 +50,7 @@ public class PositionsController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpDelete]
-    [Route("DelPositions")]
+    [Route("positions/deletepositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
     public void DelPositions(PositionsEntitiesInfo posInfo)
@@ -70,7 +70,7 @@ public class PositionsController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpPost]
-    [Route("UpPositions")]
+    [Route("positions/updatepositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
     public void UpPositions(PositionsEntitiesInfo posInfo)
@@ -91,7 +91,7 @@ public class PositionsController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpGet]
-    [Route("FPositions")]
+    [Route("positions/findpositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
     public PositionsEntitiesInfo FPositions(string id)

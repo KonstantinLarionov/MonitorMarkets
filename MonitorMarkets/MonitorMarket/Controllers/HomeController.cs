@@ -28,8 +28,8 @@ public class HomeController : Controller
     /// <param name="logInfo"></param>
     /// <response code="200">Log добавлен в базу данных</response>
     /// <response code="400">неправильные параметры</response>
-    [HttpPost]
-    [Route("AddLog")] 
+    [HttpPut]
+    [Route("log/createlog")] 
     [ProducesResponseType(typeof(LogInfo), 200)]
     public void AddLog(LogInfo logInfo)
     {
@@ -47,7 +47,7 @@ public class HomeController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpDelete]
-    [Route("DelLog")]
+    [Route("log/deletelog")]
     [ProducesResponseType(typeof(LogInfo), 200)]
 
     public void DelLog(LogInfo logInfo)
@@ -65,7 +65,7 @@ public class HomeController : Controller
     /// <response code="200">Log обновлён</response>
     /// <response code="400">неправильные параметры</response>
     [HttpPost]
-    [Route("UpLog")]
+    [Route("log/updatelog")]
     [ProducesResponseType(typeof(LogInfo), 200)]
 
     public void UpLog(LogInfo logInfo)
@@ -85,14 +85,14 @@ public class HomeController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpGet]
-    [Route("FLog")]
+    [Route("log/findlog")]
     [ProducesResponseType(typeof(LogInfo), 200)]
-
     public LogInfo FLog(string id)
     {
         var search = dbLog.FindById(id);
         return search;
     }
+    
     #endregion
     
     #endregion

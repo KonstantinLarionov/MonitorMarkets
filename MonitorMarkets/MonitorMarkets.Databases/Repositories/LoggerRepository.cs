@@ -14,12 +14,12 @@ namespace MonitorMarkets.Databases.Repositories
     {
         LoggerContext _db;
 
-        private DbSet<LogInfo> _dbSet;
+        private DbSet<Log> _dbSet;
         
         public LoggerRepository(LoggerContext context)
         {
             _db = context;
-            _dbSet = context.Set<LogInfo>();
+            _dbSet = context.Set<Log>();
         }
 
         public void Create(LogInfo item)
@@ -31,7 +31,9 @@ namespace MonitorMarkets.Databases.Repositories
         
         public LogInfo FindById(string id)
         {
-            return _dbSet.Find(id);
+            var item = _dbSet.Find(id);
+            var logInfo = new LogInfo() { MsgError = item.MsgError, Time = item.Time, TypeError = item.TypeError };
+            return logInfo;
         }
         public void Update(LogInfo item)
         {

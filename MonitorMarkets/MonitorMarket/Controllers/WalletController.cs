@@ -30,8 +30,8 @@ public class WalletController : Controller
     /// <response code="200">Wallet добавлен в базу данных</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPost]
-    [Route("AddWallet")]
+    [HttpPut]
+    [Route("wallet/addwallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
     public void AddWallet(WalletEntitiesInfo walletInfo)
@@ -52,7 +52,7 @@ public class WalletController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpDelete]
-    [Route("DelWallet")]
+    [Route("wallet/deletewallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
     public void DelWallet(WalletEntitiesInfo walletInfo)
@@ -73,7 +73,7 @@ public class WalletController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpPost]
-    [Route("UpWallet")]
+    [Route("wallet/updatewallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
     public void UpWallet(WalletEntitiesInfo walletInfo)
@@ -95,7 +95,7 @@ public class WalletController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpGet]
-    [Route("FWallet")]
+    [Route("wallet/findwallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
     public WalletEntitiesInfo FWallet(string id)
@@ -106,8 +106,7 @@ public class WalletController : Controller
 
 
     #endregion
-
-
+    
     #endregion
     
 }

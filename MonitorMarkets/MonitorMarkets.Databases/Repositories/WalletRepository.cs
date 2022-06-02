@@ -14,11 +14,11 @@ namespace MonitorMarkets.Databases.Repositories
     {
         LoggerContext _db;
 
-        private DbSet<WalletEntitiesInfo> _dbSet;
+        private DbSet<WalletEntities> _dbSet;
         public WalletRepository(LoggerContext context)
         {
             _db = context;
-            _dbSet = context.Set<WalletEntitiesInfo>();
+            _dbSet = context.Set<WalletEntities>();
         }
 
         public void Create(WalletEntitiesInfo item)
@@ -33,7 +33,12 @@ namespace MonitorMarkets.Databases.Repositories
 
         public WalletEntitiesInfo FindById(string id)
         {
-            return _dbSet.Find(id);
+            var item = _dbSet.Find(id);
+            var walletInfo = new WalletEntitiesInfo()
+            {
+                Currency = item.Currency, Aviailable = item.Aviailable, Balance = item.Balance
+            };
+            return walletInfo;
         }
         public void Update(WalletEntitiesInfo item)
         {

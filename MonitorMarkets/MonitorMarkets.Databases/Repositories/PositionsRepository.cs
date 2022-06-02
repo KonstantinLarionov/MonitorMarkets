@@ -14,11 +14,11 @@ namespace MonitorMarkets.Databases.Repositories
     {
         LoggerContext _db;
 
-        private DbSet<PositionsEntitiesInfo> _dbSet;
+        private DbSet<PositionsEntities> _dbSet;
         public PositionsRepository(LoggerContext context)
         {
             _db = context;
-            _dbSet = context.Set<PositionsEntitiesInfo>();
+            _dbSet = context.Set<PositionsEntities>();
         }
 
         public void Create(PositionsEntitiesInfo item)
@@ -33,7 +33,12 @@ namespace MonitorMarkets.Databases.Repositories
 
         public PositionsEntitiesInfo FindById(string id)
         {
-            return _dbSet.Find(id);
+            var item = _dbSet.Find(id);
+            var positionsInfo = new PositionsEntitiesInfo()
+            {
+                Price = item.Price, Amount = item.Amount, StatusPosition = item.StatusPosition, Symbol = item.Symbol
+            };
+            return positionsInfo;
         }
         public void Update(PositionsEntitiesInfo item)
         {

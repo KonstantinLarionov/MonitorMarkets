@@ -28,8 +28,8 @@ public class OrderController : Controller
     /// <response code="200">Order добавлен в базу данных</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPost]
-    [Route("AddOrder")]
+    [HttpPut]
+    [Route("order/addorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
     public void AddOrder(OrdersEntitiesInfo orderInfo)
@@ -47,7 +47,7 @@ public class OrderController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpDelete]
-    [Route("DelOrder")]
+    [Route("order/deleteorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
     public void DelOrder(OrdersEntitiesInfo orderInfo)
@@ -65,7 +65,7 @@ public class OrderController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpPost]
-    [Route("UpOrder")]
+    [Route("order/updateorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
     public void UpOrder(OrdersEntitiesInfo orderInfo)
@@ -84,7 +84,7 @@ public class OrderController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpGet]
-    [Route("FOrder")]
+    [Route("order/findorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
     public OrdersEntitiesInfo FOrder(string id)
