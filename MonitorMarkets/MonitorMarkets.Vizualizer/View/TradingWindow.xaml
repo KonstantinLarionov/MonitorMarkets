@@ -110,7 +110,7 @@
                                 </StackPanel>
                                 <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
                                     <TextBlock Name="MarketBar">
-                                        
+                                        1231231
                                     </TextBlock>
                                     <Label FontSize="20" Foreground="Black" Content="ВалютаНейм"></Label>
                                 </StackPanel>

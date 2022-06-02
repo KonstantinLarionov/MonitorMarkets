@@ -13,7 +13,7 @@ namespace MonitorMarkets.Vizualizer.View
 {
     public partial class TradingWindow : Window
     {
-        MarketsEnum status;
+        MarketsEnum _selectedmarket;
         public TradingWindow()
         {
             InitializeComponent();
@@ -21,28 +21,25 @@ namespace MonitorMarkets.Vizualizer.View
 
         public void Box_OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            //var enumtype = SelectedMarket.Text;
-            //MarketsEnum markets = (MarketsEnum) Enum.Parse(typeof(MarketsEnum), (string) SelectedMarket.SelectedValue);
-            /*enumMarket= (MarketsEnum) Enum.Parse(typeof(MarketsEnum), SelectedMarket.SelectedItem);
-            MarketBar.Text = (market);
-            var qwe = enumtype.GetType().FullName;*/
-            //var marketBinance = enumMarket.GetEnumName(MarketsEnum.Binance);
-            Enum.TryParse<MarketsEnum>(SelectedMarket.SelectedValue.ToString(), out status);
+            Enum.TryParse<MarketsEnum>(SelectedMarket.SelectedValue.ToString(), out _selectedmarket);
+            var std = GetAttributeOfType<EnumMarketsAttribute>(_selectedmarket);
         }
-
-        private  void PrintAuthorInfo(System.Type type )
+        
+        /// <summary>
+        /// Gets an attribute on an enum field value
+        /// </summary>
+        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
+        /// <param name="enumVal">The enum value</param>
+        /// <returns>The attribute of type T that exists on the enum value</returns>
+        /// <example><![CDATA[string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;]]></example>
+        ///
+        
+        public static T GetAttributeOfType<T>(Enum enumVal) where T:Attribute
         {
-            // Using reflection.  
-            var attrs = status.GetCustomAttributes(); // Reflection.  
-
-            // Displaying output.  
-            foreach (Attribute attr in attrs)
-            {
-                if (attr is EnumMarketsAttribute)
-                {
-                    EnumMarketsAttribute a = (EnumMarketsAttribute) attr;
-                }
-            }
+            var type = enumVal.GetType();
+            var memInfo = type.GetMember(enumVal.ToString());
+            var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
+            return (attributes.Length > 0) ? (T)attributes[0] : null;
         }
     }
 }
