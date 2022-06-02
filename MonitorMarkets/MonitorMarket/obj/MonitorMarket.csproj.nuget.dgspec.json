@@ -1,14 +1,14 @@
 {
   "format": 1,
   "restore": {
-    "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj": {}
   },
   "projects": {
-    "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj": {
+    "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj",
         "projectName": "MonitorMarkets.Application",
-        "projectPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj",
         "frameworks": {
           "net46": {
             "projectReferences": {}
@@ -19,17 +19,17 @@
         "net46": {}
       }
     },
-    "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj": {
+    "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
         "projectName": "MonitorMarkets.Databases",
-        "projectPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
-        "packagesPath": "C:\\Users\\nik-p\\.nuget\\packages\\",
-        "outputPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nik-p\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -41,8 +41,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj": {
-                "projectPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj"
+              "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj"
               }
             }
           }
@@ -85,21 +85,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\nik-p\\.dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj": {
+    "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj",
         "projectName": "MonitorMarket",
-        "projectPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj",
-        "packagesPath": "C:\\Users\\nik-p\\.nuget\\packages\\",
-        "outputPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\MonitorMarket.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarket\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nik-p\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -111,8 +111,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj": {
-                "projectPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj"
+              "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj"
               }
             }
           }
@@ -127,7 +127,15 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Swagger-Net": {
+              "target": "Package",
+              "version": "[8.4.11.101, )"
+            },
             "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.1, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
               "target": "Package",
               "version": "[6.3.1, )"
             }
@@ -150,7 +158,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\nik-p\\.dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

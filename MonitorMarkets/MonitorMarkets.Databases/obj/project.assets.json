@@ -4174,19 +4174,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nik-p\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
       "projectName": "MonitorMarkets.Databases",
-      "projectPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
-      "packagesPath": "C:\\Users\\nik-p\\.nuget\\packages\\",
-      "outputPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\obj\\",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\MonitorMarkets.Databases.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Databases\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\nik-p\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -4198,8 +4198,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj": {
-              "projectPath": "C:\\WorkProjects\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj"
+            "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj": {
+              "projectPath": "C:\\Users\\Admin\\Desktop\\MonitorMarkets\\MonitorMarkets\\MonitorMarkets.Application\\MonitorMarkets.Application.csproj"
             }
           }
         }
@@ -4242,7 +4242,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\nik-p\\.dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

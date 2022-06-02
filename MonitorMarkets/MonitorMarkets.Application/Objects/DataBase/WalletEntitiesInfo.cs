@@ -2,8 +2,8 @@
 {
     public class WalletEntitiesInfo
     {
-        public string Currency { get; }
-        public decimal Balance { get; }
-        public decimal Aviailable { get; }
+        public string Currency { get; set; }
+        public decimal Balance { get; set; }
+        public decimal Aviailable { get; set; }
     }
 }

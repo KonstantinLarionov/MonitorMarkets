@@ -1,8 +1,8 @@
-﻿using MonitorMarkets.Application.Objects.Data.Enums;
+﻿using MonitorMarkets.Application.Objects.DataBase;
 
 namespace MonitorMarkets.Databases.Entities
 {
-    public class PositionsEntities
+    public class PositionsEntities:BaseEntity
     {
         public string Symbol { get; set; }
         public decimal Price { get; set; }
