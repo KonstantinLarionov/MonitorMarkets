@@ -127,7 +127,15 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Swagger-Net": {
+              "target": "Package",
+              "version": "[8.4.11.101, )"
+            },
             "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.1, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
               "target": "Package",
               "version": "[6.3.1, )"
             }
