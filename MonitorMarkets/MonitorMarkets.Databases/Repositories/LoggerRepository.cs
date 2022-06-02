@@ -14,37 +14,39 @@ namespace MonitorMarkets.Databases.Repositories
     {
         LoggerContext _db;
 
-        private DbSet<LogInfo> _dbSet;
+        private DbSet<Log> _dbSet;
         
         public LoggerRepository(LoggerContext context)
         {
             _db = context;
-            _dbSet = context.Set<LogInfo>();
+            _dbSet = context.Set<Log>();
         }
 
-        public void Create(LogInfo item)
+        public int Create(LogInfo item)
         {
-            var itemDb = new Log { Id = Guid.NewGuid().ToString(), MsgError = item.MsgError, Time = item.Time, TypeError = item.TypeError };
+            var itemDb = new Log { MsgError = item.MsgError, TypeError = item.TypeError };
             _db.Add(itemDb);
-            _db.SaveChanges();
+            return _db.SaveChanges();
         }
         
-        public LogInfo FindById(string id)
+        public LogInfo FindById(Guid id)
         {
-            return _dbSet.Find(id);
+            var item = _dbSet.Find(id);
+            var logInfo = new LogInfo() { MsgError = item.MsgError,  TypeError = item.TypeError };
+            return logInfo;
         }
-        public void Update(LogInfo item)
+        public int Update(LogInfo item, Guid id)
         {
-            var itemDb = new Log { Id = Guid.NewGuid().ToString(), MsgError = item.MsgError, Time = item.Time, TypeError = item.TypeError };
+            var itemDb = new Log { Id = id, MsgError = item.MsgError,  TypeError = item.TypeError };
             _db.Entry(itemDb).State = EntityState.Modified;
-            _db.SaveChanges();
+            return _db.SaveChanges();
         }
 
-        public void Remove(LogInfo item)
+        public int Remove(Guid id)
         {
-            var itemDb = new Log { Id = Guid.NewGuid().ToString(), MsgError = item.MsgError, Time = item.Time, TypeError = item.TypeError };
+            var itemDb = _dbSet.Find(id);
             _db.Remove(itemDb);
-            _db.SaveChanges();
+            return _db.SaveChanges();
         }
         
     }

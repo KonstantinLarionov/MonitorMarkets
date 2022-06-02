@@ -29,10 +29,10 @@ public class OrderController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpPost]
-    [Route("AddOrder")]
+    [Route("order/addorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
-    public void AddOrder(OrdersEntitiesInfo orderInfo)
+    public void AddOrder([FromBody]OrdersEntitiesInfo orderInfo)
     {
         dbOrder.Create(orderInfo);
     }
@@ -47,10 +47,10 @@ public class OrderController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpDelete]
-    [Route("DelOrder")]
+    [Route("order/deleteorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
-    public void DelOrder(OrdersEntitiesInfo orderInfo)
+    public void DelOrder([FromQuery]Guid orderInfo)
     {
         dbOrder.Remove(orderInfo);
     }
@@ -64,13 +64,13 @@ public class OrderController : Controller
     /// <response code="200">Order обновлён</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPost]
-    [Route("UpOrder")]
+    [HttpPut]
+    [Route("order/updateorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
-    public void UpOrder(OrdersEntitiesInfo orderInfo)
+    public void UpOrder([FromQuery]OrdersEntitiesInfo orderInfo)
     {
-        dbOrder.Update(orderInfo);
+        // dbOrder.Update(orderInfo);
     }
     #endregion
 
@@ -84,10 +84,10 @@ public class OrderController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpGet]
-    [Route("FOrder")]
+    [Route("order/findorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
-    public OrdersEntitiesInfo FOrder(string id)
+    public OrdersEntitiesInfo FOrder([FromQuery]Guid id)
     {
         var search = dbOrder.FindById(id);
         return search;
