@@ -1,6 +1,0 @@
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Database\bin\Debug\MonitorMarkets.Database.dll
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Database\bin\Debug\MonitorMarkets.Database.pdb
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Database\obj\Debug\MonitorMarkets.Database.csproj.AssemblyReference.cache
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Database\obj\Debug\MonitorMarkets.Database.csproj.CoreCompileInputs.cache
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Database\obj\Debug\MonitorMarkets.Database.dll
-C:\Users\kosty\RiderProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Database\obj\Debug\MonitorMarkets.Database.pdb
