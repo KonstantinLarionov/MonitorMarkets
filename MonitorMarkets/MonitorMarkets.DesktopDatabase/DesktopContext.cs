@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using MonitorMarkets.DesktopDatabase.Repositories;
 
-namespace MonitorMarkets.DesktopDatabase;
 using Microsoft.EntityFrameworkCore;
-using Entities;
+using MonitorMarkets.DesktopDatabase.Entities;
+
+namespace MonitorMarkets.DesktopDatabase;
 
 public class DesktopContext:DbContext
 {
