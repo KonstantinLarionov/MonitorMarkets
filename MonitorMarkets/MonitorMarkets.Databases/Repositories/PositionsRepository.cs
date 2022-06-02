@@ -25,10 +25,25 @@ namespace MonitorMarkets.Databases.Repositories
         {
             var itemDb = new PositionsEntities()
             {
-                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
+                Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
             };
             _db.Add(itemDb);
             _db.SaveChanges();
+        }
+
+        public PositionsEntitiesInfo FindById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(PositionsEntitiesInfo item, Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public PositionsEntitiesInfo FindById(string id)
@@ -40,11 +55,10 @@ namespace MonitorMarkets.Databases.Repositories
             };
             return positionsInfo;
         }
-        public void Update(PositionsEntitiesInfo item)
+        public void Update(PositionsEntitiesInfo item, string id)
         {
             var itemDb = new PositionsEntities()
-            {
-                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
+            { Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
             };
             _db.Entry(itemDb).State = EntityState.Modified;
             _db.SaveChanges();
@@ -53,12 +67,15 @@ namespace MonitorMarkets.Databases.Repositories
         public void Remove(PositionsEntitiesInfo item)
         {
             var itemDb = new PositionsEntities()
-            {
-                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
+            { Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
             };
             _db.Remove(itemDb);
             _db.SaveChanges();
         }
-        
+
+        int IRepository<PositionsEntitiesInfo>.Create(PositionsEntitiesInfo item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

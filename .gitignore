@@ -19,6 +19,7 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
+*.info
 [Bb]in
 [Dd]ebug*/
 *.lib
@@ -30,3 +31,11 @@ _ReSharper*/
 .vs/
 #Nuget packages folder
 packages/
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
+bin/*
+OBJ/*

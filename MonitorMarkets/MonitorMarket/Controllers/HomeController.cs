@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using MonitorMarkets.Application.Objects.Abstractions;
 using MonitorMarkets.Application.Objects.DataBase;
 using MonitorMarkets.Databases;
@@ -17,7 +18,6 @@ public class HomeController : Controller
         _logger = logger;
         dbLog = repositoryLog;
     }
-
     #region Swagger
 
     #region Add
@@ -28,12 +28,20 @@ public class HomeController : Controller
     /// <param name="logInfo"></param>
     /// <response code="200">Log добавлен в базу данных</response>
     /// <response code="400">неправильные параметры</response>
-    [HttpPut]
-    [Route("log/createlog")] 
+    [Microsoft.AspNetCore.Mvc.HttpPost]
+    [Microsoft.AspNetCore.Mvc.Route("log/createlog")] 
     [ProducesResponseType(typeof(LogInfo), 200)]
-    public void AddLog(LogInfo logInfo)
+    public IActionResult AddLog([Microsoft.AspNetCore.Mvc.FromBody]LogInfo logInfo)
     {
-        dbLog.Create(logInfo);
+        var result = dbLog.Create(logInfo);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok();
+        }
     }
     #endregion
 
@@ -46,13 +54,13 @@ public class HomeController : Controller
     /// <response code="200">Log удален из базы данных</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpDelete]
-    [Route("log/deletelog")]
+    [Microsoft.AspNetCore.Mvc.HttpDelete]
+    [Microsoft.AspNetCore.Mvc.Route("log/deletelog")]
     [ProducesResponseType(typeof(LogInfo), 200)]
 
-    public void DelLog(LogInfo logInfo)
+    public void DelLog([FromQuery]Guid id)
     {
-        dbLog.Remove(logInfo);
+        dbLog.Remove(id);
     }
     #endregion
 
@@ -64,13 +72,17 @@ public class HomeController : Controller
     /// <param name="logInfo"></param>
     /// <response code="200">Log обновлён</response>
     /// <response code="400">неправильные параметры</response>
-    [HttpPost]
-    [Route("log/updatelog")]
+    [Microsoft.AspNetCore.Mvc.HttpPut]
+    [Microsoft.AspNetCore.Mvc.Route("log/updatelog")]
     [ProducesResponseType(typeof(LogInfo), 200)]
 
-    public void UpLog(LogInfo logInfo)
+    public IActionResult UpLog([FromQuery]Guid id, [Microsoft.AspNetCore.Mvc.FromBody] LogInfo info)
     {
-        dbLog.Update(logInfo);
+        var result = dbLog.Update(info, id);
+        if (result == 0)
+            return BadRequest();
+        else
+            return Ok(id);
     }
     #endregion
 
@@ -84,10 +96,10 @@ public class HomeController : Controller
     /// <response code="200">Log найден</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpGet]
-    [Route("log/findlog")]
+    [Microsoft.AspNetCore.Mvc.HttpGet]
+    [Microsoft.AspNetCore.Mvc.Route("log/findlog")]
     [ProducesResponseType(typeof(LogInfo), 200)]
-    public LogInfo FLog(string id)
+    public LogInfo FLog([FromQuery]Guid id)
     {
         var search = dbLog.FindById(id);
         return search;

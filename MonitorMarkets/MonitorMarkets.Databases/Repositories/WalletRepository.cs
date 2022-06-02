@@ -24,11 +24,25 @@ namespace MonitorMarkets.Databases.Repositories
         public void Create(WalletEntitiesInfo item)
         {
             var itemDb = new WalletEntities()
-            {
-                Id = Guid.NewGuid().ToString(), Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
+            { Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
             };
             _db.Add(itemDb);
             _db.SaveChanges();
+        }
+
+        public WalletEntitiesInfo FindById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(WalletEntitiesInfo item, Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public WalletEntitiesInfo FindById(string id)
@@ -40,11 +54,10 @@ namespace MonitorMarkets.Databases.Repositories
             };
             return walletInfo;
         }
-        public void Update(WalletEntitiesInfo item)
+        public void Update(WalletEntitiesInfo item, string id)
         {
             var itemDb = new WalletEntities()
-            {
-                Id = Guid.NewGuid().ToString(), Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
+            { Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
             };
             _db.Entry(itemDb).State = EntityState.Modified;
             _db.SaveChanges();
@@ -53,12 +66,15 @@ namespace MonitorMarkets.Databases.Repositories
         public void Remove(WalletEntitiesInfo item)
         {
             var itemDb = new WalletEntities()
-            {
-                Id = Guid.NewGuid().ToString(), Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
+            { Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
             };
             _db.Remove(itemDb);
             _db.SaveChanges();
         }
-        
+
+        int IRepository<WalletEntitiesInfo>.Create(WalletEntitiesInfo item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
