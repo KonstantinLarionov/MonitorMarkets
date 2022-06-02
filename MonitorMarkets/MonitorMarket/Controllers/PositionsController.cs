@@ -30,10 +30,10 @@ public class PositionsController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpPost]
-    [Route("AddPositions")]
+    [Route("positions/addpositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
-    public void AddPositions(PositionsEntitiesInfo posInfo)
+    public void AddPositions([FromBody]PositionsEntitiesInfo posInfo)
     {
         dbPositions.Create(posInfo);
     }
@@ -50,10 +50,10 @@ public class PositionsController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpDelete]
-    [Route("DelPositions")]
+    [Route("positions/deletepositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
-    public void DelPositions(PositionsEntitiesInfo posInfo)
+    public void DelPositions([FromQuery]Guid posInfo)
     {
         dbPositions.Remove(posInfo);
     }
@@ -69,13 +69,13 @@ public class PositionsController : Controller
     /// <response code="200">Positions обновлён</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPost]
-    [Route("UpPositions")]
+    [HttpPut]
+    [Route("positions/updatepositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
-    public void UpPositions(PositionsEntitiesInfo posInfo)
+    public void UpPositions([FromQuery]PositionsEntitiesInfo posInfo)
     {
-        dbPositions.Update(posInfo);
+        // dbPositions.Update(posInfo);
     }
 
     #endregion
@@ -91,10 +91,10 @@ public class PositionsController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpGet]
-    [Route("FPositions")]
+    [Route("positions/findpositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
-    public PositionsEntitiesInfo FPositions(string id)
+    public PositionsEntitiesInfo FPositions([FromQuery]Guid id)
     {
         var search = dbPositions.FindById(id);
         return search;

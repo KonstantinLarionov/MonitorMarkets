@@ -31,10 +31,10 @@ public class WalletController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpPost]
-    [Route("AddWallet")]
+    [Route("wallet/addwallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
-    public void AddWallet(WalletEntitiesInfo walletInfo)
+    public void AddWallet([FromBody]WalletEntitiesInfo walletInfo)
     {
         dbWallet.Create(walletInfo);
     }
@@ -52,10 +52,10 @@ public class WalletController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpDelete]
-    [Route("DelWallet")]
+    [Route("wallet/deletewallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
-    public void DelWallet(WalletEntitiesInfo walletInfo)
+    public void DelWallet([FromQuery]Guid walletInfo)
     {
         dbWallet.Remove(walletInfo);
     }
@@ -72,13 +72,13 @@ public class WalletController : Controller
     /// <response code="200">Wallet обновлён</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPost]
-    [Route("UpWallet")]
+    [HttpPut]
+    [Route("wallet/updatewallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
-    public void UpWallet(WalletEntitiesInfo walletInfo)
+    public void UpWallet([FromQuery]WalletEntitiesInfo walletInfo)
     {
-        dbWallet.Update(walletInfo);
+        // dbWallet.Update(walletInfo);
     }
 
 
@@ -95,10 +95,10 @@ public class WalletController : Controller
     /// <response code="400">неправильные параметры</response>
 
     [HttpGet]
-    [Route("FWallet")]
+    [Route("wallet/findwallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
-    public WalletEntitiesInfo FWallet(string id)
+    public WalletEntitiesInfo FWallet([FromQuery]Guid id)
     {
         var search = dbWallet.FindById(id);
         return search;
@@ -106,8 +106,7 @@ public class WalletController : Controller
 
 
     #endregion
-
-
+    
     #endregion
     
 }

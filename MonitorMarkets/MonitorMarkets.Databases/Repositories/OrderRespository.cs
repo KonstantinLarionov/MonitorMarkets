@@ -14,34 +14,54 @@ namespace MonitorMarkets.Databases.Repositories
     {
         LoggerContext _db;
 
-        private DbSet<OrdersEntitiesInfo> _dbSet;
+        private DbSet<OrdersEntities> _dbSet;
         public OrderRepository(LoggerContext context)
         {
             _db = context;
-            _dbSet = context.Set<OrdersEntitiesInfo>();
+            _dbSet = context.Set<OrdersEntities>();
         }
 
-        public void Create(OrdersEntitiesInfo item)
+        /*public void Create(OrdersEntitiesInfo item)
         {
             var itemDb = new OrdersEntities()
             {
-                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Direction = item.Direction, Price = item.Price,
+                 Amount = item.Amount, Direction = item.Direction, Price = item.Price,
                 StatusOrder = item.StatusOrder
             };
 
             _db.Add(itemDb);
             _db.SaveChanges();
+        }*/
+
+        public OrdersEntitiesInfo FindById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(OrdersEntitiesInfo item, Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public OrdersEntitiesInfo FindById(string id)
         {
-            return _dbSet.Find(id);
+            var item = _dbSet.Find(id);
+            var orderInfo = new OrdersEntitiesInfo()
+            {
+                Price = item.Price, Amount = item.Amount, Direction = item.Direction, StatusOrder = item.StatusOrder
+            };
+            return orderInfo;
         }
-        public void Update(OrdersEntitiesInfo item)
+        public void Update(OrdersEntitiesInfo item, string id)
         {
             var itemDb = new OrdersEntities()
             {
-                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Direction = item.Direction, Price = item.Price,
+                 Amount = item.Amount, Direction = item.Direction, Price = item.Price,
                 StatusOrder = item.StatusOrder
             };
 
@@ -53,13 +73,19 @@ namespace MonitorMarkets.Databases.Repositories
         {
             var itemDb = new OrdersEntities()
             {
-                Id = Guid.NewGuid().ToString(), Amount = item.Amount, Direction = item.Direction, Price = item.Price,
+                 Amount = item.Amount, Direction = item.Direction, Price = item.Price,
                 StatusOrder = item.StatusOrder
             };
 
             _db.Remove(itemDb);
             _db.SaveChanges();
         }
-        
+
+        public int Create(OrdersEntitiesInfo item)
+        {
+            var itemDb = new OrdersEntities { Amount = item.Amount, Direction = item.Direction, Price = item.Price, StatusOrder = item.StatusOrder};
+            _db.Add(itemDb);
+            return _db.SaveChanges();
+        }
     }
 }
