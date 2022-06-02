@@ -2,7 +2,7 @@
 using MonitorMarkets.Application.Objects.Abstractions;
 using MonitorMarkets.DesktopDatabase.Entities;
 
-namespace MonitorMarkets.DesktopDatabase;
+namespace MonitorMarkets.DesktopDatabase.Repositories;
 
 public class KeysRepository:IRepository<ConnectionKeys>
 {
