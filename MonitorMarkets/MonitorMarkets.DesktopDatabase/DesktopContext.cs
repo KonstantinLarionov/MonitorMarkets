@@ -9,17 +9,18 @@ namespace MonitorMarkets.DesktopDatabase;
 
 public class DesktopContext:DbContext
 {
-    public DbSet<ConnectionKeys> ConnectionKeys { get; set; }
+    //public DbSet<ConnectionKeys> ConnectionKeys { get; set; }
 
-    public DesktopContext()
+    /*public DesktopContext()
     {
         Database.EnsureCreated();
+    }*/
+    public DbSet<ConnectionKeys> ConnectionKeys { get; set; }
+    public DesktopContext(DbContextOptions<DesktopContext> options)
+        : base(options)
+    {
+        Database.EnsureCreated();   // создаем базу данных при первом обращении
     }
 
-    protected void OnCofiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite("Filename = DesktopContext.db");
-    }
-    
-    
+
 }

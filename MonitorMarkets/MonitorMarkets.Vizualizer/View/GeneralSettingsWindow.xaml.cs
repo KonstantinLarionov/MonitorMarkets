@@ -11,11 +11,11 @@ namespace MonitorMarkets.Vizualizer.View
         // private readonly IRepository<ConnectionKeys>
         public GeneralSettingsWindow()
         {
-            DesktopContext db = new DesktopContext();
-            db.Database.Create();
+            /*DesktopContext db = new DesktopContext();
             db.ConnectionsKeys.Add(new ConnectionsKeys()
                 { DateTime = DateTime.Now, PassPhrase = "123", PublicKeys = "321", SecretKey = "54353" });
             db.SaveChanges();
+            */
             
             InitializeComponent();
         }

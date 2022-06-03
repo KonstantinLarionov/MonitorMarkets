@@ -21,40 +21,47 @@ public class KeyController:Controller
     
     [HttpPost]
     [Route("CreateKey")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Получение бизнес процесса", typeof(CreateKeyRequest))]
-    [SwaggerResponse(StatusCodes.Status400BadRequest, "Получение бизнес процесса", typeof(CreateKeyResponse))]
-    public async Task <IActionResult> CreateKey([FromQuery]CreateKeyRequest request)
+    [SwaggerResponse(StatusCodes.Status200OK, "Success", typeof(CreateKeyResponse))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Fail", typeof(CreateKeyResponse))]
+    public async Task <IActionResult> CreateKey([FromBody]CreateKeyRequest request)
     {
         var Keys = new ConnectionKeys()
-            { PassPhrase = request.PassPhrase, PublicKeys = request.PublicKey, SecretKeys = request.SecretKey };
+            { PassPhrase = request.PassPhrase, PublicKeys = request.PublicKey, SecretKeys = request.SecretKey, MarketsEnum = request.MarketsEnum};
         var res = _keyRepository.Create(Keys);
         if (res != 0)
             return Ok(new CreateKeyResponse() { Sucsess = true });
         else
-            return BadRequest(new CreateKeyResponse() { Sucsess = false, Message = "cannot create" });
+            return BadRequest(new CreateKeyResponse() { Sucsess = false, Message = "cannot create new key" });
 
     }
-
-    public async Task<IActionResult> GetKey([FromHeader] GetKeyResponse request)
+    [HttpGet]
+    [Route("GetKey")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Success", typeof(GetKeyResponse))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Fail", typeof(GetKeyResponse))]
+    public async Task<IActionResult> GetKey([FromQuery] GetKeyRequest request)
     {
-        var res = _keyRepository.FindById(new Guid(""));
-        if (true)
-            return Ok(new GetKeyRequest());
+        var res = _keyRepository.FindById(new Guid("08da4540-8704-45b0-8a16-edada53a699c"));
+        if (res != null )
+            return Ok(res);
         else
-            return BadRequest(new GetKeyRequest() );
+            return BadRequest(new GetKeyResponse() {Sucsess = false, Message = "cannot get keys"});
     }
-    
-    public async Task<IActionResult> PutKey([FromBody] PutKeyRequest request )
+    [HttpPut]
+    [Route("UpdateKey")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Success", typeof(UpdateKeyResponse))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Fail", typeof(UpdateKeyResponse))]
+    public async Task<IActionResult> UpdateKey([FromBody] UpdateKeyRequest request )
     {
-        var item = _keyRepository.FindById(new Guid());
+        var item = _keyRepository.FindById(new Guid("08da4540-8704-45b0-8a16-edada53a699c"));
         item.PassPhrase = request.PassPhrase;
         item.PublicKeys = request.PublicKey;
         item.SecretKeys = request.SecretKey;
-        var res = _keyRepository.Update(item ,new Guid(""));
-        if (true)
-            return Ok(new PutKeyResponse() { Sucsess = true });
+        item.MarketsEnum = request.MarketsEnum;
+        var res = _keyRepository.Update(item ,new Guid("08da4540-8704-45b0-8a16-edada53a699c"));
+        if (res!=0)
+            return Ok(new UpdateKeyResponse() { Sucsess = true });
         else
-            return BadRequest(new PutKeyResponse() { Sucsess = false, Message = "cannot update" });
+            return BadRequest(new UpdateKeyResponse() { Sucsess = false, Message = "cannot update values in secretKey, publicKey, passPhrase" });
     }
 
 }

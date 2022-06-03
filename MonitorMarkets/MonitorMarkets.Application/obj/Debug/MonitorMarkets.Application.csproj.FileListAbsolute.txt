@@ -72,12 +72,11 @@ C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\bin\Deb
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\bin\Debug\BybitMapper.pdb
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\bin\Debug\EntityFramework.xml
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\bin\Debug\EntityFramework.SqlServer.xml
-C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\bin\Debug\Newtonsoft.Json.xml
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\bin\Debug\RestSharp.xml
-C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.AssemblyReference.cache
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.MarketsInfo.resources
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.GenerateResource.cache
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CoreCompileInputs.cache
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.CopyComplete
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.dll
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.pdb
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Application\obj\Debug\MonitorMarkets.Application.csproj.AssemblyReference.cache

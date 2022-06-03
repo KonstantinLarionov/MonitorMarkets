@@ -7,7 +7,7 @@ using MonitorMarkets.StategyService.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddStrategyService();
+builder.Services.AddDesktopDataBase(builder.Configuration);
 builder.Services.AddControllers(options =>
 {
     options.OutputFormatters.RemoveType<SystemTextJsonOutputFormatter>();

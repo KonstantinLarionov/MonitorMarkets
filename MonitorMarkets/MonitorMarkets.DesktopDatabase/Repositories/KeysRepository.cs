@@ -6,13 +6,19 @@ namespace MonitorMarkets.DesktopDatabase.Repositories;
 
 public class KeysRepository:IRepository<ConnectionKeys>
 {
-    DesktopContext _context;
+    DesktopContext _db;
     DbSet<ConnectionKeys> _dbSet;
+    
+    public KeysRepository(DesktopContext context)
+    {
+        _db = context;
+        _dbSet = context.Set<ConnectionKeys>();
+    }
 
     public int Create(ConnectionKeys item)
     {
         _dbSet.Add(item);
-        var res = _context.SaveChanges();
+        var res = _db.SaveChanges();
         return res;
     }
 
@@ -24,15 +30,15 @@ public class KeysRepository:IRepository<ConnectionKeys>
     public int Remove(Guid id)
     {
         Remove(id);
-        var res = _context.SaveChanges();
+        var res = _db.SaveChanges();
         return res;
     }
 
     public int Update(ConnectionKeys item, Guid id)
     {
         _dbSet.Find(id);
-        _context.Entry(item).State = EntityState.Modified;
-        var res = _context.SaveChanges();
+        _db.Entry(item).State = EntityState.Modified;
+        var res = _db.SaveChanges();
         return res;
     }
 
