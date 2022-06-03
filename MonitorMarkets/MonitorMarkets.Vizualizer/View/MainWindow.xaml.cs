@@ -17,13 +17,13 @@ namespace MonitorMarkets.Vizualizer
     ///
     public partial class MainWindow
     {
-        //private readonly FactoryClientService _factory;
+       /* private readonly FactoryClientService _factory;
         public MainWindow()
         {
-            //_factory = FactoryClientService.GetInstance();
-            //_factory.GetMarket(MarketsEnum.Binance);
+            _factory = FactoryClientService.GetInstance();
+            _factory.GetMarket(MarketsEnum.Binance);
             InitializeComponent();
-        }
+        }*/
 
 
         private void ButtonBase_Settings(object sender, RoutedEventArgs e)

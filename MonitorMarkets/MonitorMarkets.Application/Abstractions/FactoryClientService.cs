@@ -13,6 +13,9 @@ namespace MonitorMarkets.Application.Abstraction
         /// </summary>
         private Dictionary<MarketsEnum, IMarketClient> _collection;
 
+        private BitgetClient bitGetClient;
+        private ByBitClient byBitClient;
+
         /// <summary>
         /// Синглтон
         /// </summary>
@@ -26,7 +29,12 @@ namespace MonitorMarkets.Application.Abstraction
             //Тут заполняем коллекцию стыкую с перечислением
             _collection = new Dictionary<MarketsEnum, IMarketClient>()
             {
-
+                {
+                    MarketsEnum.Bitget, bitGetClient
+                },
+                {
+                    MarketsEnum.Bybit, byBitClient
+                }
             };
         }
 
