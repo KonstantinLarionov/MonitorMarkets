@@ -5,15 +5,16 @@ using MonitorMarkets.Databases;
 
 namespace MonitorMarket.Controllers;
 
+
+[Route("walletController")]
 public class WalletController : Controller
 {
     private readonly ILogger<WalletController> _logger;
     private readonly LoggerContext _db;
     IRepository<WalletEntitiesInfo> dbWallet;
 
-    public WalletController(ILogger<WalletController> logger, IRepository<LogInfo> repositoryLog,
-        IRepository<OrdersEntitiesInfo> repositoryOrder,
-        IRepository<PositionsEntitiesInfo> repositoryPositions, IRepository<WalletEntitiesInfo> repositoryWallet)
+    public WalletController(ILogger<WalletController> logger,
+         IRepository<WalletEntitiesInfo> repositoryWallet)
     {
         _logger = logger;
         dbWallet = repositoryWallet;

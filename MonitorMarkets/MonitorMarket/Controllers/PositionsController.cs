@@ -1,19 +1,19 @@
-﻿using System.Web.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MonitorMarkets.Application.Objects.Abstractions;
 using MonitorMarkets.Application.Objects.DataBase;
 using MonitorMarkets.Databases;
 
 namespace MonitorMarket.Controllers;
 
+[Route("positionsController")]
 public class PositionsController : Controller
 {
     private readonly ILogger<PositionsController> _logger;
     private readonly LoggerContext _db;
     IRepository<PositionsEntitiesInfo> dbPositions;
 
-    public PositionsController(ILogger<PositionsController> logger, IRepository<LogInfo> repositoryLog, IRepository<OrdersEntitiesInfo> repositoryOrder,
-        IRepository<PositionsEntitiesInfo> repositoryPositions, IRepository<WalletEntitiesInfo> repositoryWallet)
+    public PositionsController(ILogger<PositionsController> logger,
+        IRepository<PositionsEntitiesInfo> repositoryPositions)
     {
         _logger = logger;
         dbPositions = repositoryPositions;

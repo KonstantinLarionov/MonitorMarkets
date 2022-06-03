@@ -5,14 +5,14 @@ using MonitorMarkets.Databases;
 
 namespace MonitorMarket.Controllers;
 
+[Route("orderController")]
 public class OrderController : Controller
 {
     private readonly ILogger<OrderController> _logger;
     private readonly LoggerContext _db;
     IRepository<OrdersEntitiesInfo> dbOrder;
     
-    public OrderController(ILogger<OrderController> logger, IRepository<LogInfo> repositoryLog, IRepository<OrdersEntitiesInfo> repositoryOrder,
-        IRepository<PositionsEntitiesInfo> repositoryPositions, IRepository<WalletEntitiesInfo> repositoryWallet)
+    public OrderController(ILogger<OrderController> logger,  IRepository<OrdersEntitiesInfo> repositoryOrder)
     {
         _logger = logger;
         dbOrder = repositoryOrder;

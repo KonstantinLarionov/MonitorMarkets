@@ -1,20 +1,18 @@
-﻿using System.Web.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MonitorMarkets.Application.Objects.Abstractions;
 using MonitorMarkets.Application.Objects.DataBase;
 using MonitorMarkets.Databases;
-using Swagger.Net;
 
 namespace MonitorMarket.Controllers;
 
+[Route("homeController")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly LoggerContext _db;
     IRepository<LogInfo> dbLog;
     
-    public HomeController(ILogger<HomeController> logger, IRepository<LogInfo> repositoryLog, IRepository<OrdersEntitiesInfo> repositoryOrder,
-        IRepository<PositionsEntitiesInfo> repositoryPositions, IRepository<WalletEntitiesInfo> repositoryWallet)
+    public HomeController(ILogger<HomeController> logger, IRepository<LogInfo> repositoryLog)
     {
         _logger = logger;
         dbLog = repositoryLog;
