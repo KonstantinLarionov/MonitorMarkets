@@ -20,62 +20,30 @@ namespace MonitorMarkets.Databases.Repositories
             _db = context;
             _dbSet = context.Set<PositionsEntities>();
         }
-
-        public void Create(PositionsEntitiesInfo item)
+        
+        public int Create(PositionsEntitiesInfo item)
         {
-            var itemDb = new PositionsEntities()
-            {
-                Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
-            };
+            var itemDb = new PositionsEntities{ Symbol = item.Symbol, Price = item.Price, StatusPosition = item.StatusPosition};
             _db.Add(itemDb);
-            _db.SaveChanges();
+            return _db.SaveChanges();
         }
-
-        public PositionsEntitiesInfo FindById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
         public int Remove(Guid id)
         {
-            throw new NotImplementedException();
+            var itemDb = _dbSet.Find(id);
+            _db.Remove(itemDb);
+            return _db.SaveChanges();
         }
-
         public int Update(PositionsEntitiesInfo item, Guid id)
         {
-            throw new NotImplementedException();
+            var itemDb = new PositionsEntities{ Id = id, Symbol = item.Symbol, Price = item.Price, Amount = item.Amount, StatusPosition = item.StatusPosition};
+            _db.Entry(itemDb).State = EntityState.Modified;
+            return _db.SaveChanges();
         }
-
-        public PositionsEntitiesInfo FindById(string id)
+        public PositionsEntitiesInfo FindById(Guid id)
         {
             var item = _dbSet.Find(id);
-            var positionsInfo = new PositionsEntitiesInfo()
-            {
-                Price = item.Price, Amount = item.Amount, StatusPosition = item.StatusPosition, Symbol = item.Symbol
-            };
-            return positionsInfo;
-        }
-        public void Update(PositionsEntitiesInfo item, string id)
-        {
-            var itemDb = new PositionsEntities()
-            { Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
-            };
-            _db.Entry(itemDb).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
-
-        public void Remove(PositionsEntitiesInfo item)
-        {
-            var itemDb = new PositionsEntities()
-            { Amount = item.Amount, Price = item.Price, StatusPosition = item.StatusPosition, Symbol = item.Symbol
-            };
-            _db.Remove(itemDb);
-            _db.SaveChanges();
-        }
-
-        int IRepository<PositionsEntitiesInfo>.Create(PositionsEntitiesInfo item)
-        {
-            throw new NotImplementedException();
+            var posInfo = new PositionsEntitiesInfo { Symbol = item.Symbol, Price = item.Price, Amount = item.Amount, StatusPosition = item.StatusPosition };
+            return posInfo;
         }
     }
 }

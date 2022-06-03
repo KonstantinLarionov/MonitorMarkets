@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using MonitorMarkets.Application.Objects.Abstractions;
 using MonitorMarkets.Application.Objects.DataBase;
 using MonitorMarkets.Databases;
@@ -29,13 +30,21 @@ public class PositionsController : Controller
     /// <response code="200">Positions добавлен в базу данных</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPost]
-    [Route("positions/addpositions")]
+    [Microsoft.AspNetCore.Mvc.HttpPost]
+    [Microsoft.AspNetCore.Mvc.Route("positions/addpositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
-    public void AddPositions([FromBody]PositionsEntitiesInfo posInfo)
+    public IActionResult AddPositions([Microsoft.AspNetCore.Mvc.FromBody]PositionsEntitiesInfo posInfo)
     {
-        dbPositions.Create(posInfo);
+        var result = dbPositions.Create(posInfo);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok();
+        }
     }
     
     #endregion
@@ -49,13 +58,21 @@ public class PositionsController : Controller
     /// <response code="200">Positions удален из базы данных</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpDelete]
-    [Route("positions/deletepositions")]
+    [Microsoft.AspNetCore.Mvc.HttpDelete]
+    [Microsoft.AspNetCore.Mvc.Route("positions/deletepositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
-    public void DelPositions([FromQuery]Guid posInfo)
+    public IActionResult DelPositions([FromQuery]Guid id)
     {
-        dbPositions.Remove(posInfo);
+        var result = dbPositions.Remove(id);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok(id);
+        }
     }
     
     #endregion
@@ -69,13 +86,21 @@ public class PositionsController : Controller
     /// <response code="200">Positions обновлён</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpPut]
-    [Route("positions/updatepositions")]
+    [Microsoft.AspNetCore.Mvc.HttpPut]
+    [Microsoft.AspNetCore.Mvc.Route("positions/updatepositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
-    public void UpPositions([FromQuery]PositionsEntitiesInfo posInfo)
+    public IActionResult UpPositions([FromQuery]Guid id, [Microsoft.AspNetCore.Mvc.FromBody]PositionsEntitiesInfo posInfo)
     {
-        // dbPositions.Update(posInfo);
+        var result = dbPositions.Update(posInfo, id);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok(id);
+        }
     }
 
     #endregion
@@ -90,8 +115,8 @@ public class PositionsController : Controller
     /// <response code="200">Positions найден</response>
     /// <response code="400">неправильные параметры</response>
 
-    [HttpGet]
-    [Route("positions/findpositions")]
+    [Microsoft.AspNetCore.Mvc.HttpGet]
+    [Microsoft.AspNetCore.Mvc.Route("positions/findpositions")]
     [ProducesResponseType(typeof(PositionsEntitiesInfo), 200)]
 
     public PositionsEntitiesInfo FPositions([FromQuery]Guid id)

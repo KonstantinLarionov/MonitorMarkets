@@ -21,60 +21,33 @@ namespace MonitorMarkets.Databases.Repositories
             _dbSet = context.Set<WalletEntities>();
         }
 
-        public void Create(WalletEntitiesInfo item)
+        public int Create(WalletEntitiesInfo item)
         {
-            var itemDb = new WalletEntities()
-            { Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
-            };
+            var itemDb = new WalletEntities{ Currency = item.Currency, Aviailable = item.Aviailable, Balance = item.Balance};
             _db.Add(itemDb);
-            _db.SaveChanges();
-        }
-
-        public WalletEntitiesInfo FindById(Guid id)
-        {
-            throw new NotImplementedException();
+            return _db.SaveChanges();
         }
 
         public int Remove(Guid id)
         {
-            throw new NotImplementedException();
+            var itemDb = _dbSet.Find(id);
+            _db.Remove(itemDb);
+            return _db.SaveChanges();
         }
 
         public int Update(WalletEntitiesInfo item, Guid id)
         {
-            throw new NotImplementedException();
+            var itemDb = new WalletEntities{ Id = id, Currency = item.Currency, Aviailable = item.Aviailable, Balance = item.Balance };
+            _db.Entry(itemDb).State = EntityState.Modified;
+            return _db.SaveChanges();
         }
 
-        public WalletEntitiesInfo FindById(string id)
+        public WalletEntitiesInfo FindById(Guid id)
         {
             var item = _dbSet.Find(id);
-            var walletInfo = new WalletEntitiesInfo()
-            {
-                Currency = item.Currency, Aviailable = item.Aviailable, Balance = item.Balance
-            };
+            var walletInfo = new WalletEntitiesInfo() { Currency = item.Currency, Aviailable = item.Aviailable, Balance = item.Balance };
             return walletInfo;
         }
-        public void Update(WalletEntitiesInfo item, string id)
-        {
-            var itemDb = new WalletEntities()
-            { Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
-            };
-            _db.Entry(itemDb).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
-
-        public void Remove(WalletEntitiesInfo item)
-        {
-            var itemDb = new WalletEntities()
-            { Currency = item.Currency, Balance = item.Balance, Aviailable = item.Aviailable
-            };
-            _db.Remove(itemDb);
-            _db.SaveChanges();
-        }
-
-        int IRepository<WalletEntitiesInfo>.Create(WalletEntitiesInfo item)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

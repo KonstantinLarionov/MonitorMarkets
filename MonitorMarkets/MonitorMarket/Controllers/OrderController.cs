@@ -32,9 +32,11 @@ public class OrderController : Controller
     [Route("order/addorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
-    public void AddOrder([FromBody]OrdersEntitiesInfo orderInfo)
+    public IActionResult AddOrder([FromBody]OrdersEntitiesInfo orderInfo)
     {
-        dbOrder.Create(orderInfo);
+        var result = dbOrder.Create(orderInfo);
+        if (result == 0) { return BadRequest(); }
+        else { return Ok(); }
     }
     #endregion
     
@@ -50,9 +52,18 @@ public class OrderController : Controller
     [Route("order/deleteorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
-    public void DelOrder([FromQuery]Guid orderInfo)
+    public IActionResult DelOrder([FromQuery]Guid id)
     {
-        dbOrder.Remove(orderInfo);
+        var result = dbOrder.Remove(id);
+
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok(id);
+        }
     }
     #endregion
     
@@ -68,9 +79,17 @@ public class OrderController : Controller
     [Route("order/updateorder")]
     [ProducesResponseType(typeof(OrdersEntitiesInfo), 200)]
 
-    public void UpOrder([FromQuery]OrdersEntitiesInfo orderInfo)
+    public IActionResult UpOrder([FromQuery]Guid id ,[FromBody]OrdersEntitiesInfo orderInfo)
     {
-        // dbOrder.Update(orderInfo);
+        var result = dbOrder.Update(orderInfo, id);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok(id);
+        }
     }
     #endregion
 

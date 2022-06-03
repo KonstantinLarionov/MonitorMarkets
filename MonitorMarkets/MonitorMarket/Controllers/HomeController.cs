@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MonitorMarkets.Application.Objects.Abstractions;
 using MonitorMarkets.Application.Objects.DataBase;
 using MonitorMarkets.Databases;
+using Swagger.Net;
 
 namespace MonitorMarket.Controllers;
 
@@ -58,9 +59,17 @@ public class HomeController : Controller
     [Microsoft.AspNetCore.Mvc.Route("log/deletelog")]
     [ProducesResponseType(typeof(LogInfo), 200)]
 
-    public void DelLog([FromQuery]Guid id)
+    public IActionResult DelLog([FromQuery]Guid id)
     {
-        dbLog.Remove(id);
+        var result = dbLog.Remove(id);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok(id);
+        }
     }
     #endregion
 
@@ -80,9 +89,13 @@ public class HomeController : Controller
     {
         var result = dbLog.Update(info, id);
         if (result == 0)
+        {
             return BadRequest();
+        }
         else
+        {
             return Ok(id);
+        }
     }
     #endregion
 

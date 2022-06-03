@@ -34,9 +34,17 @@ public class WalletController : Controller
     [Route("wallet/addwallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
-    public void AddWallet([FromBody]WalletEntitiesInfo walletInfo)
+    public IActionResult AddWallet([FromBody]WalletEntitiesInfo walletInfo)
     {
-        dbWallet.Create(walletInfo);
+        var result = dbWallet.Create(walletInfo);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok();
+        }
     }
 
 
@@ -55,9 +63,18 @@ public class WalletController : Controller
     [Route("wallet/deletewallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
-    public void DelWallet([FromQuery]Guid walletInfo)
+    public IActionResult DelWallet([FromQuery]Guid id)
     {
-        dbWallet.Remove(walletInfo);
+        var result = dbWallet.Remove(id);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok(id);
+        }
+
     }
 
 
@@ -76,9 +93,18 @@ public class WalletController : Controller
     [Route("wallet/updatewallet")]
     [ProducesResponseType(typeof(WalletEntitiesInfo), 200)]
 
-    public void UpWallet([FromQuery]WalletEntitiesInfo walletInfo)
+    public IActionResult UpWallet([FromQuery]Guid id, [FromBody]WalletEntitiesInfo walletInfo)
     {
-        // dbWallet.Update(walletInfo);
+        var result = dbWallet.Update(walletInfo, id);
+        if (result == 0)
+        {
+            return BadRequest();
+        }
+        else
+        {
+            return Ok(id);
+        }
+
     }
 
 
