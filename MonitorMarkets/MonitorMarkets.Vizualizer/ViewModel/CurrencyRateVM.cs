@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using MonitorMarkets.Application.Abstraction;
+using MonitorMarkets.Application.Objects.Data.Enums;
 
 namespace MonitorMarkets.Vizualizer.ViewModel
 {
-    public class CurrencyRateVm : INotifyPropertyChanged
+    public class CurrencyRateVm
     {
         private readonly FactoryClientService _factory;
 
@@ -11,7 +12,7 @@ namespace MonitorMarkets.Vizualizer.ViewModel
         {
             
             _factory = FactoryClientService.GetInstance();
-            _factory.
+            var factoryClient = _factory.GetMarket(MarketsEnum.Bybit);
         }
     }
 }

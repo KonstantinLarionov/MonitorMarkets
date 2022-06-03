@@ -13,9 +13,9 @@ namespace MonitorMarkets.Application.Abstraction
         /// </summary>
         private Dictionary<MarketsEnum, IMarketClient> _collection;
 
-        private BitgetClient bitGetClient;
-        private ByBitClient byBitClient;
-
+        private BitgetClient bitGetClient = new BitgetClient("https://api.bitget.com");
+        private ByBitClient byBitClient = new ByBitClient("https://api.bybit.com");
+        
         /// <summary>
         /// Синглтон
         /// </summary>

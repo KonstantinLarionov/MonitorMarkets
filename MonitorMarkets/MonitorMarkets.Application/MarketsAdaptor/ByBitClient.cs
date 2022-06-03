@@ -60,11 +60,11 @@ namespace MonitorMarkets.Application.MarketsAdaptor
         /// <summary>
         /// Публичный конструктор класса
         /// </summary>
-        public ByBitClient()
+        public ByBitClient(string urlPublicRest)
         {
             m_HandlerComposition = new UsdcPepetualHandlerComposition(new UsdcPepetualHandlerFactory());
             m_RequestArranger = new RequestArranger();
-            _restClient = new RestClient();
+            _restClient = new RestClient(urlPublicRest);
         }
 
         /// <summary>
