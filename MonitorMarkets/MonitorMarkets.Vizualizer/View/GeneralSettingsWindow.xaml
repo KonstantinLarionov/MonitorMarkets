@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
         xmlns:enums="clr-namespace:MonitorMarkets.Application.Objects.Data.Enums;assembly=MonitorMarkets.Application"
         mc:Ignorable="d"
-        Title="General Settings" Height="450" Width="250" ResizeMode="NoResize">
+        Title="General Settings" Height="490" Width="250" ResizeMode="NoResize">
     <Window.Resources>
         <ObjectDataProvider x:Key="DatafromEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -25,6 +25,7 @@
                             <Label FontSize="20" Foreground="Black"> Биржа: </Label>
                             <ComboBox Height="30" 
                                       FontSize="16"
+                                      Name="MarketEnums"
                                       VerticalAlignment="Top" 
                                       Width="80" 
                                       BorderBrush="MediumPurple"
@@ -35,16 +36,20 @@
                         <materialDesign:Card DockPanel.Dock="Top" Margin="10" BorderBrush="Purple" Background="White" UniformCornerRadius="20" >
                                         <StackPanel Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
                                             <TextBlock HorizontalAlignment="Center" FontSize="15" Foreground="Black">Открытый ключ</TextBlock>
-                                            <TextBox materialDesign:HintAssist.Hint="Text" 
+                                            <TextBox Name="PublicKeyTextBox"
+                                                materialDesign:HintAssist.Hint="Text"
+                                                     BorderBrush="MediumPurple"
                                                      HorizontalAlignment="Center"
                                                      Foreground="Black" Width="100" 
-                                                     BorderBrush="MediumPurple" > </TextBox>
+                                                     > </TextBox>
+                                            
                                         </StackPanel>
                         </materialDesign:Card>
                         <materialDesign:Card DockPanel.Dock="Top" Margin="10" BorderBrush="Purple" Background="White" UniformCornerRadius="20">
                                         <StackPanel Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15" >
                                             <TextBlock HorizontalAlignment="Center" FontSize="15" Foreground="Black" >Закрытый ключ</TextBlock>
-                                            <TextBox materialDesign:HintAssist.Hint="Text" 
+                                            <TextBox Name="SecretKeyTextBox"
+                                                materialDesign:HintAssist.Hint="Text" 
                                                      HorizontalAlignment="Center" 
                                                      Foreground="Black" Width="100" 
                                                      BorderBrush="MediumPurple"> </TextBox>
@@ -53,13 +58,21 @@
                             <materialDesign:Card DockPanel.Dock="Top" Margin="10" BorderBrush="Purple" Background="White" UniformCornerRadius="20">
                                             <StackPanel  Height="50" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="15">
                                                 <TextBlock HorizontalAlignment="Center" FontSize="15" Foreground="Black">парольная фраза</TextBlock>
-                                                <TextBox materialDesign:HintAssist.Hint="Text" 
+                                                <TextBox Name="PassPhraseTextBox"
+                                                         materialDesign:HintAssist.Hint="Text" 
                                                          HorizontalAlignment="Center" 
                                                          VerticalAlignment="Center" 
                                                          Foreground="Black" Width="100"
                                                          BorderBrush="MediumPurple"> </TextBox>
                                             </StackPanel>
                             </materialDesign:Card>
+                            <Button Width="90" 
+                                    Height="35" 
+                                    Margin="3" 
+                                    DockPanel.Dock="Top" 
+                                    Content="Accept"
+                                    Click="ButtonBase_OnClick"
+                                    ></Button>
                         </DockPanel>
                     </DockPanel>
                 </materialDesign:Card>

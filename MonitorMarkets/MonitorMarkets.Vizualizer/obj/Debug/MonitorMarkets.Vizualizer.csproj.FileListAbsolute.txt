@@ -115,3 +115,11 @@ C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debu
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.csproj.CopyComplete
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.exe
 C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.pdb
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\Newtonsoft.Json.dll
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\System.Web.Http.dll
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\Newtonsoft.Json.xml
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\System.Web.Http.xml
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\Swagger.Net.dll
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\System.Net.Http.Formatting.dll
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\bin\Debug\System.Net.Http.Formatting.xml
+C:\WorkProjects\MonitorMarkets\MonitorMarkets\MonitorMarkets.Vizualizer\obj\Debug\MonitorMarkets.Vizualizer.exe.config
