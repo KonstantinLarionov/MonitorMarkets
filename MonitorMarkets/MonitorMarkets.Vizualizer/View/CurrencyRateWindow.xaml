@@ -13,23 +13,24 @@
         <DockPanel DockPanel.Dock="Top" Height="50">
             <StackPanel Orientation="Horizontal">
                     <Label Foreground="Black" HorizontalAlignment="Center" FontSize="15">Валютная пара: </Label>
-                    <ComboBox Width="120"
+                    <ComboBox ItemsSource="{Binding ListSymbol}" Width="120"
                               VerticalAlignment="Top" 
                               BorderBrush="MediumPurple"
                               Foreground="Black">
-                        <TextBlock >1234</TextBlock>
-                        <TextBlock>1234</TextBlock>
+                        
                     </ComboBox>
                     <Label Margin="10,0,0,0" Foreground="Black" FontSize="15">Изменение в процентах: </Label>
                     <Label>
                         <TextBox BorderBrush="MediumPurple" Width="30" Foreground="Black">
                         </TextBox>
                     </Label>
-                    <Button Margin="10,0,0,0"> Показать </Button>
+                    <Button Command="{Binding Path=ListSymbol}" Margin="10,0,0,0">
+                        Показать 
+                    </Button>
                 </StackPanel>
         </DockPanel>
         <DockPanel DockPanel.Dock="Bottom">
-            <DataGrid ItemsSource="{Binding ListContract}" DockPanel.Dock="Top" Foreground="White" GridLinesVisibility="All" SelectionUnit="FullRow" Background="Gray" RowBackground="LightGray" AutoGenerateColumns="False">
+            <DataGrid DockPanel.Dock="Top" Foreground="White" GridLinesVisibility="All" SelectionUnit="FullRow" Background="Gray" RowBackground="LightGray" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Биржи"></DataGridTextColumn>
                     <DataGridTextColumn Header="Курсы" Binding="{Binding Symbol}"></DataGridTextColumn>
@@ -37,18 +38,6 @@
                     <DataGridTextColumn Header="Объем 24ч"></DataGridTextColumn>
                     
                 </DataGrid.Columns>
-                <DataGrid>
-                    <DataGridRow></DataGridRow>
-                </DataGrid>
-                <DataGrid>
-                    <DataGridRow></DataGridRow>
-                </DataGrid>
-                <DataGrid>
-                    <DataGridRow></DataGridRow>
-                </DataGrid>
-                <DataGrid>
-                    <DataGridRow></DataGridRow>
-                </DataGrid>
             </DataGrid>
         </DockPanel>
     </DockPanel>
