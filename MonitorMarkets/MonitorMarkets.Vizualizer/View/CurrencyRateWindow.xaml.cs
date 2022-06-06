@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using MonitorMarkets.Vizualizer.ViewModel;
 
 namespace MonitorMarkets.Vizualizer.View
 {
@@ -7,6 +8,7 @@ namespace MonitorMarkets.Vizualizer.View
         public CurrencyRateWindow()
         {
             InitializeComponent();
+            DataContext = new CurrencyRateVm();
         }
     }
     

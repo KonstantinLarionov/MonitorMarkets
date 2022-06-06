@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:viewmodel="clr-namespace:MonitorMarkets.Vizualizer.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:CurrencyRateVm}"
         xmlns:local="clr-namespace:MonitorMarkets.Vizualizer.View"
         xmlns:data="clr-namespace:System.Data;assembly=System.Data"
         mc:Ignorable="d"
@@ -28,12 +29,13 @@
                 </StackPanel>
         </DockPanel>
         <DockPanel DockPanel.Dock="Bottom">
-            <DataGrid DockPanel.Dock="Top" Foreground="White" GridLinesVisibility="All" SelectionUnit="FullRow" Background="Gray" RowBackground="LightGray">
+            <DataGrid ItemsSource="{Binding ListContract}" DockPanel.Dock="Top" Foreground="White" GridLinesVisibility="All" SelectionUnit="FullRow" Background="Gray" RowBackground="LightGray" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Биржи"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Курсы"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Изменение в процентах 24ч"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Курсы" Binding="{Binding Symbol}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Изменение в процентах 24ч" ></DataGridTextColumn>
                     <DataGridTextColumn Header="Объем 24ч"></DataGridTextColumn>
+                    
                 </DataGrid.Columns>
                 <DataGrid>
                     <DataGridRow></DataGridRow>
@@ -50,4 +52,5 @@
             </DataGrid>
         </DockPanel>
     </DockPanel>
+    
 </Window>

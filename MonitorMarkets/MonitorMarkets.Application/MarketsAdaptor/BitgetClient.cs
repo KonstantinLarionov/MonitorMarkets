@@ -156,14 +156,12 @@ namespace MonitorMarkets.Application.MarketsAdaptor
                         null, null));
                 }
 
-                response_unt = new ContractInfoResponse(response_obj.Code, response_obj.Msg, listData);
+                return response_unt = new ContractInfoResponse(response_obj.Code, response_obj.Msg, listData);
             }
             catch (Exception ex)
             {
                 return null;
-            }
-
-            return null;
+            } 
         }
 
         public IEnumerable<Objects.Responses.KlineResponse> GetKlineResponse(string symbol, IntervalKlineType period,
@@ -196,8 +194,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public ServerTimeResponse ServerTimeRequest()
@@ -245,8 +241,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public Objects.Responses.WalletInfoResponse GetWalletInfoResponse(string symbol)
@@ -270,8 +264,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public Objects.Responses.PlaceOrderResponse GetPlaceOrderResponse(string symbol,
@@ -308,8 +300,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         /*public Objects.Responses.OrderBookResponse GetOrderBookResponse()
@@ -336,8 +326,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public IEnumerable<TradeHistoryResponse> GetTradeHistoryResponse(string symbol, long startTime,
@@ -365,8 +353,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         /*public Objects.Responses.TradeHistoryResponse GetTradeHistoryResponse()
@@ -393,8 +379,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         #endregion
@@ -716,6 +700,5 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             }
         }
     }
-
     #endregion
 }

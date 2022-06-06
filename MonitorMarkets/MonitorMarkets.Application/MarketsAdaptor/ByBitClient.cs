@@ -158,8 +158,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         /*public Objects.Responses.OrderBookResponse GetOrderBookResponse(string symbol)
@@ -216,8 +214,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         
@@ -265,8 +261,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public Objects.Responses.CancelOrderResponse GetCancelOrderResponse(string symbol, string orderid)
@@ -290,8 +284,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public Objects.Responses.UnfilledResponse GetActiveOrderHistory(string symbol)
@@ -315,8 +307,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         /*public Objects.Responses.OrderHistoryResponse GetOrderHistoryResponse(string symbol, long startTime, long endTime, string pageSize)
@@ -383,8 +373,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public Objects.Responses.WalletInfoResponse GetWalletInfoResponse(string symbol)
@@ -408,8 +396,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
 
         public IEnumerable<Objects.Responses.MyPositionsResponse> GetMyPositionsResponse()
@@ -434,8 +420,6 @@ namespace MonitorMarkets.Application.MarketsAdaptor
             {
                 return null;
             }
-
-            return null;
         }
         
         bool TryGetOrderAction(SideType in_type, out OrderActionEnum out_type)

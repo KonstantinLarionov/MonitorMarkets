@@ -33,7 +33,7 @@ namespace MonitorMarkets.Vizualizer.View
         private  void PrintAuthorInfo(System.Type type )
         {
             // Using reflection.  
-            var attrs = status.GetCustomAttributes(); // Reflection.  
+            var attrs = type.GetCustomAttributes(); // Reflection.  
 
             // Displaying output.  
             foreach (Attribute attr in attrs)
